@@ -1,15 +1,17 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using  TransparentAccounting.Models;
+using TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Controllers
 {
     public class AuthenticateController : BaseController
     {
         [HttpPost]
-        public User Login()
+        public User LogIn(string username, string password)
         {
-            var x = GetDbContext().Select<User>();
-            return null;
+            var users = GetDbContext().Select<User>();
+
+            return users.FirstOrDefault(u => u.Username == username && u.Password == password);
         }
     }
 }

@@ -8,6 +8,8 @@ import { NavMenuComponent } from './home/nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import {LoginComponent} from "./login/login.component";
 import {AppRoutingModule} from "./app-routing.module";
+import {AccountService} from "./account.service";
+import {AuthGuard} from "./auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,7 @@ import {AppRoutingModule} from "./app-routing.module";
     FormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AccountService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
