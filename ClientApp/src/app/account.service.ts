@@ -12,7 +12,12 @@ export class AccountService{
   }
 
   public logIn(username: string, password: string){
-    const s = this.httpClient.post(this.baseUrl + 'api/Authenticate/LogIn', {username: username, password: password});
+    let formData = new FormData();
+
+    formData.append('username', username);
+    formData.append('password', password);
+
+    const s = this.httpClient.post(this.baseUrl + 'api/Authenticate/LogIn', formData);
 
     s.subscribe((user: User) => {
       if(user){
