@@ -10,13 +10,16 @@ import {LoginComponent} from "./login/login.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {AccountService} from "./account.service";
 import {AuthGuard} from "./auth-guard.service";
+import {CookieService} from "ngx-cookie-service";
+import {DashboardComponent} from "./home/dashboard/dashboard.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,7 +27,7 @@ import {AuthGuard} from "./auth-guard.service";
     FormsModule,
     AppRoutingModule
   ],
-  providers: [AccountService, AuthGuard],
+  providers: [AccountService, AuthGuard, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,5 +13,14 @@ namespace TransparentAccounting.Controllers
 
             return users.FirstOrDefault(u => u.Username == username && u.Password == password);
         }
+
+        [HttpGet]
+        public User GetUserById(int id)
+        {
+            var users = GetDbContext().Select<User>();
+
+            return users.FirstOrDefault(u => u.Id == id);
+        }
+
     }
 }
