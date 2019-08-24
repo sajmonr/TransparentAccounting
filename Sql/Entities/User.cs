@@ -9,6 +9,8 @@ namespace TransparentAccounting.Sql.Entities
         public string Username { get; set; }
         public int Role { get; set; }
         public string Password { get; set; }
+        public List<Equity> equities;
+        public List<Liability> liabilities;
     }
 
     
