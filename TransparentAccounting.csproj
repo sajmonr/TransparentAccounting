@@ -23,8 +23,13 @@
     <Content Remove="$(SpaRoot)**" />
     <Content Include="ClientApp\src\app\home\dashboard\dashboard.component.css" />
     <Content Include="ClientApp\src\app\home\dashboard\dashboard.component.html" />
+    <Content Include="ClientApp\src\app\home\home.component.html" />
+    <Content Include="ClientApp\src\app\home\users\users.component.css" />
+    <Content Include="ClientApp\src\app\home\users\users.component.html" />
     <Content Include="ClientApp\src\app\login\login.component.css" />
     <Content Include="ClientApp\src\app\login\login.component.html" />
+    <Content Include="ClientApp\src\assets\images\user.png" />
+    <Content Include="ClientApp\src\assets\scripts\create.sql" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Include="ClientApp\src\app\home\nav-menu\nav-menu.component.css" />
@@ -33,9 +38,12 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\api.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\dashboard\dashboard.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\user-model.ts" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AccountService} from "../../account.service";
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,6 +9,8 @@ import { Component } from '@angular/core';
 export class NavMenuComponent {
   isExpanded = false;
 
+  constructor(private accountService: AccountService){}
+
   collapse() {
     this.isExpanded = false;
   }
@@ -15,4 +18,10 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  private capitalizeFirstLetter(value: string){
+    return value.charAt(0).toUpperCase() + value.slice(1);
+
+  }
+
 }

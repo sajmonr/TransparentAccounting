@@ -2,15 +2,19 @@ import {User} from "./shared/user-model";
 import {HttpClient} from '@angular/common/http'
 import {Inject, Injectable} from "@angular/core";
 import {CookieService} from "ngx-cookie-service";
-import {current} from "codelyzer/util/syntaxKind";
-import {C} from "@angular/core/src/render3";
+import {Router} from "@angular/router";
+import {ApiMethod, ApiService} from "./api.service";
 
 @Injectable()
 export class AccountService{
   private userIdCookieName = 'userId';
   private currentUser: User;
 
-  constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string, private cookie: CookieService){
+  constructor(private httpClient: HttpClient,
+              @Inject('BASE_URL') private baseUrl: string,
+              private cookie: CookieService,
+              private router: Router,
+              private apiService: ApiService){
 
   }
 
@@ -20,7 +24,7 @@ export class AccountService{
     formData.append('username', username);
     formData.append('password', password);
 
-    const s = this.httpClient.post(this.baseUrl + 'api/Authenticate/LogIn', formData);
+    const s = this.httpClient.post(this.apiService.getUrl(ApiMethod.LogIn), formData);
 
     s.subscribe((user: User) => {
       if(user){
@@ -32,16 +36,21 @@ export class AccountService{
     return s;
   }
 
+  public logOut(){
+    this.currentUser = null;
+    this.deleteUserCookie();
+    this.router.navigate(['/login'])
+  }
+
   public getCurrentUser() : User{
     return this.currentUser;
   }
 
   public async isLoggedIn(): Promise<boolean>{
+    // noinspection TypeScriptUnresolvedFunction
     return new Promise<boolean>((resolve) => {
       if(this.currentUser === undefined) {
         const cookie = this.getUserCookie();
-
-        console.log(cookie);
 
         if (cookie) {
           this.getUserById(cookie).then((result: User) => {
@@ -62,9 +71,11 @@ export class AccountService{
   }
 
   private getUserById(id: number) {
-    return this.httpClient.get<User>(this.baseUrl + 'api/Authenticate/GetUserById?id=' + id.toString()).toPromise();
+    return this.httpClient.get<User>(this.apiService.getUrl(ApiMethod.UserById) + '?id=' + id.toString()).toPromise();
   }
-
+  private deleteUserCookie(){
+    this.cookie.delete(this.userIdCookieName);
+  }
   private setUserCookie(id: number){
     this.cookie.set(this.userIdCookieName, id.toString());
   }

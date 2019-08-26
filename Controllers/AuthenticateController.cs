@@ -7,20 +7,13 @@ namespace TransparentAccounting.Controllers
     public class AuthenticateController : BaseController
     {
         [HttpPost]
-        public User LogIn(string username, string password)
+        public Models.User LogIn(string username, string password)
         {
             var users = GetDbContext().Select<User>();
 
-            return users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            var dbUser = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+
+            return Models.User.FromDbEntity(dbUser);
         }
-
-        [HttpGet]
-        public User GetUserById(int id)
-        {
-            var users = GetDbContext().Select<User>();
-
-            return users.FirstOrDefault(u => u.Id == id);
-        }
-
     }
 }

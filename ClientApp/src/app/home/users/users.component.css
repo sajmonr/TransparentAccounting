@@ -1,0 +1,21 @@
+td:last-child{
+  width: 15%;
+  text-align: center;
+}
+td:first-child{
+  width: 50%;
+}
+table td{
+  vertical-align: middle;
+}
+.edit-box{
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}

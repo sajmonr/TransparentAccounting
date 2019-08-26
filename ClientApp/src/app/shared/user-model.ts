@@ -1,9 +1,15 @@
 export class User{
-  public constructor(public id: number, public username: string, public role: UserRole){
-  }
+  id:number;
+  username: string;
+  role: UserRole;
+  isActive: boolean;
+  fullName: string;
+
+  public constructor(){}
 }
 
-enum UserRole{
-  Administrator = 1,
-  Manager = 2
+export enum UserRole{
+  Administrator,
+  Manager,
+  User
 }

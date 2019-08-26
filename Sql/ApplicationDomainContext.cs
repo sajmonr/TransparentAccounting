@@ -24,8 +24,7 @@ namespace TransparentAccounting.Sql
         {
             var output = new List<T>();
             var properties = typeof(T).GetProperties();
-            var tableName = (typeof(T).GetCustomAttributes(typeof(TableAttribute), false).Single() as TableAttribute)
-                .Name;
+            var tableName = GetTableName<T>();
             using (var connection = GetConnection())
             {
                 var command = new MySqlCommand($"select * from {tableName}", connection);
@@ -46,7 +45,98 @@ namespace TransparentAccounting.Sql
             return output;
         }
 
-        private string ToCamelCase(string value) => Char.ToLowerInvariant(value[0]) + value.Substring(1);
+        public void Delete<T>(string conditionField, int conditionValue)
+        {
+            string tableName = GetTableName<T>();
 
+            using (var connection = GetConnection())
+            {
+                var command = new MySqlCommand($"delete from {tableName} where {conditionField} = {conditionValue}", connection);
+                
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Insert<T>(T value)
+        {
+            var command = CreateInsertCommand<T>(value);
+
+            using (var connection = GetConnection())
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Update<T>(T value)
+        {
+            var command = CreateUpdateCommand<T>(value);
+
+            using (var connection = GetConnection())
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+        
+        private string ToCamelCase(string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
+
+        private MySqlCommand CreateInsertCommand<T>(T value)
+        {
+            var command = new MySqlCommand();
+            string fieldNames = string.Empty;
+            string fieldValues = string.Empty;
+            
+
+            var properties = typeof(T).GetProperties().Where(x => !Attribute.IsDefined(x, typeof(PrimaryKeyAttribute))).Select(x => x);
+
+            foreach(var property in properties)
+            {
+                fieldNames += $"{ToCamelCase(property.Name)},";
+                fieldValues += $"@{property.Name},";
+
+                command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(value));
+            }
+
+            fieldNames = $"{fieldNames.TrimEnd(',')}";
+            fieldValues = $"{fieldValues.TrimEnd(',')}";
+
+            command.CommandText = $"insert into {GetTableName<T>()} ({fieldNames}) values({fieldValues})";
+            
+            return command;
+        }
+        
+        private MySqlCommand CreateUpdateCommand<T>(T value)
+        {
+            var command = new MySqlCommand();
+            string fieldUpdates = string.Empty;
+
+            var properties = typeof(T).GetProperties().Where(x => !Attribute.IsDefined(x, typeof(PrimaryKeyAttribute))).Select(x => x);
+
+            foreach(var property in properties)
+            {
+                fieldUpdates += $"{ToCamelCase(property.Name)}=@{property.Name},";
+                command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(value));
+            }
+
+            fieldUpdates = fieldUpdates.TrimEnd(',');
+            
+            //Get the primary key to update against
+            var primaryKeyProperty = typeof(T).GetProperties()
+                .First(p => Attribute.IsDefined(p, typeof(PrimaryKeyAttribute)));
+
+            command.Parameters.AddWithValue($"@{primaryKeyProperty.Name}", primaryKeyProperty.GetValue(value));
+            
+            command.CommandText = $"update {GetTableName<T>()} set {fieldUpdates} where {ToCamelCase(primaryKeyProperty.Name)}=@{primaryKeyProperty.Name}";
+            
+            return command;
+        }
+        
+        private string GetTableName<T>() => GetTableName(typeof(T));
+        private string GetTableName(Type tableType) =>
+            ((TableAttribute)tableType.GetCustomAttributes(typeof(TableAttribute), inherit: false).Single()).Name;
     }
 }
