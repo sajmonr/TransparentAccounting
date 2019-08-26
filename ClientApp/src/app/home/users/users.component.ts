@@ -70,7 +70,7 @@ export class UsersComponent implements OnInit{
   }
   private onFormClose(){
     this.userToEdit = null;
-    //this.clearForm();
+    this.clearForm();
   }
   private clearForm(){
     this.editForm = new FormGroup({
