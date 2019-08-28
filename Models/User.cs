@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SqlEntity = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Models
