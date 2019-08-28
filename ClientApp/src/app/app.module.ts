@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './home/nav-menu/nav-menu.component';
 import {LoginComponent} from "./login/login.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {AccountService} from "./account.service";
+import {LoginService} from "./login.service";
 import {AuthGuard} from "./auth-guard.service";
 import {CookieService} from "ngx-cookie-service";
 import {DashboardComponent} from "./home/dashboard/dashboard.component";
 import {UsersComponent} from "./home/users/users.component";
 import {HomeComponent} from "./home/home.component";
 import {ApiService} from "./api.service";
+import {AccountsComponent} from "./home/accounts/accounts.component";
+import {AccountsCategoryComponent} from "./home/accounts/accounts-category/accounts-category.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {ApiService} from "./api.service";
     LoginComponent,
     HomeComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    AccountsComponent,
+    AccountsCategoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -31,7 +35,7 @@ import {ApiService} from "./api.service";
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AccountService, AuthGuard, CookieService, ApiService],
+  providers: [LoginService, AuthGuard, CookieService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

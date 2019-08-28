@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {ApiMethod, ApiService} from "./api.service";
 
 @Injectable()
-export class AccountService{
+export class LoginService{
   private userIdCookieName = 'userId';
   private currentUser: User;
 

@@ -1,5 +1,5 @@
 import {Component, NgModule, ViewChild} from "@angular/core";
-import {AccountService} from "../account.service";
+import {LoginService} from "../login.service";
 import {User} from "../shared/user-model";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
@@ -13,10 +13,10 @@ export class LoginComponent{
   @ViewChild('loginForm') loginForm: NgForm;
   invalidInfo: boolean = false;
 
-  constructor(private accountService: AccountService, private router: Router){}
+  constructor(private loginService: LoginService, private router: Router){}
 
   onSubmit(){
-    this.accountService.logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((user: User) => {
+    this.loginService.logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((user: User) => {
       if(user){
         this.router.navigate(['']);
       }else{

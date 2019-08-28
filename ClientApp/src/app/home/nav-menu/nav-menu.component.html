@@ -14,10 +14,10 @@
               </div>
           </li>
           <li class="nav-item">
-            <span class="navbar-text mr-2 ml-2">{{this.capitalizeFirstLetter(this.accountService.getCurrentUser().username)}}</span>
+            <span class="navbar-text mr-2 ml-2">{{this.capitalizeFirstLetter(this.loginService.getCurrentUser().username)}}</span>
           </li>
           <li class="nav-item">
-            <button class="btn btn-outline-light" (click)="this.accountService.logOut()">Logout</button>
+            <button class="btn btn-outline-light" (click)="this.loginService.logOut()">Logout</button>
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
@@ -25,7 +25,7 @@
             <a class="nav-link" [routerLink]='["/"]'>Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-            <a class="nav-link" [routerLink]='["/"]'>Accounts</a>
+            <a class="nav-link" [routerLink]='["/app/accounts"]'>Accounts</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/users"]'>Users</a>

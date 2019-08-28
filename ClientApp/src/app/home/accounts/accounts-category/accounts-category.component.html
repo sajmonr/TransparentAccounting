@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <tr>
+      <th colspan="7">
+        <span class="h4">{{sectionTitle}}</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let account of accounts">
+      <td>{{account.id}}</td>
+      <td>{{account.name}}</td>
+      <td>{{account.normalSide}}</td>
+      <td>{{account.beginningBalance | currency}}</td>
+      <td>{{account.balance | currency}}</td>
+      <td>{{account.subcategory.name}}</td>
+      <td>
+        <button class="btn btn-info btn-sm m-1">Edit</button>
+        <button class="btn btn-danger btn-sm m-1">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

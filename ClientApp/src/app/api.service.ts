@@ -24,6 +24,15 @@ export class ApiService{
       case ApiMethod.InsertUser:
         url += 'Users/InsertUser';
         break;
+      case ApiMethod.GetCategories:
+        url += 'Accounts/GetCategories';
+        break;
+      case ApiMethod.GetSubcategories:
+        url += 'Accounts/GetSubcategories';
+        break;
+      case ApiMethod.GetAccounts:
+        url += 'Accounts/GetAccounts';
+        break;
     }
 
     return url;
@@ -36,5 +45,8 @@ export enum ApiMethod {
   UserById,
   GetAllUsers,
   DeleteUserById,
-  InsertUser
+  InsertUser,
+  GetCategories,
+  GetSubcategories,
+  GetAccounts
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AccountService} from "../../account.service";
+import {LoginService} from "../../login.service";
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,7 +9,7 @@ import {AccountService} from "../../account.service";
 export class NavMenuComponent {
   isExpanded = false;
 
-  constructor(private accountService: AccountService){}
+  constructor(private loginService: LoginService){}
 
   collapse() {
     this.isExpanded = false;

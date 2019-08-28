@@ -1,0 +1,31 @@
+<!-- Table template from: https://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=table-with-add-and-delete-row-feature -->
+<div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10"><h2>Accounts</h2></div>
+      <div class="col-sm-2 text-right">
+        <button type="button" class="btn btn-primary">Add New</button>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Account number</th>
+        <th>Name</th>
+        <th>Normal side</th>
+        <th>Beginning balance</th>
+        <th>Balance</th>
+        <th>Subcategory</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td colspan="7" class="p-0">
+            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)"></app-accounts-category>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
