@@ -21,6 +21,12 @@ export class ApiService{
       case ApiMethod.DeleteUserById:
         url += 'Users/DeleteUserById';
         break;
+      case ApiMethod.DisableUserById:
+        url += 'Users/DisableUserById';
+        break;
+      case ApiMethod.EnableUserById:
+        url += 'Users/EnableUserById';
+        break;
       case ApiMethod.InsertUser:
         url += 'Users/InsertUser';
         break;
@@ -45,6 +51,8 @@ export enum ApiMethod {
   UserById,
   GetAllUsers,
   DeleteUserById,
+  DisableUserById,
+  EnableUserById,
   InsertUser,
   GetCategories,
   GetSubcategories,

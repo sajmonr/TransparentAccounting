@@ -1,9 +1,9 @@
 td:last-child{
-  width: 15%;
+  width: 30%;
   text-align: center;
 }
 td:first-child{
-  width: 50%;
+  width: 30%;
 }
 table td{
   vertical-align: middle;

@@ -32,6 +32,7 @@
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
     <Content Include="ClientApp\src\app\login\login.component.css" />
     <Content Include="ClientApp\src\app\login\login.component.html" />
+    <Content Include="ClientApp\src\app\password-reset\password-reset.component.html" />
     <Content Include="ClientApp\src\assets\images\user.png" />
     <Content Include="ClientApp\src\assets\scripts\create.sql" />
     <None Remove="$(SpaRoot)**" />
@@ -41,16 +42,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\admin-auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\login.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\api.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\dashboard\dashboard.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\password-reset\password-reset.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\account.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\category.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\subcategory.model.ts" />

@@ -11,7 +11,7 @@ namespace TransparentAccounting.Controllers
         {
             var users = GetDbContext().Select<User>();
 
-            var dbUser = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            var dbUser = users.FirstOrDefault(u => u.Username == username && u.Password == password && u.IsActive == 1 && u.IsDeleted == 0);
 
             return Models.User.FromDbEntity(dbUser);
         }

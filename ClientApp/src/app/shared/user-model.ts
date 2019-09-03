@@ -4,6 +4,7 @@ export class User{
   role: UserRole;
   isActive: boolean;
   fullName: string;
+  password: string;
 
   public constructor(){}
 }
@@ -11,5 +12,5 @@ export class User{
 export enum UserRole{
   Administrator,
   Manager,
-  User
+  Accountant
 }

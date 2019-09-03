@@ -13,6 +13,7 @@ namespace TransparentAccounting.Sql.Entities
         public string Password { get; set; }
         public string FullName { get; set; }
         public int IsActive { get; set; }
+        public int IsDeleted { get; set; }
 
     }
 }

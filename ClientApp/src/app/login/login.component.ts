@@ -1,5 +1,5 @@
 import {Component, NgModule, ViewChild} from "@angular/core";
-import {LoginService} from "../login.service";
+import {LoginService} from "../services/login.service";
 import {User} from "../shared/user-model";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
@@ -18,7 +18,7 @@ export class LoginComponent{
   onSubmit(){
     this.loginService.logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((user: User) => {
       if(user){
-        this.router.navigate(['']);
+        this.router.navigate(['/app/dashboard']);
       }else{
         this.invalidInfo = true;
       }

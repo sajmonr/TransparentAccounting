@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Category} from "../../shared/category.model";
-import {ApiMethod, ApiService} from "../../api.service";
+import {ApiMethod, ApiService} from "../../services/api.service";
 import {Subcategory} from "../../shared/subcategory.model";
 import {Account} from "../../shared/account.model";
 

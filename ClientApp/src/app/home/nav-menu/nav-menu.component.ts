@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {LoginService} from "../../login.service";
+import {Component} from '@angular/core';
+import {LoginService} from "../../services/login.service";
+import {UserRole} from "../../shared/user-model";
 
 @Component({
   selector: 'app-nav-menu',
@@ -22,6 +23,10 @@ export class NavMenuComponent {
   private capitalizeFirstLetter(value: string){
     return value.charAt(0).toUpperCase() + value.slice(1);
 
+  }
+
+  private isUserAdmin(){
+    return this.loginService.currentUserRole() == UserRole.Administrator;
   }
 
 }

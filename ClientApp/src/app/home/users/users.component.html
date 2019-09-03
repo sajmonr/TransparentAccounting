@@ -1,9 +1,9 @@
 <!-- Table template from: https://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=table-with-add-and-delete-row-feature -->
 <div class="container">
   <div class="container">
-      <div class="row">
-        <div class="col-sm-10"><h2>Users</h2></div>
-        <div class="col-sm-2 text-right">
+      <div class="row justify-content-between">
+        <div class="col-md-2"><h2>Users</h2></div>
+        <div class="col-md-3 text-right">
           <button type="button" class="btn btn-primary" (click)="onOpenEditForm(null)">Add New</button>
         </div>
       </div>
@@ -23,6 +23,7 @@
         <td>{{getRoleName(user.role)}}</td>
         <td>
           <button class="btn btn-info btn-sm m-1" (click)="onOpenEditForm(user)">Edit</button>
+          <button class="btn btn-sm m-1" (click)="onUserDisableToggle(user.id, user.isActive)" [ngClass]="{'btn-danger': user.isActive, 'btn-success': !user.isActive}">{{user.isActive ? 'Disable' : 'Enable'}}</button>
           <button class="btn btn-danger btn-sm m-1" (click)="onUserDelete(user.id)">Delete</button>
         </td>
       </tr>
@@ -49,15 +50,23 @@
               <span class="help-block text-danger" *ngIf="editForm.get('fullName').touched && editForm.get('fullName').invalid">The full name field is required.</span>
             </div>
             <div class="form-group">
+              <label>Password</label>
+              <input type="text" class="form-control" formControlName="password"/>
+              <span class="help-block text-danger" *ngIf="editForm.get('password').touched && editForm.get('password').invalid">
+                <span *ngIf="editForm.get('password').errors['passwordComplexity']" class="help-block d-block">The password needs to have lowercase and uppercase letters and at least one number.</span>
+                <span *ngIf="editForm.get('password').errors['passwordLength']" class="help-block d-block">The password must be at least 6 characters long.</span>
+              </span>
+            </div>
+            <div class="form-group">
               <label>Role</label>
               <select class="form-control" name="role" formControlName="role">
                 <option value="0">Administrator</option>
                 <option value="1">Manager</option>
-                <option value="2">User</option>
+                <option value="2">Accountant</option>
               </select>
             </div>
             <div class="form-group text-right">
-              <button class="btn btn-primary">Save</button>
+              <button class="btn btn-primary" [disabled]="editForm.invalid">Save</button>
               <button class="btn btn-danger ml-2" type="button" (click)="onFormClose()">Cancel</button>
             </div>
           </form>

@@ -1,4 +1,4 @@
-import {User} from "./shared/user-model";
+import {User, UserRole} from "../shared/user-model";
 import {HttpClient} from '@angular/common/http'
 import {Inject, Injectable} from "@angular/core";
 import {CookieService} from "ngx-cookie-service";
@@ -42,8 +42,12 @@ export class LoginService{
     this.router.navigate(['/login'])
   }
 
-  public getCurrentUser() : User{
+  public getCurrentUser(): User{
     return this.currentUser;
+  }
+
+  public currentUserRole(): UserRole{
+    return this.currentUser ? this.currentUser.role : null;
   }
 
   public async isLoggedIn(): Promise<boolean>{
@@ -77,7 +81,7 @@ export class LoginService{
     this.cookie.delete(this.userIdCookieName);
   }
   private setUserCookie(id: number){
-    this.cookie.set(this.userIdCookieName, id.toString());
+    this.cookie.set(this.userIdCookieName, id.toString(), undefined, '/');
   }
   private getUserCookie(): number{
     const value = this.cookie.get(this.userIdCookieName);

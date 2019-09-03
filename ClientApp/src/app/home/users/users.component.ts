@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {User, UserRole} from "../../shared/user-model";
 import {HttpClient} from "@angular/common/http";
-import {ApiMethod, ApiService} from "../../api.service";
+import {ApiMethod, ApiService} from "../../services/api.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -46,14 +46,19 @@ export class UsersComponent implements OnInit{
     })
   }
 
+  private onUserDisableToggle(userId: number, isActive: boolean){
+    const method = isActive ? ApiMethod.DisableUserById : ApiMethod.EnableUserById;
+    this.httpClient.get(this.apiService.getUrl(method) + '?userId=' + userId).subscribe(() => this.loadUsers());
+  }
+
   private getRoleName(role: UserRole): string{
     switch(role){
       case UserRole.Administrator:
         return 'Administrator';
       case UserRole.Manager:
         return 'Manager';
-      case UserRole.User:
-        return 'User';
+      case UserRole.Accountant:
+        return 'Accountant';
     }
   }
   private populateForm(user: User){
@@ -76,7 +81,33 @@ export class UsersComponent implements OnInit{
     this.editForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       fullName: new FormControl(null, Validators.required),
-      role: new FormControl(2)
+      role: new FormControl(2),
+      password: new FormControl(null, [this.passwordComplexity, this.passwordLength])
     });
   }
+
+  //Validators
+  private passwordComplexity(control: FormControl): {[s: string]: boolean}{
+    //First check the length - if 0 then it is valid
+    if(control.value === null || control.value.length === 0)
+      return null;
+
+    const hasUpperCase = /[A-Z]/.test(control.value);
+    const hasLowerCase = /[a-z]/.test(control.value);
+    const hasNumbers = /\d/.test(control.value);
+
+    if (!(hasUpperCase && hasLowerCase && hasNumbers)){
+      return {'passwordComplexity': true};
+    }
+    return null;
+  }
+
+  private passwordLength(control: FormControl): {[s: string]: boolean} {
+    //Allow empty password to not change the password otherwise require minimum of 6 characters
+    if(control.value !== null && control.value.length > 0 && control.value.length < 6)
+      return {'passwordLength': true};
+
+    return null;
+  }
+
 }

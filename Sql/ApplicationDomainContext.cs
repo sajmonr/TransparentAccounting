@@ -81,6 +81,26 @@ namespace TransparentAccounting.Sql
                 command.ExecuteNonQuery();
             }
         }
+
+        public void Update<T>(T value, string field)
+        {
+            string tableName = GetTableName<T>();
+            var primaryKeyProperty = typeof(T).GetProperties()
+                .First(p => Attribute.IsDefined(p, typeof(PrimaryKeyAttribute)));
+            var newValueProperty = typeof(T).GetProperties()
+                .First(p => p.Name.Equals(field, StringComparison.OrdinalIgnoreCase));
+            var command = new MySqlCommand($"update {tableName} set {ToCamelCase(field)} = @newValue where {ToCamelCase(primaryKeyProperty.Name)} = @primaryKeyValue");
+
+            command.Parameters.AddWithValue("@newValue", newValueProperty.GetValue(value));
+            command.Parameters.AddWithValue("@primaryKeyValue", primaryKeyProperty.GetValue(value));
+
+            using (var connection = GetConnection())
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
         
         private string ToCamelCase(string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
 
