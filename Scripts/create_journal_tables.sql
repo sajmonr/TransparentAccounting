@@ -1,7 +1,7 @@
 ALTER TABLE `applicationdomain`.`users` 
 ADD COLUMN `isDeleted` INT NOT NULL DEFAULT 0 AFTER `fullName`;
 
-CREATE TABLE `applicationdomain`.`eventlog` (
+CREATE TABLE `applicationdomain`.`events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `timestamp` datetime NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `applicationdomain`.`eventlog` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `applicationdomain`.`journal` (
+CREATE TABLE `applicationdomain`.`journalentries` (
   `id` INT NOT NULL,
   `createdBy` INT NOT NULL,
   `createDate` DATETIME NOT NULL,
