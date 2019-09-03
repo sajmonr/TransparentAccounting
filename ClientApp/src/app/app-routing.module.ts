@@ -9,6 +9,7 @@ import {HomeComponent} from "./home/home.component";
 import {AccountsComponent} from "./home/accounts/accounts.component";
 import {PasswordResetComponent} from "./password-reset/password-reset.component";
 import {AdminAuthGuard} from "./admin-auth-guard.service";
+import {EventsComponent} from "./home/events/events.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'users', component: UsersComponent, canActivate: [AdminAuthGuard]},
-      {path: 'accounts', component: AccountsComponent}
+      {path: 'accounts', component: AccountsComponent},
+      {path: 'events', component: EventsComponent, canActivate: [AdminAuthGuard]}
     ]},
   {path: 'login', component: LoginComponent},
   {path: 'passwordReset', component: PasswordResetComponent}

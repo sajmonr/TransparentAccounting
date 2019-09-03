@@ -39,6 +39,12 @@ export class ApiService{
       case ApiMethod.GetAccounts:
         url += 'Accounts/GetAccounts';
         break;
+      case ApiMethod.GetAllEvents:
+        url += 'Events/GetAll';
+        break;
+      case ApiMethod.CreateEvent:
+        url += 'Events/Create';
+        break;
     }
 
     return url;
@@ -56,5 +62,7 @@ export enum ApiMethod {
   InsertUser,
   GetCategories,
   GetSubcategories,
-  GetAccounts
+  GetAccounts,
+  GetAllEvents,
+  CreateEvent
 }

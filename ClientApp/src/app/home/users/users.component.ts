@@ -3,6 +3,7 @@ import {User, UserRole} from "../../shared/user-model";
 import {HttpClient} from "@angular/common/http";
 import {ApiMethod, ApiService} from "../../services/api.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {LoggingService} from "../../services/logging.service";
 
 @Component({
   selector: 'app-users',
@@ -14,7 +15,7 @@ export class UsersComponent implements OnInit{
   private userToEdit: User;
   private editForm: FormGroup;
 
-  constructor(private httpClient: HttpClient, private apiService: ApiService){}
+  constructor(private httpClient: HttpClient, private apiService: ApiService, private loggingService: LoggingService){}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -33,9 +34,11 @@ export class UsersComponent implements OnInit{
     this.userToEdit.username = this.editForm.value.username;
     this.userToEdit.fullName = this.editForm.value.fullName;
     this.userToEdit.role = this.editForm.value.role;
+    this.userToEdit.password = this.editForm.value.password;
 
     this.httpClient.post<User>(this.apiService.getUrl(ApiMethod.InsertUser), this.userToEdit).subscribe(() => {
       this.loadUsers();
+      this.loggingService.logEvent('User with name "' + this.userToEdit.username + '" was added or modified.');
       this.onFormClose();
     });
   }
