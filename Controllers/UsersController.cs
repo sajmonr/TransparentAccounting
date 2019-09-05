@@ -1,7 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TransparentAccounting.Sql.Entities;
+using TransparentAccounting.Utilities.Cryptography;
 
 namespace TransparentAccounting.Controllers
 {
@@ -66,8 +66,10 @@ namespace TransparentAccounting.Controllers
 
             //Only update the password if it was received
             if (!string.IsNullOrWhiteSpace(user.Password))
-                sqlUser.Password = user.Password;
-            
+            {
+                sqlUser.Password = Hash.Sha256(user.Password);
+            }
+
             if(sqlUser.Id > 0)
                 GetDbContext().Update(sqlUser);
             else

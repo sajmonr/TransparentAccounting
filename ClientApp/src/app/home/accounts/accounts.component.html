@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-10"><h2>Accounts</h2></div>
       <div class="col-sm-2 text-right">
-        <button type="button" class="btn btn-primary">Add New</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAccountModal" (click)="modalTitle = 'Add Account'">Add New</button>
       </div>
     </div>
     <table class="table table-bordered">
@@ -22,10 +22,29 @@
       <tbody>
         <tr *ngFor="let category of categories">
           <td colspan="7" class="p-0">
-            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)"></app-accounts-category>
+            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)"></app-accounts-category>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+<div class="modal fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
   </div>
 </div>

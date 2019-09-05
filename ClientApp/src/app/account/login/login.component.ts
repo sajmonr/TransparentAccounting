@@ -1,6 +1,6 @@
 import {Component, NgModule, ViewChild} from "@angular/core";
-import {LoginService} from "../services/login.service";
-import {User} from "../shared/user-model";
+import {LoginService} from "../../services/login.service";
+import {User} from "../../shared/user-model";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 

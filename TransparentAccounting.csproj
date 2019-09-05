@@ -21,6 +21,12 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
+    <Content Include="ClientApp\src\app\account\account.component.css" />
+    <Content Include="ClientApp\src\app\account\account.component.html" />
+    <Content Include="ClientApp\src\app\account\login\login.component.css" />
+    <Content Include="ClientApp\src\app\account\login\login.component.html" />
+    <Content Include="ClientApp\src\app\account\register\register.component.css" />
+    <Content Include="ClientApp\src\app\account\register\register.component.html" />
     <Content Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.css" />
     <Content Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.html" />
     <Content Include="ClientApp\src\app\home\accounts\accounts.component.css" />
@@ -32,8 +38,6 @@
     <Content Include="ClientApp\src\app\home\home.component.html" />
     <Content Include="ClientApp\src\app\home\users\users.component.css" />
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
-    <Content Include="ClientApp\src\app\login\login.component.css" />
-    <Content Include="ClientApp\src\app\login\login.component.html" />
     <Content Include="ClientApp\src\app\password-reset\password-reset.component.html" />
     <Content Include="ClientApp\src\assets\images\user.png" />
     <Content Include="ClientApp\src\assets\scripts\create.sql" />
@@ -44,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\account\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\account\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\account\register\register.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\admin-auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts.component.ts" />
@@ -53,7 +60,6 @@
     <TypeScriptCompile Include="ClientApp\src\app\home\events\events.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\password-reset\password-reset.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\logging.service.ts" />
@@ -63,6 +69,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\event.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\subcategory.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\user-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\validators\password.validator.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

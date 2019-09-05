@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './home/nav-menu/nav-menu.component';
-import {LoginComponent} from "./login/login.component";
+import {LoginComponent} from "./account/login/login.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {LoginService} from "./services/login.service";
 import {AuthGuard} from "./auth-guard.service";
@@ -20,12 +20,16 @@ import {PasswordResetComponent} from "./password-reset/password-reset.component"
 import {AdminAuthGuard} from "./admin-auth-guard.service";
 import {EventsComponent} from "./home/events/events.component";
 import {LoggingService} from "./services/logging.service";
+import {AccountComponent} from "./account/account.component";
+import {RegisterComponent} from "./account/register/register.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     LoginComponent,
+    AccountComponent,
+    RegisterComponent,
     HomeComponent,
     DashboardComponent,
     UsersComponent,

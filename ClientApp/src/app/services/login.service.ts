@@ -39,7 +39,7 @@ export class LoginService{
   public logOut(){
     this.currentUser = null;
     this.deleteUserCookie();
-    this.router.navigate(['/login'])
+    this.router.navigate(['/account'])
   }
 
   public getCurrentUser(): User{

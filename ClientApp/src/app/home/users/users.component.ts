@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiMethod, ApiService} from "../../services/api.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoggingService} from "../../services/logging.service";
+import {PasswordValidator} from "../../shared/validators/password.validator";
 
 @Component({
   selector: 'app-users',
@@ -38,7 +39,6 @@ export class UsersComponent implements OnInit{
 
     this.httpClient.post<User>(this.apiService.getUrl(ApiMethod.InsertUser), this.userToEdit).subscribe(() => {
       this.loadUsers();
-      this.loggingService.logEvent('User with name "' + this.userToEdit.username + '" was added or modified.');
       this.onFormClose();
     });
   }
@@ -85,32 +85,7 @@ export class UsersComponent implements OnInit{
       username: new FormControl(null, Validators.required),
       fullName: new FormControl(null, Validators.required),
       role: new FormControl(2),
-      password: new FormControl(null, [this.passwordComplexity, this.passwordLength])
+      password: new FormControl(null, [PasswordValidator.Length, PasswordValidator.Complexity])
     });
   }
-
-  //Validators
-  private passwordComplexity(control: FormControl): {[s: string]: boolean}{
-    //First check the length - if 0 then it is valid
-    if(control.value === null || control.value.length === 0)
-      return null;
-
-    const hasUpperCase = /[A-Z]/.test(control.value);
-    const hasLowerCase = /[a-z]/.test(control.value);
-    const hasNumbers = /\d/.test(control.value);
-
-    if (!(hasUpperCase && hasLowerCase && hasNumbers)){
-      return {'passwordComplexity': true};
-    }
-    return null;
-  }
-
-  private passwordLength(control: FormControl): {[s: string]: boolean} {
-    //Allow empty password to not change the password otherwise require minimum of 6 characters
-    if(control.value !== null && control.value.length > 0 && control.value.length < 6)
-      return {'passwordLength': true};
-
-    return null;
-  }
-
 }

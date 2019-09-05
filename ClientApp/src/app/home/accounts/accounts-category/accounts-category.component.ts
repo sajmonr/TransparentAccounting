@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Account} from "../../../shared/account.model";
 
 @Component({
@@ -9,4 +9,10 @@ import {Account} from "../../../shared/account.model";
 export class AccountsCategoryComponent{
   @Input() sectionTitle: string;
   @Input() accounts:Account[];
+  @Output() accountSelected = new EventEmitter<Account>();
+
+  onAccountEdit(account: Account){
+    this.accountSelected.emit(account);
+  }
+
 }

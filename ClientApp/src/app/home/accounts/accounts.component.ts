@@ -13,11 +13,16 @@ import {Account} from "../../shared/account.model";
 export class AccountsComponent implements OnInit{
   private accounts: Account[] = [];
   private categories: Category[];
+  private modalTitle = 'Add Account';
 
   constructor(private http: HttpClient, private apiService: ApiService){}
 
   ngOnInit(): void {
     this.http.get<Account[]>(this.apiService.getUrl(ApiMethod.GetAccounts)).subscribe(accounts => this.afterAccountsFetch(accounts));
+  }
+
+  private onAccountSelected(account){
+    console.log(account);
   }
 
   private getDistinctCategories(accounts: Account[]): Category[]{
