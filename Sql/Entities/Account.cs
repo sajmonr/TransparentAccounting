@@ -16,5 +16,21 @@ namespace TransparentAccounting.Sql.Entities
         public int Order { get; set; }
         public int StatementId { get; set; }
         public int Active { get; set; }
+
+        public static Account ToDbEntity(Models.Account account)
+        {
+            Account sqlAccount = new Account();
+            sqlAccount.Id = account.Id;
+            sqlAccount.Active = account.Active ? 1 : 0;
+            sqlAccount.BeginningBalance = account.BeginningBalance;
+            sqlAccount.Balance = account.Balance;
+            sqlAccount.CategoryId = account.Category.Id;
+            sqlAccount.SubcategoryId = account.Subcategory.Id;
+            sqlAccount.Name = account.Name;
+            sqlAccount.Order = account.Order;
+            sqlAccount.NormalSide = (int) account.NormalSide;
+            sqlAccount.StatementId = 0;
+            return sqlAccount;
+        }
     }
 }

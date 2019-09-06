@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using MySql.Data.MySqlClient;
 using TransparentAccounting.Sql.Attributes;
 
@@ -12,6 +9,8 @@ namespace TransparentAccounting.Sql
     public class ApplicationDomainContext
     {
         private readonly string _connectionString;
+        private static string INSERT_STRING_FORMATTING = "`{0}`,";
+        private static string UPDATE_STRING_FORMATTING = "`{0}`=@{1},";
 
         public ApplicationDomainContext(string connectionString)
         {
@@ -51,7 +50,7 @@ namespace TransparentAccounting.Sql
 
             using (var connection = GetConnection())
             {
-                var command = new MySqlCommand($"delete from {tableName} where {conditionField} = {conditionValue}", connection);
+                var command = new MySqlCommand($"delete from {tableName} where {ToCamelCase(conditionField)} = {conditionValue}", connection);
                 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -115,8 +114,7 @@ namespace TransparentAccounting.Sql
 
             foreach(var property in properties)
             {
-                fieldNames += $"{ToCamelCase(property.Name)},";
-                fieldValues += $"@{property.Name},";
+                fieldNames += String.Format(INSERT_STRING_FORMATTING, ToCamelCase(property.Name));
 
                 command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(value));
             }
@@ -138,7 +136,7 @@ namespace TransparentAccounting.Sql
 
             foreach(var property in properties)
             {
-                fieldUpdates += $"{ToCamelCase(property.Name)}=@{property.Name},";
+                fieldUpdates += String.Format(UPDATE_STRING_FORMATTING, ToCamelCase(property.Name), property.Name);
                 command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(value));
             }
 

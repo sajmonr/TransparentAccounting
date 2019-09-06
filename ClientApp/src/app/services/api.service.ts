@@ -39,6 +39,24 @@ export class ApiService{
       case ApiMethod.GetAccounts:
         url += 'Accounts/GetAccounts';
         break;
+      case ApiMethod.GetAccountById:
+        url += 'Accounts/GetAccountById';
+        break;
+      case ApiMethod.CreateAccount:
+        url += 'Accounts/CreateAccount';
+        break;
+      case ApiMethod.UpdateAccount:
+        url += 'Accounts/UpdateAccount';
+        break;
+      case ApiMethod.UpdateAccounts:
+        url += 'Accounts/UpdateAccounts';
+        break;
+      case ApiMethod.RemoveAccountById:
+        url += 'Accounts/RemoveAccountById';
+        break;
+      case ApiMethod.RemoveAccountsByIds:
+        url += 'Accounts/RemoveAccountsByIds';
+        break;
       case ApiMethod.GetAllEvents:
         url += 'Events/GetAll';
         break;
@@ -63,6 +81,12 @@ export enum ApiMethod {
   GetCategories,
   GetSubcategories,
   GetAccounts,
+  GetAccountById,
+  CreateAccount,
+  UpdateAccount,
+  UpdateAccounts,
+  RemoveAccountById,
+  RemoveAccountsByIds,
   GetAllEvents,
-  CreateEvent
+  CreateEvent,
 }
