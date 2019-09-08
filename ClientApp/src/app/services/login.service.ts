@@ -4,6 +4,8 @@ import {Inject, Injectable} from "@angular/core";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {ApiMethod, ApiService} from "./api.service";
+import {Login, LoginResult} from "../shared/login.model";
+import {MessageService} from "./message.service";
 
 @Injectable()
 export class LoginService{
@@ -14,7 +16,8 @@ export class LoginService{
               @Inject('BASE_URL') private baseUrl: string,
               private cookie: CookieService,
               private router: Router,
-              private apiService: ApiService){
+              private apiService: ApiService,
+              private messageService: MessageService){
 
   }
 
@@ -26,10 +29,17 @@ export class LoginService{
 
     const s = this.httpClient.post(this.apiService.getUrl(ApiMethod.LogIn), formData);
 
-    s.subscribe((user: User) => {
-      if(user){
-        this.currentUser = user;
-        this.setUserCookie(user.id);
+    s.subscribe((login: Login) => {
+      if(login.result == LoginResult.Success){
+        this.currentUser = login.user;
+        this.setUserCookie(login.user.id);
+        console.log(login.user.passwordExpiration);
+        console.log(new Date());
+
+        let d = new Date();
+
+        console.log(login.user.passwordExpiration > d);
+
       }
     });
 

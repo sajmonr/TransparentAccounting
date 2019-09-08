@@ -34,7 +34,12 @@ namespace TransparentAccounting.Sql
                     {
                         var newT = new T();
                         foreach (var property in properties)
-                            property.SetValue(newT, reader[ToCamelCase(property.Name)]);
+                        {
+                            int index = reader.GetOrdinal(ToCamelCase(property.Name));
+                            
+                            property.SetValue(newT, reader.IsDBNull(index) ? null : reader[index]);
+                        }
+                            
                         
                         output.Add(newT);
                     }
@@ -114,8 +119,9 @@ namespace TransparentAccounting.Sql
 
             foreach(var property in properties)
             {
-                fieldNames += String.Format(INSERT_STRING_FORMATTING, ToCamelCase(property.Name));
-
+                fieldNames += string.Format(INSERT_STRING_FORMATTING, ToCamelCase(property.Name));
+                fieldValues += $"@{property.Name},";
+                
                 command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(value));
             }
 

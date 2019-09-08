@@ -24,6 +24,9 @@ export class ApiService{
       case ApiMethod.DisableUserById:
         url += 'Users/DisableUserById';
         break;
+      case ApiMethod.DisableUser:
+        url += 'Users/Disable';
+        break;
       case ApiMethod.EnableUserById:
         url += 'Users/EnableUserById';
         break;
@@ -63,6 +66,15 @@ export class ApiService{
       case ApiMethod.CreateEvent:
         url += 'Events/Create';
         break;
+      case ApiMethod.SendEmail:
+        url += 'Email/Send';
+        break;
+      case ApiMethod.PasswordHistory:
+        url += 'Users/PasswordHistory';
+        break;
+      case ApiMethod.UserSelfRegister:
+        url += 'Users/SelfRegister';
+        break;
     }
 
     return url;
@@ -76,6 +88,7 @@ export enum ApiMethod {
   GetAllUsers,
   DeleteUserById,
   DisableUserById,
+  DisableUser,
   EnableUserById,
   InsertUser,
   GetCategories,
@@ -89,4 +102,7 @@ export enum ApiMethod {
   RemoveAccountsByIds,
   GetAllEvents,
   CreateEvent,
+  SendEmail,
+  PasswordHistory,
+  UserSelfRegister
 }

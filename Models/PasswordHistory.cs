@@ -1,3 +1,4 @@
+using System;
 using SqlEntities = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Models
@@ -7,16 +8,24 @@ namespace TransparentAccounting.Models
         public int Id { get; set; }
         public User User { get; set; }
         public string Password { get; set; }
+        public DateTime Added { get; set; }
 
         public static PasswordHistory FromDbEntity(SqlEntities.PasswordHistory passwordHistory, SqlEntities.User user)
+        {
+            if (passwordHistory == null)
+                return null;
+
+            return FromDbEntity(passwordHistory, Models.User.FromDbEntity(user));
+        }
+        public static PasswordHistory FromDbEntity(SqlEntities.PasswordHistory passwordHistory, User user)
         {
             return new PasswordHistory
             {
                 Id = passwordHistory.Id,
-                User = User.FromDbEntity(user),
-                Password = passwordHistory.Password
+                User = user,
+                Password = passwordHistory.Password,
+                Added = passwordHistory.Added
             };
         }
-        
     }
 }

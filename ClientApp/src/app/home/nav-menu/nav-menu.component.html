@@ -1,6 +1,9 @@
 <header>
   <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary mb-3'>
     <div class="container">
+      <a [routerLink]="['/app']">
+        <img class="logo mr-2" src="/assets/images/logo.png" alt="Logo"/>
+      </a>
       <a class="navbar-brand" [routerLink]='["/"]'>Transparent Accounting</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
         [attr.aria-expanded]="isExpanded" (click)="toggle()">

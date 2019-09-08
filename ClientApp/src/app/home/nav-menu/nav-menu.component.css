@@ -19,3 +19,6 @@ html {
 .nav-item.link-active{
   text-decoration: underline;
 }
+.logo{
+  max-height: 50px;
+}

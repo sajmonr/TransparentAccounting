@@ -5,12 +5,24 @@ export class User{
   isActive: boolean;
   fullName: string;
   password: string;
+  email: string;
+  suspendFrom: Date;
+  suspendTo: Date;
+  passwordExpiration: Date;
+  address: string;
 
-  public constructor(){}
+  public constructor(){
+    this.isActive = true;
+  }
 }
 
 export enum UserRole{
   Administrator,
   Manager,
   Accountant
+}
+export enum UserUpdateResult{
+  Ok,
+  PasswordUsedInPast,
+  UsernameTaken
 }

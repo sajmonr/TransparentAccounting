@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +40,12 @@
     <Content Include="ClientApp\src\app\home\users\users.component.css" />
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
     <Content Include="ClientApp\src\app\password-reset\password-reset.component.html" />
+    <Content Include="ClientApp\src\app\shared\components\message\message.component.css" />
+    <Content Include="ClientApp\src\app\shared\components\message\message.component.html" />
+    <Content Include="ClientApp\src\assets\images\error.png" />
+    <Content Include="ClientApp\src\assets\images\info.png" />
+    <Content Include="ClientApp\src\assets\images\logo.png" />
+    <Content Include="ClientApp\src\assets\images\success.png" />
     <Content Include="ClientApp\src\assets\images\user.png" />
     <Content Include="ClientApp\src\assets\scripts\create.sql" />
     <None Remove="$(SpaRoot)**" />
@@ -64,9 +71,15 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\logging.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\message.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\account.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\category.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\components\message\message.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\email.message.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\event.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\login.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\message.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\password.history.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\subcategory.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\user-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\validators\password.validator.ts" />

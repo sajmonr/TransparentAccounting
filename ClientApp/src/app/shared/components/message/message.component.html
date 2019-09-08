@@ -1,0 +1,28 @@
+<div #messageModal class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col">
+              <img *ngIf="currentMessage.type == messageType.Info" alt="Info image" src="/assets/images/info.png"/>
+              <img *ngIf="currentMessage.type == messageType.Success" alt="Success image" src="/assets/images/success.png"/>
+              <img *ngIf="currentMessage.type == messageType.Error" alt="Error image" src="/assets/images/error.png"/>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col">
+              <h5 class="modal-title">{{currentMessage.title}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        {{currentMessage.message}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

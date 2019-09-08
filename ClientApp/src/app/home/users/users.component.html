@@ -2,16 +2,30 @@
 <div class="container">
   <div class="container">
       <div class="row justify-content-between">
-        <div class="col-md-2"><h2>Users</h2></div>
-        <div class="col-md-3 text-right">
-          <button type="button" class="btn btn-primary" (click)="onOpenEditForm(null)">Add New</button>
+        <div class="col-2"><h2>Users</h2></div>
+        <div class="col-4">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <select class="form-control" (change)="onViewChange($event.target.value)">
+                  <option value="0">All</option>
+                  <option value="1">Expired</option>
+                </select>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-primary" (click)="onEditUser(null)" data-toggle="modal" data-target="#edit-user-modal">Add New</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered users-table">
       <thead>
       <tr>
         <th>Name</th>
         <th>Username</th>
+        <th>E-mail</th>
+        <th>Address</th>
         <th>Role</th>
         <th>Actions</th>
       </tr>
@@ -20,11 +34,12 @@
       <tr *ngFor="let user of users">
         <td>{{user.fullName}}</td>
         <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.address}}</td>
         <td>{{getRoleName(user.role)}}</td>
         <td>
-          <button class="btn btn-info btn-sm m-1" (click)="onOpenEditForm(user)">Edit</button>
-          <button class="btn btn-sm m-1" (click)="onUserDisableToggle(user.id, user.isActive)" [ngClass]="{'btn-danger': user.isActive, 'btn-success': !user.isActive}">{{user.isActive ? 'Disable' : 'Enable'}}</button>
-          <button class="btn btn-danger btn-sm m-1" (click)="onUserDelete(user.id)">Delete</button>
+          <button class="btn btn-info btn-sm m-1" (click)="onEditUser(user)" data-toggle="modal" data-target="#edit-user-modal">Edit</button>
+          <button class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#disable-user-modal" (click)="onDisableUser(user)">Disable</button>
         </td>
       </tr>
       </tbody>
@@ -32,46 +47,124 @@
   </div>
 </div>
 
-<div class="edit-box" [ngStyle]="{'display': userToEdit != null ? 'block' : 'none'}">
-  <div class="container h-100">
-    <div class="row align-items-center h-100">
-      <div class="col-6 mx-auto">
-        <div class="jumbotron">
-          <form (submit)="onEditSubmit()" [formGroup]="editForm">
-            <span class="h3">Edit user</span>
-            <div class="form-group">
-              <label>Username</label>
-              <input type="text" class="form-control" formControlName="username"/>
-              <span class="help-block text-danger" *ngIf="editForm.get('username').touched && editForm.get('username').invalid">The username field is required.</span>
-            </div>
-            <div class="form-group">
-              <label>Full Name</label>
-              <input type="text" class="form-control" formControlName="fullName"/>
-              <span class="help-block text-danger" *ngIf="editForm.get('fullName').touched && editForm.get('fullName').invalid">The full name field is required.</span>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" class="form-control" formControlName="password"/>
-              <span class="help-block text-danger" *ngIf="editForm.get('password').touched && editForm.get('password').invalid">
-                <span *ngIf="editForm.get('password').errors['passwordComplexity']" class="help-block d-block">The password needs to start with a letter and contain a number and a special character.</span>
-                <span *ngIf="editForm.get('password').errors['passwordLength']" class="help-block d-block">The password must be at least 8 characters long.</span>
-              </span>
-            </div>
-            <div class="form-group">
-              <label>Role</label>
-              <select class="form-control" name="role" formControlName="role">
-                <option value="0">Administrator</option>
-                <option value="1">Manager</option>
-                <option value="2">Accountant</option>
-              </select>
-            </div>
-            <div class="form-group text-right">
-              <button class="btn btn-primary" [disabled]="editForm.invalid">Save</button>
-              <button class="btn btn-danger ml-2" type="button" (click)="onFormClose()">Cancel</button>
-            </div>
-          </form>
+<div class="modal fade" id="disable-user-modal" tabindex="-1" role="dialog" aria-label="disableUserModal" aria-hidden="true" #disableUserModal>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form (ngSubmit)="onDisableSubmit()" [formGroup]="disableForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Disable or Delete User</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">&times;</button>
         </div>
-      </div>
+        <div class="modal-body">
+          <div class="container" [ngStyle]="{minHeight: '21vh'}">
+            <div class="form-row">
+              <div class="col">
+                <span class="h5">Disable User</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="disableIndefinitely" formControlName="disabledIndefinitely">
+                  <label for="disableIndefinitely">Disable user indefinitely</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row" *ngIf="!disableForm.get('disabledIndefinitely').value">
+              <div class="col-6">
+                <label>
+                  From
+                  <input type="date" class="form-control" formControlName="disabledFrom"/>
+                </label>
+              </div>
+              <div class="col-6">
+                <label>
+                  To
+                  <input type="date" class="form-control"  formControlName="disabledTo"/>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <button class="btn btn-danger" (click)="onDeleteUser()">Delete User</button>
+              </div>
+              <div class="col-6 text-right">
+                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit-user-modal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true" #editUserModal>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form (submit)="onEditSubmit()" [formGroup]="editForm">
+          <div class="modal-header">
+            <h5 class="modal-title">{{selectedUser.id > 0 ? 'Edit User' : 'New User'}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label>Username
+                  <input type="text" class="form-control" formControlName="username"/>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('username').touched && editForm.get('username').invalid">The username field is required.</span>
+              </div>
+              <div class="form-group">
+                <label>Full Name
+                  <input type="text" class="form-control" formControlName="fullName"/>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('fullName').touched && editForm.get('fullName').invalid">The full name field is required.</span>
+              </div>
+              <div class="form-group">
+                <label>
+                  E-mail
+                  <input type="email" class="form-control" formControlName="email"/>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('email').touched && editForm.get('email').invalid">Email must be a valid email address.</span>
+              </div>
+            <div class="form-group">
+              <label>
+                Address
+                <input type="text" class="form-control" formControlName="address"/>
+                <span class="help-block text-danger" *ngIf="editForm.get('address').touched && editForm.get('address').invalid">The address field is required.</span>
+              </label>
+            </div>
+              <div class="form-group">
+                <label>Password
+                  <input type="password" class="form-control" formControlName="password"/>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('password').touched && editForm.get('password').invalid">
+                    <span *ngIf="editForm.get('password').errors['passwordComplexity']" class="help-block d-block">The password needs to start with a letter and contain a number and a special character.</span>
+                    <span *ngIf="editForm.get('password').errors['passwordLength']" class="help-block d-block">The password must be at least 8 characters long.</span>
+                  </span>
+              </div>
+              <div class="form-group">
+                <label>Role
+                  <select class="form-control" name="role" formControlName="role">
+                    <option value="0">Administrator</option>
+                    <option value="1">Manager</option>
+                    <option value="2">Accountant</option>
+                  </select>
+                </label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary" [disabled]="editForm.invalid">Save changes</button>
+          </div>
+        </form>
+      </div>
   </div>
 </div>

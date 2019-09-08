@@ -1,8 +1,8 @@
-import {Component, NgModule, ViewChild} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {LoginService} from "../../services/login.service";
-import {User} from "../../shared/user-model";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
+import {Login, LoginResult} from "../../shared/login.model";
 
 @Component({
   selector: 'app-root',
@@ -11,16 +11,32 @@ import {NgForm} from "@angular/forms";
 })
 export class LoginComponent{
   @ViewChild('loginForm') loginForm: NgForm;
-  invalidInfo: boolean = false;
+  errorMessage: string;
 
   constructor(private loginService: LoginService, private router: Router){}
 
   onSubmit(){
-    this.loginService.logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((user: User) => {
-      if(user){
+    this.loginService.logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((login: Login) => {
+      if(login.result == LoginResult.Success){
         this.router.navigate(['/app/dashboard']);
       }else{
-        this.invalidInfo = true;
+        switch(login.result){
+          case LoginResult.InvalidPassword:
+            this.errorMessage = 'Username or password is invalid.';
+            break;
+          case LoginResult.UserSuspended:
+            this.errorMessage = 'Your account has been suspended.';
+            break;
+          case LoginResult.NotFound:
+            this.errorMessage = 'User was not found.';
+            break;
+          case LoginResult.LockedOut:
+            this.errorMessage = 'Too many failed attempts. The user was locked out.';
+            break;
+          case LoginResult.PasswordExpired:
+            this.errorMessage = 'Your password has expired. Please reset it.';
+            break;
+        }
       }
     })
   }

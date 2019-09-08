@@ -22,11 +22,14 @@ import {EventsComponent} from "./home/events/events.component";
 import {LoggingService} from "./services/logging.service";
 import {AccountComponent} from "./account/account.component";
 import {RegisterComponent} from "./account/register/register.component";
+import {MessageService} from "./services/message.service";
+import {MessageComponent} from "./shared/components/message/message.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+    MessageComponent,
     LoginComponent,
     AccountComponent,
     RegisterComponent,
@@ -45,7 +48,7 @@ import {RegisterComponent} from "./account/register/register.component";
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [LoginService, AuthGuard, AdminAuthGuard, CookieService, ApiService, LoggingService],
+  providers: [LoginService, AuthGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

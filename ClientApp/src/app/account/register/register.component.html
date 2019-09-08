@@ -6,39 +6,60 @@
   </div>
   <div class="row justify-content-center">
     <div class="col-6">
-      <form>
+      <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
         <div class="form-row">
           <div class="col">
             <label>
               First name
-              <input class="form-control" type="text"/>
+              <input class="form-control" type="text" formControlName="firstName"/>
             </label>
+            <span class="help-block text-danger" *ngIf="registerForm.get('firstName').touched && registerForm.get('firstName').invalid">First name is required.</span>
           </div>
           <div class="col">
             <label>
               Last name
-              <input class="form-control" type="text"/>
+              <input class="form-control" type="text" formControlName="lastName"/>
             </label>
+            <span class="help-block text-danger" *ngIf="registerForm.get('lastName').touched && registerForm.get('lastName').invalid">Last name is required.</span>
           </div>
         </div>
         <div class="form-row">
           <div class="col">
             <label>
               Address
-              <input class="form-control" type="text"/>
+              <input class="form-control" type="text" formControlName="address"/>
             </label>
+            <span class="help-block text-danger" *ngIf="registerForm.get('address').touched && registerForm.get('address').invalid">Address is required.</span>
           </div>
         </div>
         <div class="form-row">
           <div class="col">
             <label>
               Date of Birth
-              <input id="datepicker"/>
+              <input type="date" class="form-control" formControlName="dateOfBirth"/>
             </label>
+            <span class="help-block text-danger" *ngIf="registerForm.get('dateOfBirth').touched && registerForm.get('dateOfBirth').invalid">Date of birth is required.</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label>
+              Password
+              <input type="password" class="form-control" formControlName="password"/>
+            </label>
+              <span class="help-block text-danger" *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid">
+                <span *ngIf="registerForm.get('password').errors['passwordComplexity']" class="help-block d-block">The password needs to start with a letter and contain a number and a special character.</span>
+                <span *ngIf="registerForm.get('password').errors['passwordLength']" class="help-block d-block">The password must be at least 8 characters long.</span>
+              </span>
           </div>
         </div>
         <div class="form-row">
           <div class="col text-right">
+            <a class="mr-2" [routerLink]="['/account']">
+              <button class="btn btn-secondary">
+                Back
+              </button>
+            </a>
             <button class="btn btn-primary">
               Register
             </button>

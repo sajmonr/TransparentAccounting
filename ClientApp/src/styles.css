@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+fieldset{
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.35rem;
+}
+fieldset legend{
+  width: auto;
+  margin: 0 1rem;
+  padding: 0 0.35rem;
+  font-size: 1.25rem;
+}
+label{
+  width: 100%;
+}

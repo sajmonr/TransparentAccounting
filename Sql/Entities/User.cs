@@ -1,5 +1,5 @@
+using System;
 using TransparentAccounting.Sql.Attributes;
-using Models = TransparentAccounting.Models;
 
 namespace TransparentAccounting.Sql.Entities
 {
@@ -14,6 +14,11 @@ namespace TransparentAccounting.Sql.Entities
         public string FullName { get; set; }
         public int IsActive { get; set; }
         public int IsDeleted { get; set; }
-
+        public DateTime? SuspendFrom { get; set; }
+        public DateTime? SuspendTo { get; set; }
+        public string Email { get; set; }
+        public int PasswordTries { get; set; }
+        public DateTime PasswordExpiration { get; set; }
+        public string Address { get; set; }
     }
 }

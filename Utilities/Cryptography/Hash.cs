@@ -11,7 +11,7 @@ namespace TransparentAccounting.Utilities.Cryptography
             string hash;
             using(var sha256 = SHA256.Create())  
             {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes("hello world"));
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(value));
                 hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             }
 

@@ -1,11 +1,11 @@
-td:last-child{
-  width: 30%;
+.users-table td:last-child{
+  width: 25%;
   text-align: center;
 }
-td:first-child{
+.users-table td:first-child{
   width: 30%;
 }
-table td{
+.users-table table td{
   vertical-align: middle;
 }
 .edit-box{

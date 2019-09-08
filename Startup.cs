@@ -1,9 +1,12 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using TransparentAccounting.Sql;
 
 namespace TransparentAccounting
@@ -24,6 +27,22 @@ namespace TransparentAccounting
 
             services.Add(new ServiceDescriptor(typeof(ApplicationDomainContext), new ApplicationDomainContext(Configuration.GetConnectionString("DefaultConnection"))));
 
+            var emailConfiguration = Configuration.GetSection("Email");
+            
+            services.AddMailKit(o =>
+            {
+                o.UseMailKit(new MailKitOptions
+                {
+                    Server = emailConfiguration["Server"],
+                    Port = Convert.ToInt32(emailConfiguration["Port"]),
+                    SenderName = emailConfiguration["SenderName"],
+                    SenderEmail = emailConfiguration["SenderEmail"],
+                    Account = emailConfiguration["Account"],
+                    Password = emailConfiguration["Password"],
+                    Security = true
+                });
+            });
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

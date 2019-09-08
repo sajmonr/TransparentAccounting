@@ -1,3 +1,4 @@
+using System;
 using TransparentAccounting.Sql.Attributes;
     
 namespace TransparentAccounting.Sql.Entities
@@ -10,5 +11,6 @@ namespace TransparentAccounting.Sql.Entities
 
         public int UserId { get; set; }
         public string Password { get; set; }
+        public DateTime Added { get; set; }
     }
 }
