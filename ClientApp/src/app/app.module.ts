@@ -25,6 +25,7 @@ import {RegisterComponent} from "./account/register/register.component";
 import {MessageService} from "./services/message.service";
 import {MessageComponent} from "./shared/components/message/message.component";
 import {ResolveComponent} from "./account/resolve/resolve.component";
+import {ForgotComponent} from "./account/forgot/forgot.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {ResolveComponent} from "./account/resolve/resolve.component";
     AccountsComponent,
     AccountsCategoryComponent,
     PasswordResetComponent,
+    ForgotComponent,
     EventsComponent,
     ResolveComponent
   ],

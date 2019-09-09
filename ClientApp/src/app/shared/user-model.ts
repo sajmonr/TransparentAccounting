@@ -1,3 +1,5 @@
+import {SecurityQuestion} from "./security.question.model";
+
 export class User{
   id:number;
   username: string;
@@ -10,6 +12,7 @@ export class User{
   suspendTo: Date;
   passwordExpiration: Date;
   address: string;
+  securityQuestion: SecurityQuestion;
 
   public constructor(){
     this.isActive = true;
@@ -24,5 +27,7 @@ export enum UserRole{
 export enum UserUpdateResult{
   Ok,
   PasswordUsedInPast,
-  UsernameTaken
+  UsernameTaken,
+  UserNotFound,
+  WrongSecurityAnswer
 }

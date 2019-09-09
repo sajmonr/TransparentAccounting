@@ -5,6 +5,7 @@ using TransparentAccounting.Models;
 using TransparentAccounting.Utilities.Cryptography;
 using TransparentAccounting.Utilities;
 using User = TransparentAccounting.Sql.Entities.User;
+using Entities = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Controllers
 {
@@ -14,7 +15,7 @@ namespace TransparentAccounting.Controllers
         public Login LogIn(string username, string password)
         {
             var users = GetDbContext().Select<User>();
-
+            var securityQuestions = GetDbContext().Select<Entities.SecurityQuestion>();
             var dbUser = users.First(u => u.Username == username && u.IsDeleted == 0);
 
             if (dbUser == null)
@@ -41,7 +42,7 @@ namespace TransparentAccounting.Controllers
                 return new Login
                 {
                     Result = LoginResult.Success,
-                    User = Models.User.FromDbEntity(dbUser)
+                    User = Models.User.FromDbEntity(dbUser, securityQuestions.First(q => q.Id == dbUser.SecurityQuestion))
                 };                
             }
             
@@ -55,6 +56,13 @@ namespace TransparentAccounting.Controllers
             GetDbContext().Update(dbUser);
             return new Login {Result = dbUser.PasswordTries > Constants.MAXIMUM_PASSWORD_ATTEMPTS ? LoginResult.LockedOut : LoginResult.InvalidPassword};
         }
-            
+
+        public SecurityQuestion[] SecurityQuestions()
+        {
+            var securityQuestions = GetDbContext().Select<Entities.SecurityQuestion>();
+
+            return securityQuestions.Select(SecurityQuestion.FromDbEntity).ToArray();
+        }
+        
     }
 }

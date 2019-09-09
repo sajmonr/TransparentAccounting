@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col">
+      <h2 class="text-center">Register</h2>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <form (ngSubmit)="onPasswordSubmit()" [formGroup]="resetForm">
+        <div class="form-row">
+          <div class="col">
+            <label>
+              Username
+              <input class="form-control" type="text" formControlName="username"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="resetForm.get('username').touched && resetForm.get('username').invalid">Username is required.</span>
+          </div>
+          <div class="col">
+            <label>
+              E-mail
+              <input class="form-control" type="email" formControlName="email"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="resetForm.get('email').touched && resetForm.get('email').invalid">Email is required.</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label>
+              Answer to security question
+              <select class="form-control" formControlName="securityQuestion">
+                <option *ngFor="let question of securityQuestions" value="{{question.id}}">{{question.question}}</option>
+              </select>
+            </label>
+            <span class="help-block text-danger" *ngIf="resetForm.get('securityQuestion').touched && resetForm.get('securityQuestion').invalid">Answer to security question is required</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label>
+              Answer to security question
+              <input type="text" class="form-control" formControlName="securityAnswer"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="resetForm.get('securityAnswer').touched && resetForm.get('securityAnswer').invalid">Answer to security question is required</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label>
+              New password
+              <input type="password" class="form-control" formControlName="password"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="resetForm.get('password').touched && resetForm.get('password').invalid">
+                <span *ngIf="resetForm.get('password').errors['passwordComplexity']" class="help-block d-block">The password needs to start with a letter and contain a number and a special character.</span>
+                <span *ngIf="resetForm.get('password').errors['passwordLength']" class="help-block d-block">The password must be at least 8 characters long.</span>
+              </span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col text-right">
+            <a class="mr-2" [routerLink]="['/account']">
+              <button class="btn btn-secondary">
+                Back
+              </button>
+            </a>
+            <button class="btn btn-primary" [disabled]="resetForm.invalid">
+              Change password
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

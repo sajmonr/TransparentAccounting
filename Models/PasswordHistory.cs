@@ -10,12 +10,12 @@ namespace TransparentAccounting.Models
         public string Password { get; set; }
         public DateTime Added { get; set; }
 
-        public static PasswordHistory FromDbEntity(SqlEntities.PasswordHistory passwordHistory, SqlEntities.User user)
+        public static PasswordHistory FromDbEntity(SqlEntities.PasswordHistory passwordHistory, SqlEntities.User user, SqlEntities.SecurityQuestion securityQuestion)
         {
             if (passwordHistory == null)
                 return null;
 
-            return FromDbEntity(passwordHistory, Models.User.FromDbEntity(user));
+            return FromDbEntity(passwordHistory, User.FromDbEntity(user, securityQuestion));
         }
         public static PasswordHistory FromDbEntity(SqlEntities.PasswordHistory passwordHistory, User user)
         {

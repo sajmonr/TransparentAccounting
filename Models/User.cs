@@ -24,8 +24,9 @@ namespace TransparentAccounting.Models
         public string Email { get; set; }
         public DateTime PasswordExpiration { get; set; }
         public string Address { get; set; }
+        public SecurityQuestion SecurityQuestion { get; set; }
 
-        public static User FromDbEntity(SqlEntity.User sqlUser)
+        public static User FromDbEntity(SqlEntity.User sqlUser, SqlEntity.SecurityQuestion securityQuestion)
         {
             if (sqlUser == null) return null;
             //Do not fill the password
@@ -40,7 +41,13 @@ namespace TransparentAccounting.Models
                 SuspendFrom = sqlUser.SuspendFrom,
                 SuspendTo = sqlUser.SuspendTo,
                 Email = sqlUser.Email,
-                PasswordExpiration = sqlUser.PasswordExpiration
+                PasswordExpiration = sqlUser.PasswordExpiration,
+                SecurityQuestion = new SecurityQuestion
+                {
+                    Id = securityQuestion.Id, 
+                    Question = securityQuestion.Question,
+                    Answer = sqlUser.SecurityAnswer
+                }
             };
         }
     }

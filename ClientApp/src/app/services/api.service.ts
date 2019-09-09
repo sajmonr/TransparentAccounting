@@ -75,6 +75,12 @@ export class ApiService{
       case ApiMethod.UserSelfRegister:
         url += 'Users/SelfRegister';
         break;
+      case ApiMethod.GetSecurityQuestions:
+        url += 'Authenticate/SecurityQuestions';
+        break;
+      case ApiMethod.ForgotPassword:
+        url += 'Users/ForgotPassword';
+        break;
     }
 
     return url;
@@ -104,5 +110,7 @@ export enum ApiMethod {
   CreateEvent,
   SendEmail,
   PasswordHistory,
-  UserSelfRegister
+  UserSelfRegister,
+  GetSecurityQuestions,
+  ForgotPassword
 }

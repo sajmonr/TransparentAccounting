@@ -25,18 +25,20 @@ namespace TransparentAccounting.Controllers
         public User GetUserById(int id)
         {
             var users = GetDbContext().Select<Entities.User>();
-
             var dbUser = users.FirstOrDefault(u => u.Id == id);
+            var securityQuestion = GetDbContext().Select<Entities.SecurityQuestion>()
+                .First(q => q.Id == dbUser.SecurityQuestion);
 
-            return Models.User.FromDbEntity(dbUser);
+            return Models.User.FromDbEntity(dbUser, securityQuestion);
         }
         public User[] GetAllUsers()
         {
             var users = GetDbContext().Select<Entities.User>().Where(u => u.IsDeleted != 1).ToArray();
-            var output = new Models.User[users.Count()];
+            var securityQuestions = GetDbContext().Select<Entities.SecurityQuestion>();
+            var output = new User[users.Count()];
 
             for (int i = 0; i < output.Length; i++)
-                output[i] = Models.User.FromDbEntity(users[i]);
+                output[i] = Models.User.FromDbEntity(users[i], securityQuestions.First(q => q.Id == users[i].SecurityQuestion));
 
             return output;
         }
@@ -134,6 +136,23 @@ namespace TransparentAccounting.Controllers
         }
 
         [HttpPost]
+        public UserUpdateResult ForgotPassword([FromBody] User user)
+        {
+            var sqlUser = GetDbContext().Select<Entities.User>().FirstOrDefault(u => u.Username.Equals(user.Username) && u.Email.Equals(user.Email));
+
+            if (sqlUser == null)
+                return UserUpdateResult.UserNotFound;
+
+            if (sqlUser.SecurityQuestion != user.SecurityQuestion.Id ||
+                !sqlUser.SecurityAnswer.Equals(user.SecurityQuestion.Answer))
+                return UserUpdateResult.WrongSecurityAnswer;
+
+            user.Id = sqlUser.Id;
+            user.FullName = sqlUser.FullName;
+            
+            return InsertUser(user);
+        }
+        [HttpPost]
         public UserUpdateResult InsertUser([FromBody]User user)
         {
             bool passwordUpdated = false;
@@ -193,7 +212,10 @@ namespace TransparentAccounting.Controllers
 
         public IEnumerable<PasswordHistory> PasswordHistory(int userId)
         {
-            var user = Models.User.FromDbEntity(GetDbContext().Select<Entities.User>().FirstOrDefault(u => u.Id == userId));
+            var dbUser = GetDbContext().Select<Entities.User>().FirstOrDefault(u => u.Id == userId);
+            var securityQuestion = GetDbContext().Select<Entities.SecurityQuestion>()
+                .First(q => q.Id == dbUser.SecurityQuestion);
+            var user = Models.User.FromDbEntity(dbUser, securityQuestion);
             if(user == null)
                 return new PasswordHistory[0];
 

@@ -11,6 +11,7 @@ import {AdminAuthGuard} from "./admin-auth-guard.service";
 import {EventsComponent} from "./home/events/events.component";
 import {AccountComponent} from "./account/account.component";
 import {RegisterComponent} from "./account/register/register.component";
+import {ForgotComponent} from "./account/forgot/forgot.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'account', component: AccountComponent, children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
       {path: 'login', component: LoginComponent},
-      {path: 'register', component: RegisterComponent}
+      {path: 'register', component: RegisterComponent},
+      {path: 'forgot', component: ForgotComponent}
     ]},
   {path: 'passwordReset', component: PasswordResetComponent}
 ];

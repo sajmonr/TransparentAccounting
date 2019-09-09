@@ -20,5 +20,7 @@ namespace TransparentAccounting.Sql.Entities
         public int PasswordTries { get; set; }
         public DateTime PasswordExpiration { get; set; }
         public string Address { get; set; }
+        public int SecurityQuestion { get; set; }
+        public string SecurityAnswer { get; set; }
     }
 }
