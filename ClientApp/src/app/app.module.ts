@@ -24,6 +24,7 @@ import {AccountComponent} from "./account/account.component";
 import {RegisterComponent} from "./account/register/register.component";
 import {MessageService} from "./services/message.service";
 import {MessageComponent} from "./shared/components/message/message.component";
+import {ResolveComponent} from "./account/resolve/resolve.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MessageComponent} from "./shared/components/message/message.component";
     AccountsComponent,
     AccountsCategoryComponent,
     PasswordResetComponent,
-    EventsComponent
+    EventsComponent,
+    ResolveComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

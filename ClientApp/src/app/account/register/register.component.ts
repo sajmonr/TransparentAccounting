@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {Component} from "@angular/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "../../services/message.service";
 import {ApiMethod, ApiService} from "../../services/api.service";
 import {PasswordValidator} from "../../shared/validators/password.validator";
@@ -16,19 +16,22 @@ export class RegisterComponent {
     firstName: new FormControl(null, Validators.required),
     lastName: new FormControl(null, Validators.required),
     address: new FormControl(null, Validators.required),
+    email: new FormControl(null, [Validators.email, Validators.required]),
     dateOfBirth: new FormControl(null, Validators.required),
     password: new FormControl(null, [Validators.required, PasswordValidator.Length, PasswordValidator.Complexity])
   });
 
-  constructor(private messageService: MessageService, private apiService: ApiService,private httpClient: HttpClient){}
+  constructor(private messageService: MessageService,
+              private apiService: ApiService,
+              private httpClient: HttpClient){}
 
   private onRegister(){
     const user = new User();
-    user.username = this.registerForm.value.username;
+
     user.fullName = this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName;
-    user.role = this.registerForm.value.role;
     user.password = this.registerForm.value.password;
     user.email = this.registerForm.value.email;
+    user.address = this.registerForm.value.address;
 
     this.httpClient.post(this.apiService.getUrl(ApiMethod.UserSelfRegister), user).subscribe((result: UserUpdateResult) => {
       if(result == UserUpdateResult.UsernameTaken){
@@ -36,6 +39,7 @@ export class RegisterComponent {
         return;
       }
       this.messageService.success('User registered', 'Waiting for activation. Please check your inbox for an email once your account has been activated.');
+      this.registerForm.reset();
     });
   }
 

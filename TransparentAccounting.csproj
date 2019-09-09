@@ -28,6 +28,7 @@
     <Content Include="ClientApp\src\app\account\login\login.component.html" />
     <Content Include="ClientApp\src\app\account\register\register.component.css" />
     <Content Include="ClientApp\src\app\account\register\register.component.html" />
+    <Content Include="ClientApp\src\app\account\resolve\resolve.component.html" />
     <Content Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.css" />
     <Content Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.html" />
     <Content Include="ClientApp\src\app\home\accounts\accounts.component.css" />
@@ -58,6 +59,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\account\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\account\register\register.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\account\resolve\resolve.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\admin-auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts.component.ts" />

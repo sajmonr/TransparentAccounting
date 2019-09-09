@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using NETCore.MailKit.Core;
 using TransparentAccounting.Models;
 using TransparentAccounting.Utilities.Cryptography;
 using Entities = TransparentAccounting.Sql.Entities;
@@ -13,6 +15,13 @@ namespace TransparentAccounting.Controllers
 {
     public class UsersController : BaseController
     {
+        private IEmailService _emailService;
+        private readonly string _adminEmail;
+        public UsersController(IEmailService emailService, IConfiguration configuration)
+        {
+            _emailService = emailService;
+            _adminEmail = configuration.GetSection("Email")["SenderEmail"];
+        }
         public User GetUserById(int id)
         {
             var users = GetDbContext().Select<Entities.User>();
@@ -72,6 +81,26 @@ namespace TransparentAccounting.Controllers
             GetDbContext().Update(user, "isActive");
         }
 
+        public void ResolveSelfRegistration(int userId, bool approve)
+        {
+            var dbUser = GetDbContext().Select<Entities.User>().First(u => u.Id == userId);
+            string subject = $"Your application has been {(approve ? "approved" : "denied")}.";
+            string message;
+
+            if (approve)
+            {
+                dbUser.IsActive = 1;
+                message = "Your application has been approved. Click <a href=\"http://localhost:5001\">here</a> to log in.";
+            }
+            else
+            {
+                dbUser.IsDeleted = 1;
+                message = "Your application has been denied. Sorry :(.";
+            }
+            
+            GetDbContext().Update(dbUser);
+            _emailService.Send(dbUser.Email, subject, message, true);
+        }
         [HttpPost]
         public UserUpdateResult SelfRegister([FromBody] User user)
         {
@@ -87,10 +116,19 @@ namespace TransparentAccounting.Controllers
                 FullName = user.FullName,
                 IsActive = 0,
                 Email = user.Email,
-                Username = username
+                Username = username,
+                PasswordExpiration = DateTime.Now.AddMonths(1),
+                Password = Hash.Sha256(user.Password),
+                Address = user.Address
             };
             
             GetDbContext().Insert(dbUser);
+
+            var createdUser = GetDbContext().Select<Entities.User>().First(u => u.Username == dbUser.Username);
+            
+            var emailMessage = $"New user has registered. You can <a href=\"http://localhost:5001/account/resolve?userId={createdUser.Id}&approve=1\">approve</a> or <a href=\"http://localhost:5001/account/resolve?userId={createdUser.Id}&approve=0\">deny</a> the registration.";
+            
+            _emailService.Send(_adminEmail, "New user registration", emailMessage, true);
             
             return UserUpdateResult.Ok;
         }

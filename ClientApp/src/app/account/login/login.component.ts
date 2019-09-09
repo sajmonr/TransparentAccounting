@@ -25,7 +25,7 @@ export class LoginComponent{
             this.errorMessage = 'Username or password is invalid.';
             break;
           case LoginResult.UserSuspended:
-            this.errorMessage = 'Your account has been suspended.';
+            this.errorMessage = 'Your account is disabled.';
             break;
           case LoginResult.NotFound:
             this.errorMessage = 'User was not found.';
