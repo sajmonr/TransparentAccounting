@@ -78,8 +78,9 @@ export class UsersComponent implements OnInit{
   }
   onDisableSubmit(){
     if(this.disableForm.value.disabledIndefinitely){
-      this.selectedUser.isActive = this.disableForm.value.disabledIndefinitely;
+      this.selectedUser.isActive = false;
     }else{
+      this.selectedUser.isActive = true;
       const fromDate = new Date(this.disableForm.value.disabledFrom);
       const toDate = new Date(this.disableForm.value.disabledTo);
 

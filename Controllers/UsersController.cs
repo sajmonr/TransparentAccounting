@@ -67,9 +67,18 @@ namespace TransparentAccounting.Controllers
             var sqlUser = GetDbContext().Select<Entities.User>().First(u => u.Id == user.Id);
 
             sqlUser.IsActive = BoolToInt(user.IsActive);
-            sqlUser.SuspendFrom = user.SuspendFrom;
-            //TODO: This must be reworked to end at midnight that day
-            sqlUser.SuspendTo = user.SuspendTo;
+            
+            if (user.IsActive)
+            {
+                sqlUser.SuspendFrom = null;
+                sqlUser.SuspendTo = null;
+            }
+            else
+            {
+                sqlUser.SuspendFrom = user.SuspendFrom;
+                //TODO: This must be reworked to end at midnight that day
+                sqlUser.SuspendTo = user.SuspendTo;   
+            }
 
             GetDbContext().Update(sqlUser);
         }
@@ -165,7 +174,7 @@ namespace TransparentAccounting.Controllers
             sqlUser.FullName = user.FullName;
             sqlUser.IsActive = BoolToInt(user.IsActive);
             sqlUser.Email = user.Email;
-            sqlUser.Address = user.Address;
+            sqlUser.Address = string.IsNullOrEmpty(user.Address) ? sqlUser.Address : user.Address;
             sqlUser.SecurityQuestion = user.SecurityQuestion.Id;
             sqlUser.SecurityAnswer = user.SecurityQuestion.Answer;
             sqlUser.DateOfBirth = user.DateOfBirth;
