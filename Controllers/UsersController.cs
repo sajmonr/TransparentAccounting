@@ -82,8 +82,7 @@ namespace TransparentAccounting.Controllers
             };
             GetDbContext().Update(user, "isActive");
         }
-
-        public void ResolveSelfRegistration(int userId, bool approve)
+        public void ResolveSelfRegistration(int userId,bool approve)
         {
             var dbUser = GetDbContext().Select<Entities.User>().First(u => u.Id == userId);
             string subject = $"Your application has been {(approve ? "approved" : "denied")}.";
@@ -92,7 +91,7 @@ namespace TransparentAccounting.Controllers
             if (approve)
             {
                 dbUser.IsActive = 1;
-                message = "Your application has been approved. Click <a href=\"http://localhost:5001\">here</a> to log in.";
+                message = "Your application has been approved. Click <a href=\"https://localhost:5001\">here</a> to log in.";
             }
             else
             {
@@ -121,14 +120,17 @@ namespace TransparentAccounting.Controllers
                 Username = username,
                 PasswordExpiration = DateTime.Now.AddMonths(1),
                 Password = Hash.Sha256(user.Password),
-                Address = user.Address
+                Address = user.Address,
+                SecurityQuestion = user.SecurityQuestion.Id,
+                SecurityAnswer = user.SecurityQuestion.Answer,
+                DateOfBirth = user.DateOfBirth
             };
             
             GetDbContext().Insert(dbUser);
 
             var createdUser = GetDbContext().Select<Entities.User>().First(u => u.Username == dbUser.Username);
             
-            var emailMessage = $"New user has registered. You can <a href=\"http://localhost:5001/account/resolve?userId={createdUser.Id}&approve=1\">approve</a> or <a href=\"http://localhost:5001/account/resolve?userId={createdUser.Id}&approve=0\">deny</a> the registration.";
+            var emailMessage = $"New user has registered. You can <a href=\"https://localhost:5001/account/resolve/{createdUser.Id}/1\">approve</a> or <a href=\"https://localhost:5001/account/resolve/{createdUser.Id}/0\">deny</a> the registration.";
             
             _emailService.Send(_adminEmail, "New user registration", emailMessage, true);
             
@@ -163,6 +165,10 @@ namespace TransparentAccounting.Controllers
             sqlUser.FullName = user.FullName;
             sqlUser.IsActive = BoolToInt(user.IsActive);
             sqlUser.Email = user.Email;
+            sqlUser.Address = user.Address;
+            sqlUser.SecurityQuestion = user.SecurityQuestion.Id;
+            sqlUser.SecurityAnswer = user.SecurityQuestion.Answer;
+            sqlUser.DateOfBirth = user.DateOfBirth;
             
             //Allow this to be overriden when the username fields is empty
             sqlUser.Username = string.IsNullOrWhiteSpace(user.Username)

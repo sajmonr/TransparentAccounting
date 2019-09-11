@@ -22,5 +22,6 @@ namespace TransparentAccounting.Sql.Entities
         public string Address { get; set; }
         public int SecurityQuestion { get; set; }
         public string SecurityAnswer { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

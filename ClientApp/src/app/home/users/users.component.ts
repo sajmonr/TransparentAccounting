@@ -7,6 +7,7 @@ import {PasswordValidator} from "../../shared/validators/password.validator";
 import {DatePipe} from "@angular/common";
 import {MessageService} from "../../services/message.service";
 import {PasswordHistory} from "../../shared/password.history.model";
+import {SecurityQuestion} from "../../shared/security.question.model";
 
 @Component({
   selector: 'app-users',
@@ -16,12 +17,12 @@ import {PasswordHistory} from "../../shared/password.history.model";
 export class UsersComponent implements OnInit{
   @ViewChild('editUserModal')editUserModal: ElementRef;
   @ViewChild('disableUserModal')disableUserModal: ElementRef;
-  private passwordHistoryForUser: PasswordHistory[];
+  private dateFormatter = new DatePipe('en-US');
   private users: User[] = [];
   private selectedUser = new User();
   private editForm: FormGroup;
   private disableForm: FormGroup;
-
+  private securityQuestions: SecurityQuestion[] = [];
 
 
   constructor(private httpClient: HttpClient,
@@ -29,6 +30,10 @@ export class UsersComponent implements OnInit{
               private messageService: MessageService){}
 
   ngOnInit(): void {
+    this.httpClient.get(this.apiService.getUrl(ApiMethod.GetSecurityQuestions)).subscribe((questions: SecurityQuestion[]) => {
+      this.securityQuestions = questions;
+    });
+
     this.loadUsers();
     this.clearForms();
   }
@@ -47,6 +52,13 @@ export class UsersComponent implements OnInit{
     this.selectedUser.role = this.editForm.value.role;
     this.selectedUser.password = this.editForm.value.password;
     this.selectedUser.email = this.editForm.value.email;
+    this.selectedUser.address = this.editForm.value.address;
+    this.selectedUser.dateOfBirth = new Date(this.editForm.value.dateOfBirth);
+
+    const securityQuestion = new SecurityQuestion();
+    securityQuestion.id = this.editForm.value.securityQuestion;
+    securityQuestion.answer = this.editForm.value.securityAnswer;
+    this.selectedUser.securityQuestion = securityQuestion;
 
     this.httpClient.post(this.apiService.getUrl(ApiMethod.InsertUser), this.selectedUser).subscribe((result: UserUpdateResult) => {
       if(result == UserUpdateResult.PasswordUsedInPast){
@@ -56,7 +68,7 @@ export class UsersComponent implements OnInit{
         this.messageService.error('User cannot be saved', 'The username you have specified is taken. Please use a different username.');
         return;
       }
-
+      this.selectedUser = new User();
       this.loadUsers();
       this.closeEditForm();
     });
@@ -99,23 +111,27 @@ export class UsersComponent implements OnInit{
     }
   }
   private populateEditForm(user: User){
+
     this.editForm.patchValue({
       fullName: user.fullName,
       username: user.username,
       role: user.role,
-      email: user.email
+      email: user.email,
+      address: user.address,
+      securityQuestion: user.securityQuestion.id,
+      securityAnswer: user.securityQuestion.answer,
+      dateOfBirth: this.formatDate(user.dateOfBirth)
     });
   }
   private populateDisableForm(user: User){
-    const dateFormatter = new DatePipe('en-US');
     this.disableForm.patchValue({
-      disabledFrom: dateFormatter.transform(user.suspendFrom, 'yyyy-MM-dd'),
-      disabledTo: dateFormatter.transform(user.suspendTo, 'yyyy-MM-dd'),
+      disabledFrom: this.formatDate(user.suspendFrom),
+      disabledTo: this.formatDate(user.suspendTo),
       disabledIndefinitely: !user.isActive
     });
   }
   private loadUsers(onlyExpired?: boolean){
-    this.httpClient.get(this.apiService.getUrl(ApiMethod.GetAllUsers)).subscribe((users: User[]) => {
+    this.httpClient.get<User[]>(this.apiService.getUrl(ApiMethod.GetAllUsers)).subscribe((users: User[]) => {
       if(onlyExpired){
         this.users = [];
 
@@ -129,6 +145,12 @@ export class UsersComponent implements OnInit{
         this.users = users;
       }
     })
+  }
+  private formatDate(date: Date, format?: string){
+    if(!format){
+      format = 'yyyy-MM-dd';
+    }
+    return this.dateFormatter.transform(date, format);
   }
   private closeEditForm(){
     //@ts-ignore
@@ -155,7 +177,10 @@ export class UsersComponent implements OnInit{
       email: new FormControl(null, [Validators.required, Validators.email]),
       address: new FormControl(null, Validators.required),
       role: new FormControl(2),
-      password: new FormControl(null, [PasswordValidator.Length, PasswordValidator.Complexity])
+      password: new FormControl(null, [PasswordValidator.Length, PasswordValidator.Complexity]),
+      securityQuestion: new FormControl(1, Validators.required),
+      securityAnswer: new FormControl(null, [Validators.required]),
+      dateOfBirth: new FormControl(null, Validators.required)
     });
   }
   private clearDisableForm(){

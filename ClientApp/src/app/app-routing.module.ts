@@ -12,6 +12,7 @@ import {EventsComponent} from "./home/events/events.component";
 import {AccountComponent} from "./account/account.component";
 import {RegisterComponent} from "./account/register/register.component";
 import {ForgotComponent} from "./account/forgot/forgot.component";
+import {ResolveComponent} from "./account/resolve/resolve.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -26,9 +27,11 @@ const routes: Routes = [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
-      {path: 'forgot', component: ForgotComponent}
+      {path: 'forgot', component: ForgotComponent},
+      {path: 'resolve/:userId/:result', component: ResolveComponent}
     ]},
-  {path: 'passwordReset', component: PasswordResetComponent}
+  {path: 'passwordReset', component: PasswordResetComponent},
+  {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({

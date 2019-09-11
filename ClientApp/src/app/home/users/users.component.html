@@ -109,7 +109,7 @@
       <div class="modal-content">
         <form (submit)="onEditSubmit()" [formGroup]="editForm">
           <div class="modal-header">
-            <h5 class="modal-title">{{selectedUser.id > 0 ? 'Edit User' : 'New User'}}</h5>
+            <h5 class="modal-title">{{selectedUser && selectedUser.id > 0 ? 'Edit User' : 'New User'}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -120,19 +120,24 @@
                   <input type="text" class="form-control" formControlName="username"/>
                 </label>
                 <span class="help-block text-danger" *ngIf="editForm.get('username').touched && editForm.get('username').invalid">The username field is required.</span>
-              </div>
-              <div class="form-group">
                 <label>Full Name
                   <input type="text" class="form-control" formControlName="fullName"/>
                 </label>
                 <span class="help-block text-danger" *ngIf="editForm.get('fullName').touched && editForm.get('fullName').invalid">The full name field is required.</span>
-              </div>
-              <div class="form-group">
+                <label>Full Name
+                  <input type="text" class="form-control" formControlName="fullName"/>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('fullName').touched && editForm.get('fullName').invalid">The full name field is required.</span>
                 <label>
                   E-mail
                   <input type="email" class="form-control" formControlName="email"/>
                 </label>
                 <span class="help-block text-danger" *ngIf="editForm.get('email').touched && editForm.get('email').invalid">Email must be a valid email address.</span>
+                <label>
+                  Date of Birth
+                  <input type="date" class="form-control" formControlName="dateOfBirth"/>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('dateOfBirth').touched && editForm.get('dateOfBirth').invalid">Date of birth is required.</span>
               </div>
             <div class="form-group">
               <label>
@@ -159,6 +164,20 @@
                   </select>
                 </label>
               </div>
+            <div class="form-group">
+                <label>
+                  Security question
+                  <select class="form-control" formControlName="securityQuestion">
+                    <option *ngFor="let question of securityQuestions" value="{{question.id}}">{{question.question}}</option>
+                  </select>
+                </label>
+                <span class="help-block text-danger" *ngIf="editForm.get('securityQuestion').touched && editForm.get('securityQuestion').invalid">Answer to security question is required</span>
+              <label>
+                Answer to security question
+                <input type="text" class="form-control" formControlName="securityAnswer"/>
+              </label>
+              <span class="help-block text-danger" *ngIf="editForm.get('securityAnswer').touched && editForm.get('securityAnswer').invalid">Answer to security question is required</span>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

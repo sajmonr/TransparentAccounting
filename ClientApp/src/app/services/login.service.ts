@@ -33,13 +33,6 @@ export class LoginService{
       if(login.result == LoginResult.Success){
         this.currentUser = login.user;
         this.setUserCookie(login.user.id);
-        console.log(login.user.passwordExpiration);
-        console.log(new Date());
-
-        let d = new Date();
-
-        console.log(login.user.passwordExpiration > d);
-
       }
     });
 

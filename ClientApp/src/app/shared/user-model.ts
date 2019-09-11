@@ -13,8 +13,10 @@ export class User{
   passwordExpiration: Date;
   address: string;
   securityQuestion: SecurityQuestion;
+  dateOfBirth: Date;
 
   public constructor(){
+    this.id = 0;
     this.isActive = true;
   }
 }

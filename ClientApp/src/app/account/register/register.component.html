@@ -63,6 +63,26 @@
           </div>
         </div>
         <div class="form-row">
+          <div class="col">
+            <label>
+              Security question
+              <select class="form-control" formControlName="securityQuestion">
+                <option *ngFor="let question of securityQuestions" value="{{question.id}}">{{question.question}}</option>
+              </select>
+            </label>
+            <span class="help-block text-danger" *ngIf="registerForm.get('securityQuestion').touched && registerForm.get('securityQuestion').invalid">Answer to security question is required</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label>
+              Answer to security question
+              <input type="text" class="form-control" formControlName="securityAnswer"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="registerForm.get('securityAnswer').touched && registerForm.get('securityAnswer').invalid">Answer to security question is required</span>
+          </div>
+        </div>
+        <div class="form-row">
           <div class="col text-right">
             <a class="mr-2" [routerLink]="['/account']">
               <button class="btn btn-secondary">

@@ -81,6 +81,9 @@ export class ApiService{
       case ApiMethod.ForgotPassword:
         url += 'Users/ForgotPassword';
         break;
+      case ApiMethod.ResolveSelfRegistration:
+        url += 'Users/ResolveSelfRegistration';
+        break;
     }
 
     return url;
@@ -112,5 +115,6 @@ export enum ApiMethod {
   PasswordHistory,
   UserSelfRegister,
   GetSecurityQuestions,
-  ForgotPassword
+  ForgotPassword,
+  ResolveSelfRegistration
 }

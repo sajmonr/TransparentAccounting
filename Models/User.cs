@@ -25,6 +25,7 @@ namespace TransparentAccounting.Models
         public DateTime PasswordExpiration { get; set; }
         public string Address { get; set; }
         public SecurityQuestion SecurityQuestion { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public static User FromDbEntity(SqlEntity.User sqlUser, SqlEntity.SecurityQuestion securityQuestion)
         {
@@ -47,7 +48,9 @@ namespace TransparentAccounting.Models
                     Id = securityQuestion.Id, 
                     Question = securityQuestion.Question,
                     Answer = sqlUser.SecurityAnswer
-                }
+                },
+                Address =  sqlUser.Address,
+                DateOfBirth = sqlUser.DateOfBirth
             };
         }
     }
