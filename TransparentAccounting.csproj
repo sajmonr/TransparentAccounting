@@ -36,12 +36,12 @@
     <Content Include="ClientApp\src\app\home\accounts\accounts.component.html" />
     <Content Include="ClientApp\src\app\home\dashboard\dashboard.component.css" />
     <Content Include="ClientApp\src\app\home\dashboard\dashboard.component.html" />
+    <Content Include="ClientApp\src\app\home\email\email.component.html" />
     <Content Include="ClientApp\src\app\home\events\events.component.css" />
     <Content Include="ClientApp\src\app\home\events\events.component.html" />
     <Content Include="ClientApp\src\app\home\home.component.html" />
     <Content Include="ClientApp\src\app\home\users\users.component.css" />
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
-    <Content Include="ClientApp\src\app\password-reset\password-reset.component.html" />
     <Content Include="ClientApp\src\app\shared\components\message\message.component.css" />
     <Content Include="ClientApp\src\app\shared\components\message\message.component.html" />
     <Content Include="ClientApp\src\assets\images\error.png" />
@@ -68,10 +68,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\dashboard\dashboard.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\email\email.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\events\events.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\password-reset\password-reset.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\logging.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />

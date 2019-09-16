@@ -77,15 +77,17 @@ export class UsersComponent implements OnInit{
     this.loadUsers(value == 1);
   }
   onDisableSubmit(){
-    if(this.disableForm.value.disabledIndefinitely){
-      this.selectedUser.isActive = false;
-    }else{
-      this.selectedUser.isActive = true;
+    this.selectedUser.isActive = !this.disableForm.value.disabledIndefinitely;
+
+    if(this.selectedUser.isActive && this.disableForm.value.disabledFrom && this.disableForm.value.disabledTo){
       const fromDate = new Date(this.disableForm.value.disabledFrom);
       const toDate = new Date(this.disableForm.value.disabledTo);
 
       this.selectedUser.suspendFrom = fromDate;
       this.selectedUser.suspendTo = toDate;
+    }else{
+      this.selectedUser.suspendFrom = null;
+      this.selectedUser.suspendTo = null;
     }
 
     this.httpClient.post<User>(this.apiService.getUrl(ApiMethod.DisableUser), this.selectedUser).subscribe(() => {
@@ -126,10 +128,15 @@ export class UsersComponent implements OnInit{
   }
   private populateDisableForm(user: User){
     this.disableForm.patchValue({
-      disabledFrom: this.formatDate(user.suspendFrom),
-      disabledTo: this.formatDate(user.suspendTo),
       disabledIndefinitely: !user.isActive
     });
+    if(user.suspendTo && user.suspendFrom){
+      console.log('patching');
+      this.disableForm.patchValue({
+        disabledFrom: this.formatDate(user.suspendFrom),
+        disabledTo: this.formatDate(user.suspendTo),
+      });
+    }
   }
   private loadUsers(onlyExpired?: boolean){
     this.httpClient.get<User[]>(this.apiService.getUrl(ApiMethod.GetAllUsers)).subscribe((users: User[]) => {

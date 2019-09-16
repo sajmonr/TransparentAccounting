@@ -82,6 +82,7 @@ export class LoginService{
   }
   private deleteUserCookie(){
     this.cookie.delete(this.userIdCookieName);
+    this.cookie.delete('expired_notified');
   }
   private setUserCookie(id: number){
     this.cookie.set(this.userIdCookieName, id.toString(), undefined, '/');

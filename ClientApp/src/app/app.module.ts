@@ -16,7 +16,6 @@ import {HomeComponent} from "./home/home.component";
 import {ApiService} from "./services/api.service";
 import {AccountsComponent} from "./home/accounts/accounts.component";
 import {AccountsCategoryComponent} from "./home/accounts/accounts-category/accounts-category.component";
-import {PasswordResetComponent} from "./password-reset/password-reset.component";
 import {AdminAuthGuard} from "./admin-auth-guard.service";
 import {EventsComponent} from "./home/events/events.component";
 import {LoggingService} from "./services/logging.service";
@@ -26,6 +25,7 @@ import {MessageService} from "./services/message.service";
 import {MessageComponent} from "./shared/components/message/message.component";
 import {ResolveComponent} from "./account/resolve/resolve.component";
 import {ForgotComponent} from "./account/forgot/forgot.component";
+import {EmailComponent} from "./home/email/email.component";
 
 @NgModule({
   declarations: [
@@ -40,10 +40,10 @@ import {ForgotComponent} from "./account/forgot/forgot.component";
     UsersComponent,
     AccountsComponent,
     AccountsCategoryComponent,
-    PasswordResetComponent,
     ForgotComponent,
     EventsComponent,
-    ResolveComponent
+    ResolveComponent,
+    EmailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
