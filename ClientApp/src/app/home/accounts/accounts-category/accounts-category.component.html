@@ -16,7 +16,7 @@
       <td>{{account.subcategory.name}}</td>
       <td>
         <button class="btn btn-info btn-sm m-1" (click)="onAccountEdit(account)">Edit</button>
-        <button class="btn btn-danger btn-sm m-1">Delete</button>
+        <button class="btn btn-danger btn-sm m-1" (click)="onAccountRemove(account)" >Delete</button>
       </td>
     </tr>
   </tbody>

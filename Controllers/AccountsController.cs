@@ -79,7 +79,6 @@ namespace TransparentAccounting.Controllers
             foreach (var id in ids)
             {
                 RemoveAccountById(id);
-                Console.WriteLine("Success");
             }
         }
     }

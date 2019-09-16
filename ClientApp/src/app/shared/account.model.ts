@@ -11,6 +11,17 @@ export class Account{
   public subcategory: Subcategory;
   public order: number;
   public active: boolean;
+
+  public constructor(){
+    this.id = 0;
+    this.active = true;
+    this.name = "";
+    this.normalSide = NormalSide.LeftSide;
+    this.beginningBalance = 0;
+    this.balance = 0;
+    this.category = new Category();
+    this.subcategory = new Subcategory();
+  }
 }
 export enum NormalSide{
   LeftSide,
