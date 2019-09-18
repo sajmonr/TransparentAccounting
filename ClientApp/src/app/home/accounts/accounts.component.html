@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-10"><h2>Accounts</h2></div>
       <div class="col-sm-2 text-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAccountModal" (click)="modalTitle = 'Add Account'">Add New</button>
+        <button type="button" class="btn btn-primary" (click)="onCreateAccountSelected(); modalTitle = 'Add Account'">Add New</button>
       </div>
     </div>
     <table class="table table-bordered">
@@ -22,29 +22,62 @@
       <tbody>
         <tr *ngFor="let category of categories">
           <td colspan="7" class="p-0">
-            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)"></app-accounts-category>
+            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)" (removeAccountSelected)="onRemoveAccount($event)"></app-accounts-category>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-<div class="modal fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+
+<div class="modal fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="editAccountModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <form (submit)="onEditAccountSubmit()" [formGroup]="editForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">{{selectedAccount && selectedAccount.id > 0 ? 'Edit Account' : 'New Account'}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Name
+              <input type="text" class="form-control" formControlName="name"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('name').touched && editForm.get('name').invalid">The name field is required.</span>
+            <label>Normal Side
+              <input type="text" class="form-control" formControlName="normalSide"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('normalSide').touched && editForm.get('normalSide').invalid">The normal side field is required.</span>
+            <label>Beginning Balance
+              <input type="text" class="form-control" formControlName="beginningBalance"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('beginningBalance').touched && editForm.get('beginningBalance').invalid">The beginning balance name field is required.</span>
+            <label>Balance
+              <input type="email" class="form-control" formControlName="balance"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('balance').touched && editForm.get('balance').invalid">The balance name field is required.</span>
+            <label>Category
+              <select id="category" class="form-control" name="category" formControlName="category">
+                <option *ngFor="let category of allCategories" value="{{category.id}}">{{category.name}}</option>
+              </select>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('category').touched && editForm.get('category').invalid">The category name field is required.</span>
+            <label>Subcategory
+              <select id="subcategory" class="form-control" name="subcategory" formControlName="subcategory">
+                <option *ngFor="let subcategory of allSubcategories" value="{{subcategory.id}}">{{subcategory.name}}</option>
+              </select>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('subcategory').touched && editForm.get('subcategory').invalid">The subcategory name field is required.</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" [disabled]="editForm.invalid" (click)="onEditAccountSubmit()">Save changes</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+

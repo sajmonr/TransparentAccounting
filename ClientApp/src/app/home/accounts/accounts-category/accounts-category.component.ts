@@ -10,9 +10,14 @@ export class AccountsCategoryComponent{
   @Input() sectionTitle: string;
   @Input() accounts:Account[];
   @Output() accountSelected = new EventEmitter<Account>();
+  @Output() removeAccountSelected = new EventEmitter<number>();
 
   onAccountEdit(account: Account){
     this.accountSelected.emit(account);
+  }
+
+  onAccountRemove(account) {
+    this.removeAccountSelected.emit(account.id);
   }
 
 }
