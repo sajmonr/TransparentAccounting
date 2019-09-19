@@ -11,6 +11,7 @@ export class Account{
   public subcategory: Subcategory;
   public order: number;
   public active: boolean;
+  public accountId: number;
 
   public constructor(){
     this.id = 0;
@@ -21,6 +22,7 @@ export class Account{
     this.balance = 0;
     this.category = new Category();
     this.subcategory = new Subcategory();
+    this.accountId = 0;
   }
 }
 export enum NormalSide{

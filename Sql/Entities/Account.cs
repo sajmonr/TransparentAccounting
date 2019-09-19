@@ -16,6 +16,7 @@ namespace TransparentAccounting.Sql.Entities
         public int Order { get; set; }
         public int StatementId { get; set; }
         public int Active { get; set; }
+        public int AccountId { get; set; }
 
         public static Account ToDbEntity(Models.Account account)
         {
@@ -30,6 +31,7 @@ namespace TransparentAccounting.Sql.Entities
             sqlAccount.Order = account.Order;
             sqlAccount.NormalSide = (int) account.NormalSide;
             sqlAccount.StatementId = 0;
+            sqlAccount.AccountId = account.AccountId;
             return sqlAccount;
         }
     }

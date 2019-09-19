@@ -8,7 +8,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let account of accounts.sort(accountsComparator)">
-      <td>{{account.subcategory.accountId}}</td>
+      <td>{{account.accountId}}</td>
       <td>{{account.name}}</td>
       <td>{{eNormalSide[account.normalSide]}}</td>
       <td>{{account.beginningBalance | currency}}</td>

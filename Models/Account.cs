@@ -14,6 +14,7 @@ namespace TransparentAccounting.Models
         public Subcategory Subcategory { get; set; }
         public int Order { get; set; }
         public bool Active { get; set; }
+        public int AccountId { get; set; }
 
         public static Account FromDbEntity(SqlEntity.Account account, SqlEntity.Category category, SqlEntity.Subcategory subcategory)
         {
@@ -27,7 +28,8 @@ namespace TransparentAccounting.Models
                 Order = account.Order,
                 Active = account.Active == 1,
                 Category = Category.FromDbEntity(category),
-                Subcategory = Subcategory.FromDbEntity(subcategory)
+                Subcategory = Subcategory.FromDbEntity(subcategory),
+                AccountId = account.AccountId
             };
         }
         
