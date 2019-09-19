@@ -6,7 +6,7 @@ namespace TransparentAccounting.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
+        public int AccountId { get; set; }
         public static Subcategory FromDbEntity(SqlEntity.Subcategory sqlSubcategory)
         {
             if (sqlSubcategory == null) return null;
@@ -14,7 +14,8 @@ namespace TransparentAccounting.Models
             return new Subcategory
             {
                 Id = sqlSubcategory.Id,
-                Name = sqlSubcategory.Name
+                Name = sqlSubcategory.Name,
+                AccountId = sqlSubcategory.AccountId
             };
         }
         

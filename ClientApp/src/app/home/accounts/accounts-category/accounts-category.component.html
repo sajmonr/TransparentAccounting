@@ -7,10 +7,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let account of accounts">
-      <td>{{account.id}}</td>
+    <tr *ngFor="let account of accounts.sort(accountsComparator)">
+      <td>{{account.subcategory.accountId}}</td>
       <td>{{account.name}}</td>
-      <td>{{account.normalSide}}</td>
+      <td>{{eNormalSide[account.normalSide]}}</td>
       <td>{{account.beginningBalance | currency}}</td>
       <td>{{account.balance | currency}}</td>
       <td>{{account.subcategory.name}}</td>

@@ -16,7 +16,7 @@ export class Account{
     this.id = 0;
     this.active = true;
     this.name = "";
-    this.normalSide = NormalSide.LeftSide;
+    this.normalSide = NormalSide.Left;
     this.beginningBalance = 0;
     this.balance = 0;
     this.category = new Category();
@@ -24,6 +24,6 @@ export class Account{
   }
 }
 export enum NormalSide{
-  LeftSide,
-  RightSide
+  Left,
+  Right
 }

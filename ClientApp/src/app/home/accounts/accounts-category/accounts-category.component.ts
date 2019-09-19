@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Account} from "../../../shared/account.model";
+import {Account, NormalSide} from "../../../shared/account.model";
 
 @Component({
   selector: 'app-accounts-category',
@@ -12,12 +12,18 @@ export class AccountsCategoryComponent{
   @Output() accountSelected = new EventEmitter<Account>();
   @Output() removeAccountSelected = new EventEmitter<number>();
 
+  private eNormalSide = NormalSide;
+
   onAccountEdit(account: Account){
     this.accountSelected.emit(account);
   }
 
   onAccountRemove(account) {
     this.removeAccountSelected.emit(account.id);
+  }
+
+  private accountsComparator(left: Account, right: Account): number{
+    return left.order - right.order;
   }
 
 }
