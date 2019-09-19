@@ -13,16 +13,14 @@ namespace TransparentAccounting.Controllers
         {
             var sqlEvents = GetDbContext().Select<SqlEntities.Event>();
             var sqlUsers = GetDbContext().Select<SqlEntities.User>();
-            var securityQuestions = GetDbContext().Select<SqlEntities.SecurityQuestion>();
 
             var events = new List<Event>();
             
             foreach(var e in sqlEvents)
             {
                 var user = sqlUsers.First(u => u.Id == e.UserId);
-                var securityQuestion = securityQuestions.First(q => q.Id == user.SecurityQuestion);
-                
-                events.Add(Event.FromDbEntity(e, Models.User.FromDbEntity(user, securityQuestion)));
+
+                events.Add(Event.FromDbEntity(e, Models.User.FromDbEntity(user)));
             }
 
             return events.ToArray();

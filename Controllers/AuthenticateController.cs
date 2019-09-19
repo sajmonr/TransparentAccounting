@@ -15,7 +15,6 @@ namespace TransparentAccounting.Controllers
         public Login LogIn(string username, string password)
         {
             var users = GetDbContext().Select<User>();
-            var securityQuestions = GetDbContext().Select<Entities.SecurityQuestion>();
             var dbUser = users.First(u => u.Username == username && u.IsDeleted == 0);
 
             if (dbUser == null)
@@ -42,7 +41,7 @@ namespace TransparentAccounting.Controllers
                 return new Login
                 {
                     Result = LoginResult.Success,
-                    User = Models.User.FromDbEntity(dbUser, securityQuestions.First(q => q.Id == dbUser.SecurityQuestion))
+                    User = Models.User.FromDbEntity(dbUser)
                 };                
             }
             

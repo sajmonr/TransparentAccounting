@@ -26,6 +26,7 @@ import {MessageComponent} from "./shared/components/message/message.component";
 import {ResolveComponent} from "./account/resolve/resolve.component";
 import {ForgotComponent} from "./account/forgot/forgot.component";
 import {EmailComponent} from "./home/email/email.component";
+import {JournalComponent} from "./home/journal/journal.component";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {EmailComponent} from "./home/email/email.component";
     ForgotComponent,
     EventsComponent,
     ResolveComponent,
-    EmailComponent
+    EmailComponent,
+    JournalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

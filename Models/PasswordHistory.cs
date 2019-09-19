@@ -15,7 +15,7 @@ namespace TransparentAccounting.Models
             if (passwordHistory == null)
                 return null;
 
-            return FromDbEntity(passwordHistory, User.FromDbEntity(user, securityQuestion));
+            return FromDbEntity(passwordHistory, User.FromDbEntity(user));
         }
         public static PasswordHistory FromDbEntity(SqlEntities.PasswordHistory passwordHistory, User user)
         {

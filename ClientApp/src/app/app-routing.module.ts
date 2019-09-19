@@ -13,6 +13,7 @@ import {RegisterComponent} from "./account/register/register.component";
 import {ForgotComponent} from "./account/forgot/forgot.component";
 import {ResolveComponent} from "./account/resolve/resolve.component";
 import {EmailComponent} from "./home/email/email.component";
+import {JournalComponent} from "./home/journal/journal.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -22,7 +23,8 @@ const routes: Routes = [
       {path: 'users', component: UsersComponent, canActivate: [AdminAuthGuard]},
       {path: 'accounts', component: AccountsComponent},
       {path: 'events', component: EventsComponent, canActivate: [AdminAuthGuard]},
-      {path: 'email', component: EmailComponent, canActivate: [AdminAuthGuard]}
+      {path: 'email', component: EmailComponent, canActivate: [AdminAuthGuard]},
+      {path: 'journal', component: JournalComponent, canActivate: [AdminAuthGuard]}
     ]},
   {path: 'account', component: AccountComponent, children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},

@@ -1,4 +1,7 @@
 using System;
+using System.Linq;
+using TransparentAccounting.Sql;
+using TransparentAccounting.Utilities;
 using SqlEntity = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Models
@@ -27,9 +30,15 @@ namespace TransparentAccounting.Models
         public SecurityQuestion SecurityQuestion { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public static User FromDbEntity(SqlEntity.User sqlUser, SqlEntity.SecurityQuestion securityQuestion)
+        public static User FromDbEntity(SqlEntity.User sqlUser)
         {
             if (sqlUser == null) return null;
+
+            var db = new ApplicationDomainContext();
+
+            var securityQuestion = SecurityQuestion.FromDbEntity(db.Select<SqlEntity.SecurityQuestion>()
+                .First(q => q.Id == sqlUser.SecurityQuestion));
+            
             //Do not fill the password
             return new User
             {

@@ -1,3 +1,6 @@
+using System.Linq;
+using TransparentAccounting.Sql;
+using TransparentAccounting.Utilities;
 using SqlEntity = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Models
@@ -31,6 +34,16 @@ namespace TransparentAccounting.Models
                 Subcategory = Subcategory.FromDbEntity(subcategory),
                 AccountId = account.AccountId
             };
+        }
+
+        public static Account FromDbEntity(SqlEntity.Account account)
+        {
+            var db = new ApplicationDomainContext();
+
+            var subcategory = db.Select<SqlEntity.Subcategory>().First(s => s.Id == account.SubcategoryId);
+            var category = db.Select<SqlEntity.Category>().First(c => c.Id == account.CategoryId);
+
+            return FromDbEntity(account, category, subcategory);
         }
         
     }

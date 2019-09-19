@@ -39,6 +39,9 @@
           <li *ngIf="isUserAdmin()" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/events"]'>Events</a>
           </li>
+          <li *ngIf="isUserAdmin()" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a class="nav-link" [routerLink]='["/app/journal"]'>Journal</a>
+          </li>
         </ul>
       </div>
     </div>

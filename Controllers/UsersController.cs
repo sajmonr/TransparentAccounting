@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NETCore.MailKit.Core;
 using TransparentAccounting.Models;
@@ -26,19 +24,16 @@ namespace TransparentAccounting.Controllers
         {
             var users = GetDbContext().Select<Entities.User>();
             var dbUser = users.FirstOrDefault(u => u.Id == id);
-            var securityQuestion = GetDbContext().Select<Entities.SecurityQuestion>()
-                .First(q => q.Id == dbUser.SecurityQuestion);
 
-            return Models.User.FromDbEntity(dbUser, securityQuestion);
+            return Models.User.FromDbEntity(dbUser);
         }
         public User[] GetAllUsers()
         {
             var users = GetDbContext().Select<Entities.User>().Where(u => u.IsDeleted != 1).ToArray();
-            var securityQuestions = GetDbContext().Select<Entities.SecurityQuestion>();
             var output = new User[users.Count()];
 
             for (int i = 0; i < output.Length; i++)
-                output[i] = Models.User.FromDbEntity(users[i], securityQuestions.First(q => q.Id == users[i].SecurityQuestion));
+                output[i] = Models.User.FromDbEntity(users[i]);
 
             return output;
         }
@@ -228,9 +223,7 @@ namespace TransparentAccounting.Controllers
         public IEnumerable<PasswordHistory> PasswordHistory(int userId)
         {
             var dbUser = GetDbContext().Select<Entities.User>().FirstOrDefault(u => u.Id == userId);
-            var securityQuestion = GetDbContext().Select<Entities.SecurityQuestion>()
-                .First(q => q.Id == dbUser.SecurityQuestion);
-            var user = Models.User.FromDbEntity(dbUser, securityQuestion);
+            var user = Models.User.FromDbEntity(dbUser);
             if(user == null)
                 return new PasswordHistory[0];
 

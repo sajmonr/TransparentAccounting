@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using TransparentAccounting.Sql.Attributes;
+using TransparentAccounting.Utilities;
 
 namespace TransparentAccounting.Sql
 {
@@ -12,6 +13,8 @@ namespace TransparentAccounting.Sql
         private static string INSERT_STRING_FORMATTING = "`{0}`,";
         private static string UPDATE_STRING_FORMATTING = "`{0}`=@{1},";
 
+        public ApplicationDomainContext(): this(Constants.CONECTION_STRING){}
+        
         public ApplicationDomainContext(string connectionString)
         {
             _connectionString = connectionString;
@@ -48,7 +51,6 @@ namespace TransparentAccounting.Sql
 
             return output;
         }
-
         public void Delete<T>(string conditionField, int conditionValue)
         {
             string tableName = GetTableName<T>();
