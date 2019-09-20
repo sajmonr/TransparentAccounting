@@ -46,3 +46,13 @@ ALTER TABLE `applicationdomain`.`journalentries`
     DROP COLUMN `createDate`,
     DROP COLUMN `createdBy`,
     ADD COLUMN `transactionId` INT NOT NULL AFTER `amount`;
+    
+    ALTER TABLE `applicationdomain`.`journalentries` 
+DROP COLUMN `accountCredit`,
+DROP COLUMN `accountDebit`,
+ADD COLUMN `debit` INT NOT NULL AFTER `transactionId`,
+CHANGE COLUMN `amount` `amount` DECIMAL(10,2) NOT NULL ;
+
+ALTER TABLE `applicationdomain`.`journalentries`
+    ADD COLUMN `accountId` INT NOT NULL AFTER `debit`;
+

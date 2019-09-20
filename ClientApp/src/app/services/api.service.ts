@@ -85,7 +85,10 @@ export class ApiService{
         url += 'Users/ResolveSelfRegistration';
         break;
       case ApiMethod.GetJournalEntries:
-        url += 'Journal/GetEntries';
+        url += 'Journal/Entries';
+        break;
+      case ApiMethod.GetTransactions:
+        url += 'Journal/Transactions';
         break;
     }
 
@@ -120,5 +123,6 @@ export enum ApiMethod {
   GetSecurityQuestions,
   ForgotPassword,
   ResolveSelfRegistration,
-  GetJournalEntries
+  GetJournalEntries,
+  GetTransactions
 }

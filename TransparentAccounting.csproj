@@ -88,6 +88,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\journal.entry.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\journal.entry.type.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\journal.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\journal.transaction.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\login.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\message.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\password.history.model.ts" />

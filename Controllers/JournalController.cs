@@ -8,7 +8,13 @@ namespace TransparentAccounting.Controllers
 {
     public class JournalController : BaseController
     {
-        public IEnumerable<JournalEntry> GetEntries()
+        public IEnumerable<JournalTransaction> Transactions()
+        {
+            var transactions = GetDbContext().Select<SqlEntities.JournalTransaction>();
+
+            return transactions.Select(JournalTransaction.FromDbEntity);
+        }
+        public IEnumerable<JournalEntry> Entries()
         {
             var entries = GetDbContext().Select<SqlEntities.JournalEntry>();
 

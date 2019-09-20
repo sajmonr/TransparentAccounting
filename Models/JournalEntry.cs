@@ -10,26 +10,24 @@ namespace TransparentAccounting.Models
     public class JournalEntry
     {
         public int Id { get; set; }
-        public Account AccountCredit { get; set; }
-        public Account AccountDebit { get; set; }
         public decimal Amount { get; set; }
-        
+        public int TransactionId { get; set; }
+        public bool Debit { get; set; }
+        public Account Account { get; set; }
 
         public static JournalEntry FromDbEntity(SqlEntities.JournalEntry sqlEntry)
         {
             var db = new ApplicationDomainContext();
 
-            var accounts = db.Select<SqlEntities.Account>();
-
-            var debitAccount = Account.FromDbEntity(accounts.First(a => a.Id == sqlEntry.AccountDebit));
-            var creditAccount = Account.FromDbEntity(accounts.First(a => a.Id == sqlEntry.AccountCredit));
+            var account = Account.FromDbEntity(db.Select<SqlEntities.Account>().First(a => a.Id == sqlEntry.AccountId));
             
             return new JournalEntry
             {
                 Id = sqlEntry.Id,
-                AccountCredit =  creditAccount,
-                AccountDebit = debitAccount,
-                Amount =  sqlEntry.Amount
+                Amount =  sqlEntry.Amount,
+                TransactionId = sqlEntry.TransactionId,
+                Debit = sqlEntry.Debit == 1,
+                Account = account
             };
         }
         

@@ -7,7 +7,7 @@ namespace TransparentAccounting.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public static Journal FromDbIntity(SqlEntities.Journal sqlJournal)
+        public static Journal FromDbEntity(SqlEntities.Journal sqlJournal)
         {
             return new Journal
             {
