@@ -1,6 +1,8 @@
-<div style="display: none;">
+<strong>Welcome to Transparent Accounting</strong>
+<div style="display: block;">
   <strong>This is dashboard</strong>
   <button (click)="onSendEmail()">Send email</button>
-  <button (click)="messageService.info('test', 'just testring')">Send message</button>
+  <button class="btn btn-success" (click)="messageService.success('Success info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Success modal</button>
+  <button class="btn btn-danger" (click)="messageService.error('Error info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Error modal</button>
+  <button class="btn btn-info" (click)="messageService.info('Test info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Info modal</button>
 </div>
-<strong>Welcome to Transparent Accounting</strong>
