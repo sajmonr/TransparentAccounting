@@ -10,11 +10,17 @@ import {JournalTransaction} from "../../shared/journal.transaction.model";
   styleUrls: ['./journal.component.css']
 })
 export class JournalComponent implements OnInit{
+  private transactions: JournalTransaction[] = [];
+
   constructor(private apiService: ApiService, private http: HttpClient){}
 
   ngOnInit(): void {
-    this.http.get<JournalTransaction>(this.apiService.getUrl(ApiMethod.GetTransactions)).subscribe(transaction => {
-      console.log(transaction);
+    this.loadTransactions();
+  }
+
+  private loadTransactions(){
+    this.http.get<JournalTransaction[]>(this.apiService.getUrl(ApiMethod.GetTransactions)).subscribe(transactions => {
+      this.transactions = transactions;
     });
   }
 

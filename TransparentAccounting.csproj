@@ -41,6 +41,8 @@
     <Content Include="ClientApp\src\app\home\events\events.component.css" />
     <Content Include="ClientApp\src\app\home\events\events.component.html" />
     <Content Include="ClientApp\src\app\home\home.component.html" />
+    <Content Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.css" />
+    <Content Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.html" />
     <Content Include="ClientApp\src\app\home\journal\journal.component.css" />
     <Content Include="ClientApp\src\app\home\journal\journal.component.html" />
     <Content Include="ClientApp\src\app\home\users\users.component.css" />
@@ -74,6 +76,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\home\email\email.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\events\events.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\journal.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />

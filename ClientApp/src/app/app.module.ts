@@ -27,6 +27,7 @@ import {ResolveComponent} from "./account/resolve/resolve.component";
 import {ForgotComponent} from "./account/forgot/forgot.component";
 import {EmailComponent} from "./home/email/email.component";
 import {JournalComponent} from "./home/journal/journal.component";
+import {JournalEntriesListComponent} from "./home/journal/entries/journal.entries.list.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {JournalComponent} from "./home/journal/journal.component";
     EventsComponent,
     ResolveComponent,
     EmailComponent,
-    JournalComponent
+    JournalComponent,
+    JournalEntriesListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

@@ -1,1 +1,36 @@
-<strong>journal</strong>
+<div class="container">
+  <div class="container">
+    <div class="row text-left justify-content-between">
+      <div class="col"><h2>Journal</h2></div>
+    </div>
+    <table class="table table-bordered users-table">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Created By</th>
+        <th>Entries</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let transaction of transactions">
+        <tr>
+          <td>{{transaction.createDate | date: 'M/d/yyyy'}}</td>
+          <td>{{transaction.type.name}}</td>
+          <td>{{transaction.createdBy.fullName}}</td>
+          <td><app-journal-entries-list [entries]="transaction.entries"></app-journal-entries-list></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="font-weight-bold">Description: </span>
+            <span>{{transaction.description}}</span>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
