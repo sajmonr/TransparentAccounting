@@ -1,9 +1,12 @@
 <div class="container">
   <div class="container">
     <div class="row text-left justify-content-between">
-      <div class="col"><h2>Journal</h2></div>
+      <div class="col-2"><h2>Journal</h2></div>
+      <div class="col-10">
+        <button class="btn btn-primary">Add entry</button>
+      </div>
     </div>
-    <table class="table table-bordered users-table">
+    <table class="table table-borderless users-table">
       <thead>
       <tr>
         <th>Date</th>
@@ -20,10 +23,8 @@
           <td>{{transaction.createdBy.fullName}}</td>
           <td><app-journal-entries-list [entries]="transaction.entries"></app-journal-entries-list></td>
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr class="border-bottom">
+          <td colspan="3"></td>
           <td>
             <span class="font-weight-bold">Description: </span>
             <span>{{transaction.description}}</span>

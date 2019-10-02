@@ -1,3 +1,6 @@
 td:last-child{
   width: 70%;
 }
+thead{
+  border-bottom: 2px solid black;
+}
