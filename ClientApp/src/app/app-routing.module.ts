@@ -14,6 +14,8 @@ import {ForgotComponent} from "./account/forgot/forgot.component";
 import {ResolveComponent} from "./account/resolve/resolve.component";
 import {EmailComponent} from "./home/email/email.component";
 import {JournalComponent} from "./home/journal/journal.component";
+import {RoleGuard} from "./role-guard.service";
+import {UserRole} from "./shared/user-model";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -22,9 +24,13 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'users', component: UsersComponent, canActivate: [AdminAuthGuard]},
       {path: 'accounts', component: AccountsComponent},
-      {path: 'events', component: EventsComponent, canActivate: [AdminAuthGuard]},
+      {path: 'events', component: EventsComponent, canActivate: [RoleGuard], data: {
+        allowedRoles: [UserRole.Administrator, UserRole.Manager]
+        }},
       {path: 'email', component: EmailComponent, canActivate: [AdminAuthGuard]},
-      {path: 'journal', component: JournalComponent, canActivate: [AdminAuthGuard]}
+      {path: 'journal', component: JournalComponent, canActivate: [RoleGuard], data: {
+        allowedRoles: [UserRole.Manager, UserRole.Accountant, UserRole.Administrator]
+        }}
     ]},
   {path: 'account', component: AccountComponent, children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},

@@ -1,9 +1,34 @@
 <div class="container">
   <div class="container">
     <div class="row text-left justify-content-between">
-      <div class="col-2"><h2>Journal</h2></div>
-      <div class="col-10">
-        <button class="btn btn-primary">Add entry</button>
+      <div class="col"><h2>Journal</h2></div>
+      <div class="col text-right">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modal-add-journal-entry">Add Entry</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>
+          Status
+          <select class="form-control w-auto" (change)="statusFilter = $event.target.value">
+            <option [ngValue]="null">Any</option>
+            <option [ngValue]="transactionStatusType.Approved">Approved</option>
+            <option [ngValue]="transactionStatusType.Pending">Pending</option>
+            <option [ngValue]="transactionStatusType.Denied">Rejected</option>
+          </select>
+        </label>
+        <label>
+          From Date
+          <input type="date" class="form-control" (change)="setDateFilter($event.target.value, true)"/>
+        </label>
+        <label>
+          To Date
+          <input type="date" class="form-control" (change)="setDateFilter($event.target.value, false)"/>
+        </label>
+        <label>
+          Search
+          <input type="text" class="form-control"/>
+        </label>
       </div>
     </div>
     <table class="table table-borderless users-table">
@@ -13,25 +38,56 @@
         <th>Type</th>
         <th>Created By</th>
         <th>Entries</th>
+        <th>Status</th>
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let transaction of transactions">
+      <ng-container *ngFor="let transaction of viewTransactions">
         <tr>
           <td>{{transaction.createDate | date: 'M/d/yyyy'}}</td>
-          <td>{{transaction.type.name}}</td>
+          <td>{{transactionType[transaction.type]}}</td>
           <td>{{transaction.createdBy.fullName}}</td>
           <td><app-journal-entries-list [entries]="transaction.entries"></app-journal-entries-list></td>
+          <td class="text-center align-middle">
+            <span class="d-block" *ngIf="!canUserPost() || transaction.status != transactionStatusType.Pending">{{transactionStatusType[transaction.status]}}</span>
+            <div *ngIf="canUserPost() && transaction.status == transactionStatusType.Pending">
+              <button class="btn btn-success w-100 mb-3">Approve</button>
+              <button class="btn btn-danger w-100">Reject</button>
+            </div>
+          </td>
         </tr>
-        <tr class="border-bottom">
-          <td colspan="3"></td>
-          <td>
+        <tr>
+          <td colspan="5">
             <span class="font-weight-bold">Description: </span>
             <span>{{transaction.description}}</span>
+          </td>
+        </tr>
+        <tr class="border-bottom">
+          <td colspan="5">
+            <span class="font-weight-bold">Source documents: </span>
+            <span>No documents</span>
           </td>
         </tr>
       </ng-container>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-add-journal-entry">
+  <div class="modal-dialog modal-dialog-centered modal-50">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="h5 modal-title">Add journal entry</span>
+      </div>
+      <div class="modal-body">
+        <app-journal-add-form #addForm></app-journal-add-form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="addForm.reset()">Cancel</button>
+        <button type="button" class="btn btn-secondary" (click)="addForm.reset()">Reset</button>
+        <button type="button" class="btn btn-primary" (click)="addForm.submit()" [disabled]="!addForm.valid">Save</button>
+      </div>
+    </div>
   </div>
 </div>

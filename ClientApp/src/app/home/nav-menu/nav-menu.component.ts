@@ -8,13 +8,10 @@ import {UserRole} from "../../shared/user-model";
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  private userRole = UserRole;
   isExpanded = false;
 
   constructor(private loginService: LoginService){}
-
-  collapse() {
-    this.isExpanded = false;
-  }
 
   toggle() {
     this.isExpanded = !this.isExpanded;
@@ -25,8 +22,8 @@ export class NavMenuComponent {
 
   }
 
-  private isUserAdmin(){
-    return this.loginService.currentUserRole() == UserRole.Administrator;
+  private roleCanActivate(roles: UserRole[]): boolean{
+    return roles.some(role => role == this.loginService.currentUserRole());
   }
 
 }

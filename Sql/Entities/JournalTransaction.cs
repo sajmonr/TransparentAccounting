@@ -11,9 +11,10 @@ namespace TransparentAccounting.Sql.Entities
         public int CreatedBy { get; set; }
         public DateTime CreateDate { get; set; }
         public string Description { get; set; }
-        public int? ApprovedBy { get; set; }
-        public DateTime? ApproveDate { get; set; }
-        public int JournalId { get; set; }
+        public int? ResolvedBy { get; set; }
+        public DateTime? ResolveDate { get; set; }
+        public int JournalId { get; set; } = 1;
         public int Type { get; set; }
+        public int Status { get; set; }
     }
 }

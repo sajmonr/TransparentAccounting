@@ -13,3 +13,27 @@ fieldset legend{
 label{
   width: 100%;
 }
+.modal-95{
+  max-width: 95vw !important;
+  height: 100%;
+  margin: 0 auto;
+}
+.modal-95 .modal-content{
+  min-height: 95vh;
+}
+.modal-75{
+  max-width: 75vw !important;
+  height: 100%;
+  margin: 0 auto;
+}
+.modal-75 .modal-content{
+  min-height: 75vh;
+}
+.modal-50{
+  max-width: 50vw !important;
+  height: 100%;
+  margin: 0 auto;
+}
+.modal-50 .modal-content{
+  min-height: 50vh;
+}

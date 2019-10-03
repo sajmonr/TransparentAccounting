@@ -28,6 +28,10 @@ import {ForgotComponent} from "./account/forgot/forgot.component";
 import {EmailComponent} from "./home/email/email.component";
 import {JournalComponent} from "./home/journal/journal.component";
 import {JournalEntriesListComponent} from "./home/journal/entries/journal.entries.list.component";
+import {JournalAddFormComponent} from "./home/journal/add-form/journal-add-form.component";
+import {AccountsService} from "./services/accounts.service";
+import {JournalService} from "./services/journal.service";
+import {RoleGuard} from "./role-guard.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +51,8 @@ import {JournalEntriesListComponent} from "./home/journal/entries/journal.entrie
     ResolveComponent,
     EmailComponent,
     JournalComponent,
-    JournalEntriesListComponent
+    JournalEntriesListComponent,
+    JournalAddFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -56,7 +61,7 @@ import {JournalEntriesListComponent} from "./home/journal/entries/journal.entrie
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [LoginService, AuthGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService],
+  providers: [LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

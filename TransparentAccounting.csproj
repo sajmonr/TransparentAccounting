@@ -41,6 +41,8 @@
     <Content Include="ClientApp\src\app\home\events\events.component.css" />
     <Content Include="ClientApp\src\app\home\events\events.component.html" />
     <Content Include="ClientApp\src\app\home\home.component.html" />
+    <Content Include="ClientApp\src\app\home\journal\add-form\journal-add-form.component.css" />
+    <Content Include="ClientApp\src\app\home\journal\add-form\journal-add-form.component.html" />
     <Content Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.css" />
     <Content Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.html" />
     <Content Include="ClientApp\src\app\home\journal\journal.component.css" />
@@ -49,9 +51,11 @@
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
     <Content Include="ClientApp\src\app\shared\components\message\message.component.css" />
     <Content Include="ClientApp\src\app\shared\components\message\message.component.html" />
+    <Content Include="ClientApp\src\assets\images\cancel.png" />
     <Content Include="ClientApp\src\assets\images\error.png" />
     <Content Include="ClientApp\src\assets\images\info.png" />
     <Content Include="ClientApp\src\assets\images\logo.png" />
+    <Content Include="ClientApp\src\assets\images\ok.png" />
     <Content Include="ClientApp\src\assets\images\success.png" />
     <Content Include="ClientApp\src\assets\images\user.png" />
     <Content Include="ClientApp\src\assets\scripts\create.sql" />
@@ -76,10 +80,14 @@
     <TypeScriptCompile Include="ClientApp\src\app\home\email\email.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\events\events.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\journal\add-form\journal-add-form.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\journal.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\role-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\accounts.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\journal.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\logging.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\message.service.ts" />
@@ -89,7 +97,6 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\email.message.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\event.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\journal.entry.model.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\shared\journal.entry.type.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\journal.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\journal.transaction.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\login.model.ts" />

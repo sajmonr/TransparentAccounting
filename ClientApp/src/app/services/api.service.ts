@@ -90,6 +90,10 @@ export class ApiService{
       case ApiMethod.GetTransactions:
         url += 'Journal/Transactions';
         break;
+      case ApiMethod.AddTransaction:
+        url += 'Journal/AddTransaction';
+        break;
+
     }
 
     return url;
@@ -124,5 +128,6 @@ export enum ApiMethod {
   ForgotPassword,
   ResolveSelfRegistration,
   GetJournalEntries,
-  GetTransactions
+  GetTransactions,
+  AddTransaction
 }

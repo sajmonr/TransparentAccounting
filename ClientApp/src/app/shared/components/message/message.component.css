@@ -1,3 +1,7 @@
-.message-image{
-  width: 100px;
+button{
+  border-radius: 2rem;
+}
+.modal{
+  z-index: 1060 !important;
+  background-color: rgba(0,0,0,0.35);
 }

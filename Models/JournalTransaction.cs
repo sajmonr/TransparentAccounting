@@ -12,11 +12,12 @@ namespace TransparentAccounting.Models
         public User CreatedBy { get; set; }
         public DateTime CreateDate { get; set; }
         public string Description { get; set; }
-        public User ApprovedBy { get; set; }
-        public DateTime? ApproveDate { get; set; }
+        public User ResolvedBy { get; set; }
+        public DateTime? ResolveDate { get; set; }
         public Journal Journal { get; set; }
-        public JournalEntryType Type { get; set; }
+        public TransactionType Type { get; set; }
         public List<JournalEntry> Entries { get; set; }
+        public TransactionStatusType Status { get; set; }
 
         public static JournalTransaction FromDbEntity(SqlEntities.JournalTransaction sqlTransaction)
         {
@@ -26,12 +27,9 @@ namespace TransparentAccounting.Models
 
             var journal =
                 Journal.FromDbEntity(db.Select<SqlEntities.Journal>().First(j => j.Id == sqlTransaction.JournalId));
-            var journalEntryType =
-                JournalEntryType.FromDbEntity(db.Select<SqlEntities.JournalEntryType>()
-                    .First(t => t.Id == sqlTransaction.Type));
             var createdBy = User.FromDbEntity(users.First(u => u.Id == sqlTransaction.CreatedBy));
-            var approvedBy = sqlTransaction.ApprovedBy.HasValue ? 
-                User.FromDbEntity(users.FirstOrDefault(u => u.Id == sqlTransaction.ApprovedBy.Value)) : null;
+            var resolvedBy = sqlTransaction.ResolvedBy.HasValue ? 
+                User.FromDbEntity(users.FirstOrDefault(u => u.Id == sqlTransaction.ResolvedBy.Value)) : null;
 
             var entries = new List<JournalEntry>();
             
@@ -45,12 +43,13 @@ namespace TransparentAccounting.Models
                 Id = sqlTransaction.Id,
                 CreateDate = sqlTransaction.CreateDate,
                 Description = sqlTransaction.Description,
-                ApproveDate = sqlTransaction.ApproveDate,
+                ResolveDate = sqlTransaction.ResolveDate,
                 Journal = journal,
-                Type = journalEntryType,
-                ApprovedBy = approvedBy,
+                Type = (TransactionType)sqlTransaction.Type,
+                ResolvedBy = resolvedBy,
                 CreatedBy = createdBy,
-                Entries = entries
+                Entries = entries,
+                Status = (TransactionStatusType)sqlTransaction.Status
             };
         }
         

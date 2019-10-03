@@ -1,6 +1,5 @@
 import {User} from "./user-model";
 import {Journal} from "./journal.model";
-import {JournalEntryType} from "./journal.entry.type.model";
 import {JournalEntry} from "./journal.entry.model";
 
 export class JournalTransaction{
@@ -8,9 +7,19 @@ export class JournalTransaction{
   createdBy: User;
   createDate: Date;
   description: string;
-  approvedBy: User;
-  approveDate: Date;
+  resolvedBy: User;
+  resolveDate: Date;
   journal: Journal;
-  type: JournalEntryType;
+  type: TransactionType;
   entries: JournalEntry[];
+  status: TransactionStatusType;
+}
+export enum TransactionStatusType{
+  Pending,
+  Approved,
+  Denied
+}
+export enum TransactionType{
+  Regular,
+  Adjusting
 }

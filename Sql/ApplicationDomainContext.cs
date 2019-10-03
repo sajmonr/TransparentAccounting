@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using MySql.Data.MySqlClient;
 using TransparentAccounting.Sql.Attributes;
 using TransparentAccounting.Utilities;
@@ -64,8 +65,9 @@ namespace TransparentAccounting.Sql
             }
         }
 
-        public void Insert<T>(T value)
+        public int Insert<T>(T value)
         {
+            int insertId = 0;
             var command = CreateInsertCommand<T>(value);
 
             using (var connection = GetConnection())
@@ -73,7 +75,11 @@ namespace TransparentAccounting.Sql
                 command.Connection = connection;
                 connection.Open();
                 command.ExecuteNonQuery();
+
+                insertId = LastInsertedId(connection);
             }
+
+            return insertId;
         }
 
         public void Update<T>(T value)
@@ -164,5 +170,11 @@ namespace TransparentAccounting.Sql
         private string GetTableName<T>() => GetTableName(typeof(T));
         private string GetTableName(Type tableType) =>
             ((TableAttribute)tableType.GetCustomAttributes(typeof(TableAttribute), inherit: false).Single()).Name;
+
+        private int LastInsertedId(MySqlConnection connection)
+        {
+            var command = new MySqlCommand("select last_insert_id()", connection);
+            return Convert.ToInt32(command.ExecuteScalar());
+        }
     }
 }
