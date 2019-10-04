@@ -54,13 +54,13 @@ namespace TransparentAccounting.Controllers
         }
 
         [HttpPost]
-        public void ApproveEntry()
+        public void ApproveTransaction()
         {
             
         }
 
         [HttpPost]
-        public void RejectEntry()
+        public void RejectTransaction()
         {
             
         }
