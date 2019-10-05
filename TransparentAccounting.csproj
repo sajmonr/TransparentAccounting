@@ -87,11 +87,13 @@
     <TypeScriptCompile Include="ClientApp\src\app\role-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\accounts.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\file.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\journal.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\logging.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\message.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\account.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\attachement.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\category.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\components\message\message.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\email.message.model.ts" />

@@ -5,7 +5,6 @@ using SqlEntity = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Models
 {
-    public enum NormalSide{Left, Right}
     public class Account
     {
         public int Id { get; set; }

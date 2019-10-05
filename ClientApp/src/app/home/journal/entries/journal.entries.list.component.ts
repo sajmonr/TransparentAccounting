@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {JournalEntry} from "../../../shared/journal.entry.model";
+import {NormalSide} from "../../../shared/account.model";
 
 @Component({
   selector: 'app-journal-entries-list',
@@ -10,9 +11,9 @@ export class JournalEntriesListComponent{
   @Input() entries: JournalEntry[];
 
   private getDebits(): JournalEntry[]{
-    return this.entries.filter(a => a.debit);
+    return this.entries.filter(a => a.side == NormalSide.Left);
   }
   private getCredits(): JournalEntry[]{
-    return this.entries.filter(a => !a.debit);
+    return this.entries.filter(a => a.side == NormalSide.Right);
   }
 }

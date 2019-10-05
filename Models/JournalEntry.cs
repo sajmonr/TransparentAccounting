@@ -12,7 +12,7 @@ namespace TransparentAccounting.Models
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public int TransactionId { get; set; }
-        public bool Debit { get; set; }
+        public NormalSide Side { get; set; }
         public Account Account { get; set; }
 
         public static JournalEntry FromDbEntity(SqlEntities.JournalEntry sqlEntry)
@@ -26,7 +26,7 @@ namespace TransparentAccounting.Models
                 Id = sqlEntry.Id,
                 Amount =  sqlEntry.Amount,
                 TransactionId = sqlEntry.TransactionId,
-                Debit = sqlEntry.Debit == 1,
+                Side = (NormalSide)sqlEntry.Side,
                 Account = account
             };
         }

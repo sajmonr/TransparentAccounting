@@ -1,24 +1,28 @@
 import {HttpClient} from "@angular/common/http";
 import {ApiMethod, ApiService} from "./api.service";
-import {JournalTransaction} from "../shared/journal.transaction.model";
+import {JournalTransaction, TransactionStatusType} from "../shared/journal.transaction.model";
 import {Injectable} from "@angular/core";
+import {LoginService} from "./login.service";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class JournalService{
-  constructor(private http: HttpClient, private api: ApiService){}
+  constructor(private http: HttpClient, private api: ApiService, private login: LoginService){}
 
   addTransaction(transaction: JournalTransaction){
     this.http.post(this.api.getUrl(ApiMethod.AddTransaction), transaction).subscribe(result => {
-      console.log('done');
+
     })
   }
 
-  approveTransaction(transaction: JournalTransaction){
-    this.http.post(this.api.getUrl(ApiMethod.ApproveTransaction), transaction);
-  }
+  resolveTransaction(transaction: JournalTransaction, approve: boolean): Promise<any> {
+    transaction.resolvedBy = this.login.getCurrentUser();
 
-  rejectTransaction(transaction: JournalTransaction){
-    this.http.post(this.api.getUrl(ApiMethod.RejectTransaction), transaction);
+    return new Promise<any>(resolve => {
+      this.http.post(this.api.getUrl(approve ? ApiMethod.ApproveTransaction : ApiMethod.RejectTransaction), transaction).subscribe(() => {
+        resolve();
+      });
+    });
   }
 
 }

@@ -31,9 +31,9 @@
             </select>
           </td>
           <td>
-            <select class="form-control" [(ngModel)]="entry.debit" name="entry-debit-{{i}}">
-              <option [ngValue]="true">Debit</option>
-              <option [ngValue]="false">Credit</option>
+            <select class="form-control" [(ngModel)]="entry.side" name="entry-debit-{{i}}">
+              <option [ngValue]="normalSide.Left">Debit</option>
+              <option [ngValue]="normalSide.Right">Credit</option>
             </select>
           </td>
           <td><input type="number" step="0.01" min="0" class="form-control" [(ngModel)]="entry.amount" (keyup)="onUpdateEntries()" name="entry-amount-{{i}}"/></td>
@@ -46,6 +46,31 @@
     <span class="help-text text-danger d-block" *ngFor="let error of journalEntriesErrors">{{error}}</span>
   </div>
   <div class="form-group">
-
+    <table class="table table-borderless files-table">
+      <tr *ngIf="files.length == 0">
+        <td class="font-weight-bold">Files: </td>
+        <td>No files selected</td>
+        <td></td>
+      </tr>
+      <tr *ngFor="let file of files; first as isFirst; index as i">
+        <td class="font-weight-bold">{{isFirst ? 'Files: ' : ''}}</td>
+        <td>{{file.name}}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="onFileDelete(i)">Delete</button>
+        </td>
+      </tr>
+    </table>
+    <div class="text-right">
+      <span class="btn btn-primary btn-file">
+      Add File
+      <input type="file" multiple accept="application/msword,.xls,.xlsx,.pdf,.jpg,.jpeg,.png" (change)="onFileSelected($event.target.files)"/>
+    </span>
+    </div>
+    <div class="mt-2" *ngIf="uploadProgress >= 0">
+      <span class="d-block display-4 text-center mb-2" style="font-size: 2rem;">Uploading files ({{uploadProgress}}%)</span>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width.%]="uploadProgress"></div>
+      </div>
+    </div>
   </div>
 </form>

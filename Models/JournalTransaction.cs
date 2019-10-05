@@ -18,26 +18,22 @@ namespace TransparentAccounting.Models
         public TransactionType Type { get; set; }
         public List<JournalEntry> Entries { get; set; }
         public TransactionStatusType Status { get; set; }
+        public List<Attachment> Attachments { get; set; }
 
         public static JournalTransaction FromDbEntity(SqlEntities.JournalTransaction sqlTransaction)
         {
             var db = new ApplicationDomainContext();
 
-            var users = db.Select<SqlEntities.User>();
-
+            var users = db.Select<SqlEntities.User>().ToArray();
+            var attachments = db.Select<SqlEntities.Attachment>().Where(a => a.TransactionId == sqlTransaction.Id);
             var journal =
                 Journal.FromDbEntity(db.Select<SqlEntities.Journal>().First(j => j.Id == sqlTransaction.JournalId));
             var createdBy = User.FromDbEntity(users.First(u => u.Id == sqlTransaction.CreatedBy));
             var resolvedBy = sqlTransaction.ResolvedBy.HasValue ? 
                 User.FromDbEntity(users.FirstOrDefault(u => u.Id == sqlTransaction.ResolvedBy.Value)) : null;
 
-            var entries = new List<JournalEntry>();
-            
-            foreach (var e in db.Select<SqlEntities.JournalEntry>().Where(e => e.TransactionId == sqlTransaction.Id))
-            {
-                entries.Add(JournalEntry.FromDbEntity(e));
-            }
-            
+            var entries = db.Select<SqlEntities.JournalEntry>().Where(e => e.TransactionId == sqlTransaction.Id).Select(JournalEntry.FromDbEntity).ToList();
+
             return new JournalTransaction
             {
                 Id = sqlTransaction.Id,
@@ -49,7 +45,8 @@ namespace TransparentAccounting.Models
                 ResolvedBy = resolvedBy,
                 CreatedBy = createdBy,
                 Entries = entries,
-                Status = (TransactionStatusType)sqlTransaction.Status
+                Status = (TransactionStatusType)sqlTransaction.Status,
+                Attachments = attachments.Select(Attachment.FromDbEntity).ToList()
             };
         }
         

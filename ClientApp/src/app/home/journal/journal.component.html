@@ -11,10 +11,10 @@
         <label>
           Status
           <select class="form-control w-auto" (change)="statusFilter = $event.target.value">
-            <option [ngValue]="null">Any</option>
-            <option [ngValue]="transactionStatusType.Approved">Approved</option>
-            <option [ngValue]="transactionStatusType.Pending">Pending</option>
-            <option [ngValue]="transactionStatusType.Denied">Rejected</option>
+            <option value="{{null}}">Any</option>
+            <option value="{{transactionStatusType.Approved}}">Approved</option>
+            <option value="{{transactionStatusType.Pending}}">Pending</option>
+            <option value="{{transactionStatusType.Rejected}}">Rejected</option>
           </select>
         </label>
         <label>
@@ -27,11 +27,11 @@
         </label>
         <label>
           Search
-          <input type="text" class="form-control"/>
+          <input type="text" class="form-control" [(ngModel)]="searchFilter" (keyup)="onSearchKeyUp()"/>
         </label>
       </div>
     </div>
-    <table class="table table-borderless users-table">
+    <table class="table table-borderless entry-table">
       <thead>
       <tr>
         <th>Date</th>
@@ -49,23 +49,31 @@
           <td>{{transaction.createdBy.fullName}}</td>
           <td><app-journal-entries-list [entries]="transaction.entries"></app-journal-entries-list></td>
           <td class="text-center align-middle">
-            <span class="d-block" *ngIf="!canUserPost() || transaction.status != transactionStatusType.Pending">{{transactionStatusType[transaction.status]}}</span>
+            <span class="d-block" *ngIf="!canUserPost() || transaction.status != transactionStatusType.Pending"
+            [ngClass]="{'text-info': transaction.status == transactionStatusType.Pending, 'text-success': transaction.status == transactionStatusType.Approved, 'text-danger': transaction.status == transactionStatusType.Rejected}">{{transactionStatusType[transaction.status]}}</span>
             <div *ngIf="canUserPost() && transaction.status == transactionStatusType.Pending">
-              <button class="btn btn-success w-100 mb-3">Approve</button>
-              <button class="btn btn-danger w-100">Reject</button>
+              <button class="btn btn-success w-100 mb-3" data-toggle="modal" data-target="#modal-resolve-journal-entry" [attr.data-approve]="true" [attr.data-transaction]="transaction.id">Approve</button>
+              <button class="btn btn-danger w-100" data-toggle="modal" data-target="#modal-resolve-journal-entry" [attr.data-approve]="false" [attr.data-transaction]="transaction.id">Reject</button>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="5">
-            <span class="font-weight-bold">Description: </span>
-            <span>{{transaction.description}}</span>
-          </td>
-        </tr>
-        <tr class="border-bottom">
-          <td colspan="5">
-            <span class="font-weight-bold">Source documents: </span>
-            <span>No documents</span>
+            <table class="table table-borderless table-information">
+              <tr>
+                <td>Description</td>
+                <td colspan="5">
+                  <span [innerHTML]="transaction.description"></span>
+                </td>
+              </tr>
+              <tr class="border-bottom">
+                <td>Documents</td>
+                <td colspan="5">
+                  <span *ngIf="transaction.attachments.length == 0">No documents</span>
+                  <a *ngFor="let attachment of transaction.attachments" href="{{attachment.path}}" download="{{attachment.name}}" class="d-block">{{attachment.name}}</a>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
       </ng-container>
@@ -74,7 +82,28 @@
   </div>
 </div>
 
-<div class="modal fade" id="modal-add-journal-entry">
+<div class="modal fade" id="modal-resolve-journal-entry">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="h5 modal-title">{{resolveApprove ? 'Approve' : 'Reject'}} entry</span>
+      </div>
+      <div class="modal-body">
+        <label class="w-100">
+          Comments
+          <textarea class="form-control" rows="4" [(ngModel)]="resolveComments" (input)="approveCommentsChanged($event.target.value)"></textarea>
+        </label>
+        <span class="help-block text-danger" *ngIf="!resolveValid">You must enter a reason for rejection.</span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#modal-resolve-journal-entry">Cancel</button>
+        <button class="btn btn-primary" type="button" [ngStyle]="{'cursor': resolveValid ? 'pointer' : 'not-allowed'}" data-toggle="modal" data-target="#modal-resolve-journal-entry" (click)="onEntryResolve()" [disabled]="!resolveValid">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-add-journal-entry" #addModal>
   <div class="modal-dialog modal-dialog-centered modal-50">
     <div class="modal-content">
       <div class="modal-header">
@@ -86,7 +115,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="addForm.reset()">Cancel</button>
         <button type="button" class="btn btn-secondary" (click)="addForm.reset()">Reset</button>
-        <button type="button" class="btn btn-primary" (click)="addForm.submit()" [disabled]="!addForm.valid">Save</button>
+        <button type="button" class="btn btn-primary" (click)="submitNewEntry()" [disabled]="!addForm.valid || submitInProgress">Save</button>
       </div>
     </div>
   </div>

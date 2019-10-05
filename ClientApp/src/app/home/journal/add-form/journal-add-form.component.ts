@@ -1,16 +1,6 @@
-import {
-  Component,
-  DoCheck,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild
-} from "@angular/core";
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
-import {Account} from "../../../shared/account.model";
+import {Component, DoCheck, OnInit, ViewChild} from "@angular/core";
+import {NgForm} from "@angular/forms";
+import {Account, NormalSide} from "../../../shared/account.model";
 import {AccountsService} from "../../../services/accounts.service";
 import {JournalEntry} from "../../../shared/journal.entry.model";
 import {JournalTransaction, TransactionType} from "../../../shared/journal.transaction.model";
@@ -18,7 +8,8 @@ import {LoginService} from "../../../services/login.service";
 import {User} from "../../../shared/user-model";
 import {JournalService} from "../../../services/journal.service";
 import {MessageService} from "../../../services/message.service";
-import {BootstrapOptions} from "@angular/core/src/application_ref";
+import {FileService} from "../../../services/file.service";
+import {Attachement} from "../../../shared/attachement.model";
 
 @Component({
   selector: 'app-journal-add-form',
@@ -27,10 +18,12 @@ import {BootstrapOptions} from "@angular/core/src/application_ref";
 })
 export class JournalAddFormComponent implements OnInit, DoCheck{
   @ViewChild('newForm')newForm: NgForm;
-  private transactionType = TransactionType;
+  private normalSide = NormalSide;
   private addNewEntryTimeout;
   private allAccounts: Account[] = [];
   private journalEntries: JournalEntry[] = [];
+  private files: File[] = [];
+  private uploadProgress = -1;
 
   private journalEntriesTouched = false;
   private journalEntriesErrors: string[] = [];
@@ -40,7 +33,8 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
   constructor(private accountsService: AccountsService,
               private journalService: JournalService,
               private loginService: LoginService,
-              private messages: MessageService){}
+              private messages: MessageService,
+              private filesService: FileService){}
 
   ngOnInit(): void {
     this.reset();
@@ -62,6 +56,40 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       clearTimeout(this.addNewEntryTimeout);
     }
     this.addNewEntryTimeout = setTimeout(this.addNewEntry.bind(this), 500);
+  }
+
+  private onFileSelected(files: FileList){
+    for(let i = 0; i < files.length; i++){
+      let file = files[i];
+      if(!this.files.some(f => f.name == file.name)){
+        this.files.push(file);
+      }
+    }
+  }
+  private async uploadFiles(): Promise<Attachement[]>{
+    return new Promise<Attachement[]>(resolve => {
+      this.filesService.progress.subscribe(this.onUploadProgress.bind(this));
+      this.filesService.uploadFinished.subscribe(files => {
+        const attachments: Attachement[] = [];
+
+        files.forEach(f => {
+          const a = new Attachement();
+          a.name = f.name;
+          a.path = f.path;
+
+          attachments.push(a);
+        });
+
+        resolve(attachments);
+      });
+      this.filesService.upload(this.files);
+    });
+  }
+  private onFileDelete(index: number){
+    this.files.splice(index, 1);
+  }
+  private onUploadProgress(progress: number){
+    this.uploadProgress = progress;
   }
 
   private onEntryDelete(entry: JournalEntry){
@@ -123,7 +151,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
     let credit = 0;
 
     this.journalEntries.forEach(entry => {
-      if(entry.debit)
+      if(entry.side == NormalSide.Left)
         debit++;
       else
         credit++;
@@ -137,7 +165,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
     let credit = 0;
 
     this.journalEntries.forEach(entry => {
-      if(entry.debit)
+      if(entry.side == NormalSide.Left)
         debit += entry.amount;
       else
         credit += entry.amount;
@@ -160,7 +188,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
     this.journalEntriesErrors = newErrors;
   }
 
-  submit(){
+  async submit(){
     const error = this.validateForm();
     if(error){
       this.messages.error('Uh-oh', error);
@@ -176,6 +204,9 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
     transaction.createdBy = createdBy;
     transaction.entries = this.journalEntries.filter(entry => entry.amount > 0 && entry.account.id > 0);
 
+    if(this.files.length > 0){
+      transaction.attachments = await this.uploadFiles();
+    }
     this.journalService.addTransaction(transaction);
   }
 
@@ -184,6 +215,9 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
 
     this.journalEntriesTouched = false;
     this.journalEntriesErrors = [];
+
+    this.files = [];
+    this.uploadProgress = -1;
 
     this.journalEntries.splice(0, this.journalEntries.length);
     this.addNewEntry();

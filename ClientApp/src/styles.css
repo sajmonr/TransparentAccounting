@@ -13,6 +13,10 @@ fieldset legend{
 label{
   width: 100%;
 }
+.modal-body{
+  max-height: 75vh;
+  overflow-y: scroll;
+}
 .modal-95{
   max-width: 95vw !important;
   height: 100%;
@@ -36,4 +40,7 @@ label{
 }
 .modal-50 .modal-content{
   min-height: 50vh;
+}
+button:disabled{
+  cursor: not-allowed;
 }

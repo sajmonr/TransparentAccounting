@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {ChangeDetectorRef, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -32,6 +32,8 @@ import {JournalAddFormComponent} from "./home/journal/add-form/journal-add-form.
 import {AccountsService} from "./services/accounts.service";
 import {JournalService} from "./services/journal.service";
 import {RoleGuard} from "./role-guard.service";
+import {DatePipe} from "@angular/common";
+import {FileService} from "./services/file.service";
 
 @NgModule({
   declarations: [
@@ -61,7 +63,7 @@ import {RoleGuard} from "./role-guard.service";
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService],
+  providers: [DatePipe, LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService,FileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

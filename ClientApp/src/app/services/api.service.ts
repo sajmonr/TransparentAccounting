@@ -99,6 +99,9 @@ export class ApiService{
       case ApiMethod.RejectTransaction:
         url += 'Journal/RejectTransaction';
         break;
+      case ApiMethod.UploadFile:
+        url += 'Files/Upload';
+        break;
     }
 
     return url;
@@ -136,5 +139,6 @@ export enum ApiMethod {
   GetTransactions,
   AddTransaction,
   ApproveTransaction,
-  RejectTransaction
+  RejectTransaction,
+  UploadFile
 }
