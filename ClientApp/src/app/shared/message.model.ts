@@ -1,6 +1,6 @@
 export class Message{
   title: string;
-  message: string;
+  modalMessage: string;
   type: MessageType;
 }
-export enum MessageType{Info, Success, Error}
+export enum MessageType{Success, Error, Info}

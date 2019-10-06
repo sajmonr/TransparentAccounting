@@ -1,22 +1,27 @@
 <table>
   <thead>
     <tr>
-      <th colspan="7">
+      <th colspan="10">
         <span class="h4">{{sectionTitle}}</span>
       </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let account of accounts.sort(accountsComparator)">
-      <td>{{account.accountId}}</td>
-      <td>{{account.name}}</td>
+      <td class="link" (click)="onLedgerSelected(account)">{{account.accountId}}</td>
+      <td class="link" (click)="onLedgerSelected(account)">{{account.name}}</td>
       <td>{{eNormalSide[account.normalSide]}}</td>
-      <td>{{account.beginningBalance | currency}}</td>
-      <td>{{account.balance | currency}}</td>
+      <td class="text-right">{{account.beginningBalance | currency}}</td>
+      <td class="text-right">{{account.balance | currency}}</td>
+      <td class="text-right">{{account.credit | currency}}</td>
+      <td class="text-right">{{account.debit | currency}}</td>
       <td>{{account.subcategory.name}}</td>
+      <td>{{account.comment}}</td>
       <td>
-        <button class="btn btn-info btn-sm m-1" (click)="onAccountEdit(account)">Edit</button>
-        <button class="btn btn-danger btn-sm m-1" (click)="onAccountRemove(account)" >Delete</button>
+        <button *ngIf="isUserAuthorized()" class="btn btn-info btn-sm m-1" data-toggle="tooltip" title="Allows you to edit accounts" (click)="onAccountEdit(account)">Edit</button>
+        <button *ngIf="isUserAuthorized() && account.active" class="btn btn-danger btn-sm m-1" data-toggle="tooltip" title="Allows you to deactivate accounts" (click)="onAccountDeactivate(account)" >Deactivate</button>
+        <button *ngIf="isUserAuthorized() && !account.active" class="btn btn-info btn-sm m-1" data-toggle="tooltip" title="Allows you to activate accounts" (click)="onAccountActivate(account)" >Activate</button>
+
       </td>
     </tr>
   </tbody>

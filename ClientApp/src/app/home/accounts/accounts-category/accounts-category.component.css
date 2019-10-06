@@ -2,3 +2,21 @@ table{
   width: 100%;
   table-layout: fixed;
 }
+
+.outer-div
+{
+  padding: 30px;
+  text-align: center;
+}
+
+.inner-div
+{
+  margin: 0 auto;
+  display: inline-block;
+  padding: 50px;
+}
+
+.link {
+  color: deepskyblue;
+  text-decoration: underline;
+}
