@@ -47,6 +47,8 @@
     <Content Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.html" />
     <Content Include="ClientApp\src\app\home\journal\journal.component.css" />
     <Content Include="ClientApp\src\app\home\journal\journal.component.html" />
+    <Content Include="ClientApp\src\app\home\ledger\ledger.component.css" />
+    <Content Include="ClientApp\src\app\home\ledger\ledger.component.html" />
     <Content Include="ClientApp\src\app\home\users\users.component.css" />
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
     <Content Include="ClientApp\src\app\shared\components\message\message.component.css" />
@@ -83,6 +85,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\add-form\journal-add-form.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\entries\journal.entries.list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\journal.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\ledger\ledger.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\role-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\accounts.service.ts" />

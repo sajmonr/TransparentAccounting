@@ -16,6 +16,7 @@ import {EmailComponent} from "./home/email/email.component";
 import {JournalComponent} from "./home/journal/journal.component";
 import {RoleGuard} from "./role-guard.service";
 import {UserRole} from "./shared/user-model";
+import {LedgerComponent} from "./home/ledger/ledger.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -30,6 +31,12 @@ const routes: Routes = [
       {path: 'email', component: EmailComponent, canActivate: [AdminAuthGuard]},
       {path: 'journal', component: JournalComponent, canActivate: [RoleGuard], data: {
         allowedRoles: [UserRole.Manager, UserRole.Accountant, UserRole.Administrator]
+        }},
+      {path: 'ledger', component: LedgerComponent, canActivate: [RoleGuard], data: {
+        allowedRoles: [UserRole.Administrator, UserRole.Manager, UserRole.Accountant]
+        }},
+      {path: 'ledger/:accountId', component: LedgerComponent, canActivate: [RoleGuard], data: {
+          allowedRoles: [UserRole.Administrator, UserRole.Manager, UserRole.Accountant]
         }}
     ]},
   {path: 'account', component: AccountComponent, children: [

@@ -42,6 +42,9 @@
           <li *ngIf="roleCanActivate([userRole.Administrator, userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/journal"]'>Journal</a>
           </li>
+          <li *ngIf="roleCanActivate([userRole.Administrator, userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a class="nav-link" [routerLink]='["/app/ledger"]'>Ledger</a>
+          </li>
         </ul>
       </div>
     </div>
