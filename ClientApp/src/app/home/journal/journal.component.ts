@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, DoCheck, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from "@angular/core";
 import {ApiMethod, ApiService} from "../../services/api.service";
 import {HttpClient} from "@angular/common/http";
 import {JournalTransaction, TransactionStatusType, TransactionType} from "../../shared/journal.transaction.model";
@@ -8,6 +17,8 @@ import {JournalService} from "../../services/journal.service";
 import {DatePipe, Time} from "@angular/common";
 import {JournalAddFormComponent} from "./add-form/journal-add-form.component";
 import {NormalSide} from "../../shared/account.model";
+import {ActivatedRoute} from "@angular/router";
+import {single} from "rxjs/operators";
 
 @Component({
   selector: 'app-journal',
@@ -22,6 +33,8 @@ export class JournalComponent implements OnInit, DoCheck{
   private transactions: JournalTransaction[] = [];
   private viewTransactions: JournalTransaction[] = [];
 
+  private viewEntryId = -1;
+
   private statusFilter: TransactionStatusType = null;
   private startDateFilter: Date = null;
   private endDateFilter: Date = null;
@@ -35,11 +48,18 @@ export class JournalComponent implements OnInit, DoCheck{
   private submitInProgress = false;
 
   constructor(private changeDetector: ChangeDetectorRef,
+              private activatedRouted: ActivatedRoute,
               private apiService: ApiService,
               private http: HttpClient,
               private journals: JournalService,
               private login: LoginService,
-              private datePipe: DatePipe){}
+              private datePipe: DatePipe){
+    activatedRouted.params.subscribe(params => {
+      if(params["entryId"]){
+        this.viewEntryId = params["entryId"];
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.registerResolveModalHooks();
@@ -47,7 +67,18 @@ export class JournalComponent implements OnInit, DoCheck{
   }
 
   ngDoCheck(): void {
-    this.applyFilters();
+    if(this.viewEntryId < 0)
+      this.applyFilters();
+  }
+
+  private applyFilters(){
+    this.viewTransactions = this.transactions.slice();
+
+    this.applyTransactionStatusFilter();
+    this.applyTransactionDateFilter(true);
+    this.applyTransactionDateFilter(false);
+
+    this.search();
   }
 
   private onEntryResolve(){
@@ -60,7 +91,9 @@ export class JournalComponent implements OnInit, DoCheck{
     this.http.get<JournalTransaction[]>(this.apiService.getUrl(ApiMethod.GetTransactions)).subscribe(transactions => {
       //@ts-ignore
       this.transactions = transactions.sort((left, right) => new Date(right.createDate) - new Date(left.createDate));
-      this.viewTransactions = transactions.slice();
+      console.log(this.viewEntryId);
+      console.log(transactions.filter(t => t.entries.some(e => e.id == this.viewEntryId)));
+      this.viewTransactions = this.viewEntryId > 0 ? transactions.filter(t => t.entries.some(e => e.id == this.viewEntryId)) : transactions.slice();
     });
   }
 
@@ -75,19 +108,7 @@ export class JournalComponent implements OnInit, DoCheck{
     $(this.addModal.nativeElement).modal('hide');
   }
 
-  private applyFilters(){
-    this.viewTransactions = this.transactions.slice();
 
-    this.applyTransactionStatusFilter();
-    this.applyTransactionDateFilter(true);
-    this.applyTransactionDateFilter(false);
-
-    this.search();
-  }
-
-  private onSearchKeyUp(){
-
-  }
 
   private search(){
     if(this.searchFilter == '')
@@ -132,6 +153,7 @@ export class JournalComponent implements OnInit, DoCheck{
       return td.getDate() == date.getDate() && td.getMonth() == date.getMonth() && td.getFullYear() == date.getFullYear();
     });
   }
+
   private setDateFilter(date: string, start: boolean){
     const filterDate = date ? new Date(date) : null;
     if(start){
@@ -166,6 +188,7 @@ export class JournalComponent implements OnInit, DoCheck{
   }
 
   private registerResolveModalHooks() {
+    //@ts-ignore
     $('#modal-resolve-journal-entry').on('show.bs.modal', function (event) {
       //@ts-ignore
       const transactionId = $(event.relatedTarget).data('transaction');

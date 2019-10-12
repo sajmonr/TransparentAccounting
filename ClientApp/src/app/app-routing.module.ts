@@ -32,6 +32,9 @@ const routes: Routes = [
       {path: 'journal', component: JournalComponent, canActivate: [RoleGuard], data: {
         allowedRoles: [UserRole.Manager, UserRole.Accountant, UserRole.Administrator]
         }},
+      {path: 'journal/:entryId', component: JournalComponent, canActivate: [RoleGuard], data: {
+          allowedRoles: [UserRole.Manager, UserRole.Accountant, UserRole.Administrator]
+        }},
       {path: 'ledger', component: LedgerComponent, canActivate: [RoleGuard], data: {
         allowedRoles: [UserRole.Administrator, UserRole.Manager, UserRole.Accountant]
         }},
