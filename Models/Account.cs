@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TransparentAccounting.Sql;
 using TransparentAccounting.Utilities;
@@ -17,6 +18,12 @@ namespace TransparentAccounting.Models
         public int Order { get; set; }
         public bool Active { get; set; }
         public int AccountId { get; set; }
+        
+        public decimal Debit { get; set; }
+        
+        public decimal Credit { get; set; }
+        
+        public String Comment { get; set; }
 
         public static Account FromDbEntity(SqlEntity.Account account, SqlEntity.Category category, SqlEntity.Subcategory subcategory)
         {
@@ -27,6 +34,9 @@ namespace TransparentAccounting.Models
                 NormalSide = (NormalSide) account.NormalSide,
                 BeginningBalance = account.BeginningBalance,
                 Balance = account.Balance,
+                Debit = account.Debit,
+                Credit = account.Credit,
+                Comment = account.Comment,
                 Order = account.Order,
                 Active = account.Active == 1,
                 Category = Category.FromDbEntity(category),

@@ -52,6 +52,37 @@ namespace TransparentAccounting.Sql
 
             return output;
         }
+        
+        public IEnumerable<T> SelectWhere<T>(string conditionField, int conditionValue) where T : new()
+        {
+            var output = new List<T>();
+            var properties = typeof(T).GetProperties();
+            var tableName = GetTableName<T>();
+            using (var connection = GetConnection())
+            {
+                var command = new MySqlCommand($"select * from {tableName} where {ToCamelCase(conditionField)} = {conditionValue}", connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var newT = new T();
+                        foreach (var property in properties)
+                        {
+                            int index = reader.GetOrdinal(ToCamelCase(property.Name));
+                            
+                            property.SetValue(newT, reader.IsDBNull(index) ? null : reader[index]);
+                        }
+                            
+                        
+                        output.Add(newT);
+                    }
+                }
+            }
+
+            return output;
+        }
+
         public void Delete<T>(string conditionField, int conditionValue)
         {
             string tableName = GetTableName<T>();

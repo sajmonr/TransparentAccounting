@@ -7,6 +7,9 @@ export class Account{
   public normalSide: NormalSide;
   public beginningBalance: number;
   public balance: number;
+  public debit: number;
+  public credit: number;
+  public comment: string;
   public category: Category;
   public subcategory: Subcategory;
   public order: number;
@@ -16,6 +19,9 @@ export class Account{
   public constructor(){
     this.id = 0;
     this.active = true;
+    this.credit = 0;
+    this.debit = 0;
+    this.comment = "";
     this.name = "";
     this.normalSide = NormalSide.Left;
     this.beginningBalance = 0;
