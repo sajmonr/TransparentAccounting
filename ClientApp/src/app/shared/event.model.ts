@@ -5,4 +5,6 @@ export class Event{
   createdBy: User;
   timestamp: Date;
   description: string;
+  original: string;
+  updated: string;
 }

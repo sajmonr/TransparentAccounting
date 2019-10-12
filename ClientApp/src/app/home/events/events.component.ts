@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiMethod, ApiService} from "../../services/api.service";
 import {User} from "../../shared/user-model";
 import {Event} from "../../shared/event.model";
+import {diffString} from "../events/stringdiff/jsdiff.js";
 
 @Component({
   selector: 'app-events',
@@ -23,4 +24,9 @@ export class EventsComponent implements OnInit{
       this.events = events;
     })
   }
+
+  private diffCheck(event: Event): string {
+    return diffString("Hello my name is Myles", "Hello my name is Mike");
+  }
+
 }
