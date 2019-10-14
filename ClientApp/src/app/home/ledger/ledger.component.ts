@@ -143,28 +143,47 @@ export class LedgerComponent implements OnInit, DoCheck{
 
     let searchResults: JournalTransaction[];
 
+    let accounts: Account[] = [];
+
     if(this.selectedAccounts.length == 0){
+      let query = this.searchFilter;
       //Only match if this is a decimal number
       if(/^\d*\.?\d{0,2}$/.test(this.searchFilter)){
         searchResults = this.searchByAmount(parseInt(this.searchFilter), this.viewTransactions);
       }
+      this.viewTransactions.forEach(transaction => transaction.entries.forEach(entry => {
+        if (entry.account.accountId.toString().search(query) != -1 && !this.isDuplicate(entry.account, accounts)) {
+          accounts.push(entry.account);
+        }
+      }));
+      this.selectedAccounts = accounts;
     }
 
-    let accounts: Account[] = [];
     if (searchResults != null) {
       searchResults.forEach(transactions => {
         transactions.entries.forEach(entry => {
-          let accounts1 = this.accounts.filter(account => account.id == entry.account.id);
-          accounts1.forEach(account => accounts.push(account));
+          let filteredAccounts = this.accounts.filter(account => account.id == entry.account.id);
+          filteredAccounts.forEach(account => {
+            if (!this.isDuplicate(account, accounts)) {
+              accounts.push(account);
+            }
+          });
         });
       });
       this.selectedAccounts = accounts;
     }
 
-
-
     this.populateData(this.selectedAccounts);
 
+  }
+
+  private isDuplicate(newAccount: Account, accounts) {
+    for (let account of accounts) {
+      if (account.accountId == newAccount.accountId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   ngDoCheck(): void {
