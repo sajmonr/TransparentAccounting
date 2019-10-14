@@ -9,10 +9,12 @@ import {Observable} from "rxjs";
 export class JournalService{
   constructor(private http: HttpClient, private api: ApiService, private login: LoginService){}
 
-  addTransaction(transaction: JournalTransaction){
-    this.http.post(this.api.getUrl(ApiMethod.AddTransaction), transaction).subscribe(result => {
-
-    })
+  async addTransaction(transaction: JournalTransaction): Promise<any>{
+    return new Promise<any>(resolve => {
+      this.http.post(this.api.getUrl(ApiMethod.AddTransaction), transaction).subscribe(result => {
+        resolve();
+      });
+    });
   }
 
   resolveTransaction(transaction: JournalTransaction, approve: boolean): Promise<any> {

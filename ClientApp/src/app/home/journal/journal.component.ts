@@ -91,8 +91,6 @@ export class JournalComponent implements OnInit, DoCheck{
     this.http.get<JournalTransaction[]>(this.apiService.getUrl(ApiMethod.GetTransactions)).subscribe(transactions => {
       //@ts-ignore
       this.transactions = transactions.sort((left, right) => new Date(right.createDate) - new Date(left.createDate));
-      console.log(this.viewEntryId);
-      console.log(transactions.filter(t => t.entries.some(e => e.id == this.viewEntryId)));
       this.viewTransactions = this.viewEntryId > 0 ? transactions.filter(t => t.entries.some(e => e.id == this.viewEntryId)) : transactions.slice();
     });
   }
@@ -103,12 +101,11 @@ export class JournalComponent implements OnInit, DoCheck{
     await this.addForm.submit();
 
     this.submitInProgress = false;
+    console.log('loading');
     this.loadTransactions();
     //@ts-ignore
     $(this.addModal.nativeElement).modal('hide');
   }
-
-
 
   private search(){
     if(this.searchFilter == '')

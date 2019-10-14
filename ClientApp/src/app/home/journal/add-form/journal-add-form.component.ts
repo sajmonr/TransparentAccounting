@@ -121,10 +121,14 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
 
   private getAvailableAccounts(currentEntry: JournalEntry): Account[]{
     let accounts = this.allAccounts.slice();
+
+    if(currentEntry.id == 0)
+      return accounts;
+
     let accountsToRemove = [];
 
     this.journalEntries.forEach(entry => {
-      if(entry.account.id != currentEntry.account.id){
+      if(+entry.account.id != +currentEntry.account.id){
         accountsToRemove.push(entry.account.id);
       }
     });
@@ -133,7 +137,8 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       accounts.splice(accounts.findIndex( a => a.id == accountId), 1);
     });
 
-    return accounts;
+    //return accounts;
+    return this.allAccounts.slice();
   }
 
   private validateForm(): string{
@@ -142,6 +147,8 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
     //Debit == Credit
     if(!this.validateDebitCreditEqual())
       return 'Debits and credits must be equal.';
+    if(!this.validateAccountUse())
+      return 'You cannot use one account more than once.';
 
     return null;
   }
@@ -159,7 +166,18 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
 
     return debit > 0 && credit > 0;
   }
+  private validateAccountUse(): boolean{
+    let accounts: number[] = [];
+    let success = true;
 
+    this.journalEntries.forEach(entry => {
+      if(accounts.some(a => a == entry.account.id))
+        success = false;
+      accounts.push(entry.account.id);
+    });
+
+    return success;
+  }
   private validateDebitCreditEqual(): boolean{
     let debit = 0;
     let credit = 0;
@@ -184,6 +202,8 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       newErrors.push('There must be at least one debit and one credit entry.');
     if(!this.validateDebitCreditEqual())
       newErrors.push('Credits and debits must be equal.');
+    if(!this.validateAccountUse())
+      newErrors.push('You cannot use one account more than once.');
 
     this.journalEntriesErrors = newErrors;
   }
@@ -207,7 +227,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
     if(this.files.length > 0){
       transaction.attachments = await this.uploadFiles();
     }
-    this.journalService.addTransaction(transaction);
+    await this.journalService.addTransaction(transaction);
   }
 
   reset(){
