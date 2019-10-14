@@ -47,15 +47,20 @@ namespace TransparentAccounting.Controllers
 
             int transactionId = dbContext.Insert(sqlTransaction);
 
-            var sqlAttachments = transaction.Attachments.Select(a => new SqlEntities.Attachment
+            if (transaction.Attachments != null)
             {
-                TransactionId = transactionId,
-                Name = a.Name,
-                Path = a.Path
-            });
+                var sqlAttachments = transaction.Attachments.Select(a => new SqlEntities.Attachment
+                {
+                    TransactionId = transactionId,
+                    Name = a.Name,
+                    Path = a.Path
+                });
+                
+                foreach (var attachment in sqlAttachments)
+                    dbContext.Insert(attachment);
+            }
 
-            foreach (var attachment in sqlAttachments)
-                dbContext.Insert(attachment);
+            
             
             var sqlEntries = transaction.Entries.Select(entry => new SqlEntities.JournalEntry
             {
@@ -118,12 +123,42 @@ namespace TransparentAccounting.Controllers
                 var account = accounts.First(a => a.Id == entry.AccountId);
 
                 if (account.NormalSide == entry.Side)
+                {
                     account.Balance += entry.Amount;
-                else
+                }
+                else 
+                {
                     account.Balance -= entry.Amount;
-                
+                }
+
                 dbContext.Update(account);
             }
+        }
+
+        private decimal postDebitBalance(SqlEntities.Account account, SqlEntities.JournalEntry entry)
+        {
+            if (NormalSide.Left.Equals(account.NormalSide))
+            {
+                account.Debit += entry.Amount;
+            }
+            else
+            {
+                account.Debit -= entry.Amount;
+            }
+            return account.Debit;
+        }
+
+        private decimal postCreditBalance(SqlEntities.Account account, SqlEntities.JournalEntry entry)
+        {
+            if (NormalSide.Right.Equals(account.NormalSide))
+            {
+                account.Credit += entry.Amount;
+            }
+            else
+            {
+                account.Credit -= entry.Amount;
+            }
+            return account.Credit;
         }
 
         private void SaveFiles()

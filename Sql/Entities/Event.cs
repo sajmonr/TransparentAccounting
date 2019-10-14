@@ -11,5 +11,8 @@ namespace TransparentAccounting.Sql.Entities
         public int UserId { get; set; }
         public DateTime Timestamp { get; set; }
         public string Description { get; set; }
+        public string Original { get; set; }
+        public string Updated { get; set; }
+        
     }
 }

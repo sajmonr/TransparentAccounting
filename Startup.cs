@@ -43,6 +43,17 @@ namespace TransparentAccounting
                 });
             });
             
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -67,6 +78,7 @@ namespace TransparentAccounting
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCors("AllowAllHeaders");
 
             app.UseMvc(routes =>
             {

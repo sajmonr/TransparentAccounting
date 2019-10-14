@@ -48,7 +48,7 @@
       <tbody>
         <tr *ngFor="let category of categories">
           <td colspan="10" class="p-0">
-            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)" (removeAccountSelected)="onRemoveAccount($event)" (activateAccountSelected)="onActivateAccountSelected($event)" (deactivateAccountSelected)="onDeactivateAccountSelected($event)" (ledgerAccountSelected)="onLedgerSelected($event)"></app-accounts-category>
+            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)" (removeAccountSelected)="onRemoveAccount($event)" (activateAccountSelected)="onActivateAccountSelected($event)" (deactivateAccountSelected)="onDeactivateAccountSelected($event)"></app-accounts-category>
           </td>
         </tr>
       </tbody>

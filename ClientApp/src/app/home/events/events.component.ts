@@ -25,8 +25,5 @@ export class EventsComponent implements OnInit{
     })
   }
 
-  private diffCheck(event: Event): string {
-    return diffString("Hello my name is Myles", "Hello my name is Mike");
-  }
 
 }

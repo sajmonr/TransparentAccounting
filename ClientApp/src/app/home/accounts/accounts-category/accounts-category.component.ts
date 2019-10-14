@@ -15,7 +15,6 @@ export class AccountsCategoryComponent{
   @Output() removeAccountSelected = new EventEmitter<number>();
   @Output() deactivateAccountSelected = new EventEmitter<Account>();
   @Output() activateAccountSelected = new EventEmitter<Account>();
-  @Output() ledgerAccountSelected = new EventEmitter<Account>();
 
   constructor(private loginService: LoginService) {}
 
@@ -35,10 +34,6 @@ export class AccountsCategoryComponent{
 
   onAccountActivate(account) {
     this.activateAccountSelected.emit(account);
-  }
-
-  onLedgerSelected(account) {
-    this.ledgerAccountSelected.emit(account);
   }
 
   private isUserAuthorized() {

@@ -35,6 +35,7 @@ import {RoleGuard} from "./role-guard.service";
 import {DatePipe} from "@angular/common";
 import {FileService} from "./services/file.service";
 import {LedgerComponent} from "./home/ledger/ledger.component";
+import {LedgerEntryComponent} from "./home/ledger/ledger-entry/ledger-entry.component";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {LedgerComponent} from "./home/ledger/ledger.component";
     JournalComponent,
     JournalEntriesListComponent,
     JournalAddFormComponent,
-    LedgerComponent
+    LedgerComponent,
+    LedgerEntryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

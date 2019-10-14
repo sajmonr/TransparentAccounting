@@ -30,6 +30,16 @@ export class Account{
     this.subcategory = new Subcategory();
     this.accountId = 0;
   }
+
+  public toString() {
+    return "Id: " + this.id +
+      " Active: " + this.active +
+      " Credit: " + this.credit +
+      " Debit: " + this.debit +
+      " Name: " + this.name +
+      " Normal Side: " + this.normalSide +
+      " Beginning Balance: " + this.beginningBalance;
+  }
 }
 export enum NormalSide{
   Left = 0,

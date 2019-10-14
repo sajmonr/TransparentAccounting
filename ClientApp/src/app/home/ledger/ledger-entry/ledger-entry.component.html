@@ -1,0 +1,19 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th colspan="6">
+      <span class="h4">{{sectionTitle}}</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let entry of entries">
+    <td>{{entry.createDate | date:"shortDate"}}</td>
+    <td>{{entry.description}}</td>
+    <td class="link"><a [routerLink]='["/app/journal", entry.id]'>{{entry.id}}</a></td>
+    <td class="text-right">{{entry.debit | currency}}</td>
+    <td class="text-right">{{entry.credit | currency}}</td>
+    <td class="text-right">{{entry.balance | currency}}</td>
+  </tr>
+  </tbody>
+</table>

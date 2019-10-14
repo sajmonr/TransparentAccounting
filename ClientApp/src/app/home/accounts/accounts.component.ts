@@ -8,6 +8,7 @@ import {Subcategory} from "../../shared/subcategory.model";
 import {MessageService} from "../../services/message.service";
 import {LoginService} from "../../services/login.service";
 import {UserRole} from "../../shared/user-model";
+import {LoggingService} from "../../services/logging.service";
 
 @Component({
   selector: 'app-accounts',
@@ -32,11 +33,16 @@ export class AccountsComponent implements OnInit{
   private static HELP_INFO_CODE = 1004;
   private static DUPLICATE_ACCOUNT_INFO_ERROR = 1005;
   private static ACTIVATE_SUCCESS_CODE = 1006;
+  private static UPDATE_ACCOUNT_LOG = "Update Account";
+  private static CREATE_ACCOUNT_LOG = "Create Account";
+  private static DEACTIVATE_ACCOUNT_LOG = "Deactivate Account";
+  private static ACTIVATE_ACCOUNT_LOG = "Activate Account";
 
   constructor(private http: HttpClient,
               private apiService: ApiService,
               private messageService: MessageService,
-              private loginService: LoginService){}
+              private loginService: LoginService,
+              private loggingService: LoggingService){}
 
   ngOnInit(): void {
     this.getAccounts();
@@ -122,6 +128,8 @@ export class AccountsComponent implements OnInit{
   private onActivateAccountSelected(account) {
     this.selectedAccount = account;
     this.selectedAccount.active = true;
+    this.loggingService.updateLogEventFromObject(AccountsComponent.ACTIVATE_ACCOUNT_LOG, account, this.selectedAccount);
+
     this.http.post(this.apiService.getUrl(ApiMethod.UpdateAccount), this.selectedAccount).subscribe(next => {
       this.selectedAccount = null;
       this.messageService.messageByCode(AccountsComponent.ACTIVATE_SUCCESS_CODE);
@@ -133,6 +141,8 @@ export class AccountsComponent implements OnInit{
     if (account.balance == 0) {
       this.selectedAccount = account;
       this.selectedAccount.active = false;
+      this.loggingService.updateLogEventFromObject(AccountsComponent.DEACTIVATE_ACCOUNT_LOG, account, this.selectedAccount);
+
       this.http.post(this.apiService.getUrl(ApiMethod.UpdateAccount), this.selectedAccount).subscribe(next => {
         this.selectedAccount = null;
         this.messageService.messageByCode(AccountsComponent.DEACTIVATE_SUCCESS_CODE);
@@ -141,11 +151,6 @@ export class AccountsComponent implements OnInit{
     } else {
       this.messageService.messageByCode(AccountsComponent.DEACTIVATE_ERROR_CODE);
     }
-  }
-
-  private onLedgerSelected(account) {
-    // Not implemented
-    this.messageService.messageByCode(AccountsComponent.FEATURE_NOT_IMPLEMENTED_ERROR_CODE);
   }
 
   private getDistinctCategories(accounts: Account[]): Category[]{
@@ -167,6 +172,7 @@ export class AccountsComponent implements OnInit{
   }
 
   private onEditAccountSubmit() {
+    let originalAccount = this.selectedAccount;
     this.selectedAccount.accountId = this.editForm.value.id;
     this.selectedAccount.name = this.editForm.value.name;
     this.selectedAccount.beginningBalance = this.editForm.value.beginningBalance;
@@ -178,6 +184,7 @@ export class AccountsComponent implements OnInit{
     } else {
       this.selectedAccount.normalSide = NormalSide.Right;
     }
+    this.loggingService.updateLogEventFromObject(AccountsComponent.UPDATE_ACCOUNT_LOG, originalAccount, this.selectedAccount);
     this.postEditAccount();
   }
 
@@ -185,6 +192,7 @@ export class AccountsComponent implements OnInit{
     this.selectedAccount.accountId = this.createForm.value.id;
     this.selectedAccount.name = this.createForm.value.name;
     this.selectedAccount.beginningBalance = this.createForm.value.beginningBalance;
+    this.selectedAccount.balance = this.selectedAccount.beginningBalance;
 
     this.selectedAccount.subcategory = this.findSubcategoryById(this.createForm.value.subcategory);
     this.selectedAccount.category = this.findCategoryById(this.selectedAccount.subcategory.categoryId);
@@ -195,6 +203,8 @@ export class AccountsComponent implements OnInit{
     }
 
     if (!this.isDuplicate(this.selectedAccount)) {
+      this.loggingService.createLogEventFromObject(AccountsComponent.CREATE_ACCOUNT_LOG, this.selectedAccount);
+
       this.postCreateAccount();
     } else {
       this.createMessage(AccountsComponent.DUPLICATE_ACCOUNT_INFO_ERROR);
