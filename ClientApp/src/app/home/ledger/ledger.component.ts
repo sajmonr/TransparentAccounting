@@ -61,10 +61,10 @@ export class LedgerComponent implements OnInit, DoCheck{
     this.sortTransactions();
     let ledgers: Ledger[] = [];
     this.selectedAccounts.forEach( account => {
+      let ledgerEntries: LedgerEntry[] = [];
       this.transactions.forEach(transaction => {
         let entries = transaction.entries.filter(t => t.account.id == account.id);
         let createDate = transaction.createDate;
-        let ledgerEntries: LedgerEntry[] = [];
 
         entries.forEach(entry => {
           if (entry.side == 0) {
@@ -78,10 +78,10 @@ export class LedgerComponent implements OnInit, DoCheck{
           createDate = null;
         });
 
-        if (ledgerEntries.length != 0) {
-          ledgers.push(new Ledger(ledgerEntries, account.name, transaction.createDate));
-        }
       });
+      if (ledgerEntries.length != 0) {
+        ledgers.push(new Ledger(ledgerEntries, account.name));
+      }
     });
 
     this.ledgers = ledgers;
@@ -133,7 +133,7 @@ export class LedgerComponent implements OnInit, DoCheck{
 
   private search(){
     if(this.searchFilter == '') {
-      if (this.accounts != null && this.accounts.length != 0  && !this.startDateFilter && !this.endDateFilter) {
+      if (this.accounts != null && this.accounts.length != 0) {
         this.populateData(this.accounts);
       }
       return;
@@ -174,24 +174,25 @@ export class LedgerComponent implements OnInit, DoCheck{
   private applyFilters(){
     this.viewTransactions = this.transactions.slice();
 
+    this.search();
+
     this.applyTransactionDateFilter(true);
     this.applyTransactionDateFilter(false);
 
-
-    this.search();
   }
 
   private applyTransactionDateFilter(start: boolean){
     if (this.startDateFilter && this.endDateFilter) {
-      this.ledgers = this.ledgersCopy.filter(t => new Date(t.date).getUTCDate() <= this.endDateFilter.getUTCDate() && new Date(t.date).getUTCDate() >= this.startDateFilter.getUTCDate());
+      this.ledgers = this.ledgersCopy.slice();
+      this.ledgers.forEach(ledger => ledger.ledgerEntries = ledger.ledgerEntries.filter(entry => new Date(entry.createDate).getUTCDate() <= this.endDateFilter.getUTCDate() && new Date(entry.createDate).getUTCDate() >= this.startDateFilter.getUTCDate()));
       return;
     }
     if(start && this.startDateFilter || !start && this.endDateFilter){
+      this.ledgers = this.ledgersCopy.slice();
       if(start){
-        this.ledgers = this.ledgersCopy.filter(t => new Date(t.date).getUTCDate() >= this.startDateFilter.getUTCDate());
+        this.ledgers.forEach(ledger => ledger.ledgerEntries = ledger.ledgerEntries.filter(entry => new Date(entry.createDate).getUTCDate() >= this.startDateFilter.getUTCDate()));
       } else {
-        this.ledgers = this.ledgersCopy.filter(t => new Date(t.date).getUTCDate() <= new Date(this.endDateFilter).getUTCDate());
-      }
+        this.ledgers.forEach(ledger => ledger.ledgerEntries = ledger.ledgerEntries.filter(entry => new Date(entry.createDate).getUTCDate() <= this.endDateFilter.getUTCDate()));      }
     }
 
   }
