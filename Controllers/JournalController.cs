@@ -124,42 +124,37 @@ namespace TransparentAccounting.Controllers
 
                 if (account.NormalSide == entry.Side)
                 {
+                    if (0 == account.NormalSide)
+                    {
+                        account.Debit += entry.Amount;
+                    }
+                    if (1 == account.NormalSide)
+                    {
+                        account.Credit += entry.Amount;
+                    }
+                    
                     account.Balance += entry.Amount;
                 }
                 else 
                 {
+                    if (0 == account.NormalSide)
+                    {
+                        account.Debit -= entry.Amount;
+                    }
+                    if (1 ==account.NormalSide )
+                    {
+                        account.Credit -= entry.Amount;
+                    }
                     account.Balance -= entry.Amount;
                 }
+
 
                 dbContext.Update(account);
             }
         }
+        
 
-        private decimal postDebitBalance(SqlEntities.Account account, SqlEntities.JournalEntry entry)
-        {
-            if (NormalSide.Left.Equals(account.NormalSide))
-            {
-                account.Debit += entry.Amount;
-            }
-            else
-            {
-                account.Debit -= entry.Amount;
-            }
-            return account.Debit;
-        }
-
-        private decimal postCreditBalance(SqlEntities.Account account, SqlEntities.JournalEntry entry)
-        {
-            if (NormalSide.Right.Equals(account.NormalSide))
-            {
-                account.Credit += entry.Amount;
-            }
-            else
-            {
-                account.Credit -= entry.Amount;
-            }
-            return account.Credit;
-        }
+        
 
         private void SaveFiles()
         {

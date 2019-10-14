@@ -175,7 +175,6 @@ export class AccountsComponent implements OnInit{
     let originalAccount = this.selectedAccount;
     this.selectedAccount.accountId = this.editForm.value.id;
     this.selectedAccount.name = this.editForm.value.name;
-    this.selectedAccount.beginningBalance = this.editForm.value.beginningBalance;
 
     this.selectedAccount.subcategory = this.findSubcategoryById(this.editForm.value.subcategory);
     this.selectedAccount.category = this.findCategoryById(this.selectedAccount.subcategory.categoryId);
@@ -184,6 +183,7 @@ export class AccountsComponent implements OnInit{
     } else {
       this.selectedAccount.normalSide = NormalSide.Right;
     }
+    this.selectedAccount.comment = this.editForm.value.comment;
     this.loggingService.updateLogEventFromObject(AccountsComponent.UPDATE_ACCOUNT_LOG, originalAccount, this.selectedAccount);
     this.postEditAccount();
   }
@@ -201,6 +201,7 @@ export class AccountsComponent implements OnInit{
     } else {
       this.selectedAccount.normalSide = NormalSide.Right;
     }
+    this.selectedAccount.comment = this.editForm.value.comment;
 
     if (!this.isDuplicate(this.selectedAccount)) {
       this.loggingService.createLogEventFromObject(AccountsComponent.CREATE_ACCOUNT_LOG, this.selectedAccount);
@@ -233,7 +234,7 @@ export class AccountsComponent implements OnInit{
     this.editForm = new FormGroup({
       id: new FormControl(null, Validators.required),
       name: new FormControl(null, Validators.required),
-      beginningBalance: new FormControl(null, [Validators.required]),
+      comment: new FormControl(null),
       subcategory: new FormControl(null),
     });
   }
@@ -244,7 +245,7 @@ export class AccountsComponent implements OnInit{
       name: new FormControl(null, Validators.required),
       beginningBalance: new FormControl(null, [Validators.required]),
       subcategory: new FormControl(null),
-
+      comment: new FormControl(null),
     });
   }
 
@@ -254,9 +255,8 @@ export class AccountsComponent implements OnInit{
     this.editForm.patchValue( {
       id: this.selectedAccount.accountId,
       name: this.selectedAccount.name,
-      beginningBalance: this.selectedAccount.beginningBalance,
-      balance: this.selectedAccount.balance,
-      subcategory: this.selectedAccount.subcategory.id
+      subcategory: this.selectedAccount.subcategory.id,
+      comment: this.selectedAccount.comment
     });
   }
 
@@ -267,7 +267,8 @@ export class AccountsComponent implements OnInit{
       id: this.selectedAccount.accountId,
       name: this.selectedAccount.name,
       beginningBalance: this.selectedAccount.beginningBalance,
-      subcategory: this.selectedAccount.subcategory.id
+      subcategory: this.selectedAccount.subcategory.id,
+      comment: this.selectedAccount.comment
     });
   }
 
@@ -329,6 +330,10 @@ export class AccountsComponent implements OnInit{
 
   private showCalendar() {
     (<any>$('#calendar')).modal('show');
+  }
+
+  private showEmail() {
+    (<any>$('#emailDialog')).modal('show');
   }
 
   private static isDuplicateInArray(newAccount: Account, accounts: Account[]) {

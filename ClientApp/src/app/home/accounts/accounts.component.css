@@ -5,3 +5,7 @@ table{
 .margin {
   margin-bottom: 10px;
 }
+
+.emailMargin {
+  margin: 30px;
+}

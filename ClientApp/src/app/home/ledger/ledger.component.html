@@ -36,6 +36,7 @@
 
       <tbody>
       <tr *ngFor="let ledger of ledgers">
+
         <td colspan="6" class="p-0">
           <app-ledger-entry [entries]="getLedgerEntries(ledger.ledgerEntries)" [sectionTitle]="ledger.name"></app-ledger-entry>
         </td>

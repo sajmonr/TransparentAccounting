@@ -47,6 +47,7 @@ export class LedgerComponent implements OnInit, DoCheck{
 
   private populateData(accounts) {
     if (this.accountId != 0) {
+      this.selectedAccounts = [];
       this.selectedAccounts.push(this.findAccountById(this.accountId));
       this.getEntries();
     } else {
@@ -88,7 +89,7 @@ export class LedgerComponent implements OnInit, DoCheck{
   }
 
   private sortTransactions() {
-    this.transactions.sort((a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
+    this.transactions.sort((a, b) => new Date(a.createDate).getTime() - new Date(b.createDate).getTime());
   }
 
   private getDebitBalance(entry, account) {
