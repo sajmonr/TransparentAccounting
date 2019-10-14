@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Scripts/0-create_application_domain.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/10-add_users_suspend.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/100-alter-journalentries.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/20-create_journal_tables.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/30-edit_users.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/40-add_security_questions.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/50-add_dob.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/60-add-accountId.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/70-add-journals.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/80-add-subcategories.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Scripts/90-alter-journaltransactions.sql" dialect="MySQL" />
+  </component>
+</project>

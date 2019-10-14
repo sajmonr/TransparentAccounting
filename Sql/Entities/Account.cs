@@ -1,3 +1,4 @@
+using System;
 using TransparentAccounting.Sql.Attributes;
 
 namespace TransparentAccounting.Sql.Entities
@@ -17,6 +18,12 @@ namespace TransparentAccounting.Sql.Entities
         public int StatementId { get; set; }
         public int Active { get; set; }
         public int AccountId { get; set; }
+        
+        public decimal Debit { get; set; }
+        
+        public decimal Credit { get; set; }
+        
+        public String Comment { get; set; }
 
         public static Account ToDbEntity(Models.Account account)
         {
@@ -25,6 +32,9 @@ namespace TransparentAccounting.Sql.Entities
             sqlAccount.Active = account.Active ? 1 : 0;
             sqlAccount.BeginningBalance = account.BeginningBalance;
             sqlAccount.Balance = account.Balance;
+            sqlAccount.Credit = account.Credit;
+            sqlAccount.Debit = account.Debit;
+            sqlAccount.Comment = account.Comment;
             sqlAccount.CategoryId = account.Category.Id;
             sqlAccount.SubcategoryId = account.Subcategory.Id;
             sqlAccount.Name = account.Name;

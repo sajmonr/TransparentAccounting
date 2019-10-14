@@ -34,7 +34,9 @@ namespace TransparentAccounting.Controllers
                 Description = newEvent.Description,
                 //Adjust for timezone here - it's dirty but works for us
                 Timestamp = newEvent.Timestamp.AddHours(-4),
-                UserId = newEvent.CreatedBy.Id
+                UserId = newEvent.CreatedBy.Id,
+                Original = newEvent.Original,
+                Updated = newEvent.Updated
             };
             GetDbContext().Insert(sqlEvent);
         }

@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Account, NormalSide} from "../../../shared/account.model";
+import {LoginService} from "../../../services/login.service";
+import {UserRole} from "../../../shared/user-model";
 
 @Component({
   selector: 'app-accounts-category',
@@ -11,6 +13,10 @@ export class AccountsCategoryComponent{
   @Input() accounts:Account[];
   @Output() accountSelected = new EventEmitter<Account>();
   @Output() removeAccountSelected = new EventEmitter<number>();
+  @Output() deactivateAccountSelected = new EventEmitter<Account>();
+  @Output() activateAccountSelected = new EventEmitter<Account>();
+
+  constructor(private loginService: LoginService) {}
 
   private eNormalSide = NormalSide;
 
@@ -18,12 +24,23 @@ export class AccountsCategoryComponent{
     this.accountSelected.emit(account);
   }
 
-  onAccountRemove(account) {
-    this.removeAccountSelected.emit(account.id);
-  }
-
   private accountsComparator(left: Account, right: Account): number{
     return left.order - right.order;
   }
+
+  onAccountDeactivate(account) {
+    this.deactivateAccountSelected.emit(account);
+  }
+
+  onAccountActivate(account) {
+    this.activateAccountSelected.emit(account);
+  }
+
+  private isUserAuthorized() {
+    const role = this.loginService.currentUserRole();
+    return role == UserRole.Administrator;
+  }
+
+
 
 }

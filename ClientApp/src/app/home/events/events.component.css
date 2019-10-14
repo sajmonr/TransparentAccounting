@@ -1,3 +1,14 @@
 td:last-child{
   width: 60%;
 }
+
+.del {
+  text-decoration: line-through;
+  background: #fbb6c2;
+  color: #555;
+}
+
+.ins {
+  text-decoration: none;
+  color: #d4fcbc;
+}

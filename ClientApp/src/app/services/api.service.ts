@@ -102,6 +102,8 @@ export class ApiService{
       case ApiMethod.UploadFile:
         url += 'Files/Upload';
         break;
+      case ApiMethod.MessageCode:
+        url += 'Message/MessageCode'
     }
 
     return url;
@@ -140,5 +142,6 @@ export enum ApiMethod {
   AddTransaction,
   ApproveTransaction,
   RejectTransaction,
-  UploadFile
+  UploadFile,
+  MessageCode
 }

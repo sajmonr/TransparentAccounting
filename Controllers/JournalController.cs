@@ -47,15 +47,20 @@ namespace TransparentAccounting.Controllers
 
             int transactionId = dbContext.Insert(sqlTransaction);
 
-            var sqlAttachments = transaction.Attachments.Select(a => new SqlEntities.Attachment
+            if (transaction.Attachments != null)
             {
-                TransactionId = transactionId,
-                Name = a.Name,
-                Path = a.Path
-            });
+                var sqlAttachments = transaction.Attachments.Select(a => new SqlEntities.Attachment
+                {
+                    TransactionId = transactionId,
+                    Name = a.Name,
+                    Path = a.Path
+                });
+                
+                foreach (var attachment in sqlAttachments)
+                    dbContext.Insert(attachment);
+            }
 
-            foreach (var attachment in sqlAttachments)
-                dbContext.Insert(attachment);
+            
             
             var sqlEntries = transaction.Entries.Select(entry => new SqlEntities.JournalEntry
             {
@@ -118,13 +123,38 @@ namespace TransparentAccounting.Controllers
                 var account = accounts.First(a => a.Id == entry.AccountId);
 
                 if (account.NormalSide == entry.Side)
+                {
+                    if (0 == account.NormalSide)
+                    {
+                        account.Debit += entry.Amount;
+                    }
+                    if (1 == account.NormalSide)
+                    {
+                        account.Credit += entry.Amount;
+                    }
+                    
                     account.Balance += entry.Amount;
-                else
+                }
+                else 
+                {
+                    if (0 == account.NormalSide)
+                    {
+                        account.Debit -= entry.Amount;
+                    }
+                    if (1 ==account.NormalSide )
+                    {
+                        account.Credit -= entry.Amount;
+                    }
                     account.Balance -= entry.Amount;
-                
+                }
+
+
                 dbContext.Update(account);
             }
         }
+        
+
+        
 
         private void SaveFiles()
         {

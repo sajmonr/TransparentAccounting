@@ -9,6 +9,8 @@ namespace TransparentAccounting.Models
         public User CreatedBy { get; set; }
         public DateTime Timestamp { get; set; }
         public string Description { get; set; }
+        public string Original { get; set; }
+        public string Updated { get; set; }
 
         public static Event FromDbEntity(SqlEntities.Event sqlEvent, User creator)
         {
@@ -17,7 +19,9 @@ namespace TransparentAccounting.Models
                 Id = sqlEvent.Id,
                 CreatedBy = creator,
                 Timestamp =  sqlEvent.Timestamp,
-                Description = sqlEvent.Description
+                Description = sqlEvent.Description,
+                Original = sqlEvent.Original,
+                Updated = sqlEvent.Updated
             };
         }
         

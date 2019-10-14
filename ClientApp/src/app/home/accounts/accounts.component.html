@@ -2,12 +2,39 @@
 <div class="container">
   <div class="container">
     <div class="row">
-      <div class="col-sm-10"><h2>Accounts</h2></div>
-      <div class="col-sm-2 text-right">
-        <button type="button" class="btn btn-primary" (click)="onCreateAccountSelected(); modalTitle = 'Add Account'">Add New</button>
+      <div class="col-md-10 margin"><h2>Accounts</h2></div>
+
+      <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-primary center" data-toggle="tooltip" title="Help" (click)="onHelpSelected();">Help</button>
       </div>
     </div>
-    <table class="table table-bordered">
+
+    <div class="row">
+      <div class="col-sm-2 text-left">
+        <button type="button" data-toggle="tooltip" title="Shows a modal view of a calendar" class="btn btn-primary" (click)="showCalendar()">Calendar</button>
+      </div>
+
+      <div class="col-sm-2 text-left">
+        <button type="button" class="btn btn-primary" (click)="showEmail()">Email</button>
+      </div>
+
+      <form action="">
+        <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-3">
+          <div class="input-group">
+            <input (keyup)="onSearchInputEntered($event)" type="search" placeholder="Search" aria-describedby="button-addon1" class="form-control border-0 bg-light" id="search">
+            <div class="input-group-append">
+              <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="col-md-12 text-right">
+        <button *ngIf="isUserAuthorized(false)" type="button" class="btn btn-primary margin" data-toggle="tooltip" title="Allows you to create accounts" (click)="onCreateAccountSelected(); modalTitle = 'Add Account'">Add New</button>
+      </div>
+
+    </div>
+    <table id="accountsTable" class="table table-bordered">
       <thead>
       <tr>
         <th>Account number</th>
@@ -15,14 +42,17 @@
         <th>Normal side</th>
         <th>Beginning balance</th>
         <th>Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
         <th>Subcategory</th>
+        <th>Comment</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
         <tr *ngFor="let category of categories">
-          <td colspan="7" class="p-0">
-            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)" (removeAccountSelected)="onRemoveAccount($event)"></app-accounts-category>
+          <td colspan="10" class="p-0">
+            <app-accounts-category [sectionTitle]="category.name" [accounts]="getAccountsByCategory(category.id)" (accountSelected)="onAccountSelected($event)" (removeAccountSelected)="onRemoveAccount($event)" (activateAccountSelected)="onActivateAccountSelected($event)" (deactivateAccountSelected)="onDeactivateAccountSelected($event)"></app-accounts-category>
           </td>
         </tr>
       </tbody>
@@ -42,34 +72,24 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
+            <label>ID
+              <input type="text" class="form-control" formControlName="id"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('id').touched && editForm.get('id').invalid">The id field is required.</span>
             <label>Name
               <input type="text" class="form-control" formControlName="name"/>
             </label>
             <span class="help-block text-danger" *ngIf="editForm.get('name').touched && editForm.get('name').invalid">The name field is required.</span>
-            <label>Normal Side
-              <input type="text" class="form-control" formControlName="normalSide"/>
-            </label>
-            <span class="help-block text-danger" *ngIf="editForm.get('normalSide').touched && editForm.get('normalSide').invalid">The normal side field is required.</span>
-            <label>Beginning Balance
-              <input type="text" class="form-control" formControlName="beginningBalance"/>
-            </label>
-            <span class="help-block text-danger" *ngIf="editForm.get('beginningBalance').touched && editForm.get('beginningBalance').invalid">The beginning balance name field is required.</span>
-            <label>Balance
-              <input type="email" class="form-control" formControlName="balance"/>
-            </label>
-            <span class="help-block text-danger" *ngIf="editForm.get('balance').touched && editForm.get('balance').invalid">The balance name field is required.</span>
-            <label>Category
-              <select id="category" class="form-control" name="category" formControlName="category">
-                <option *ngFor="let category of allCategories" value="{{category.id}}">{{category.name}}</option>
-              </select>
-            </label>
-            <span class="help-block text-danger" *ngIf="editForm.get('category').touched && editForm.get('category').invalid">The category name field is required.</span>
             <label>Subcategory
-              <select id="subcategory" class="form-control" name="subcategory" formControlName="subcategory">
-                <option *ngFor="let subcategory of allSubcategories" value="{{subcategory.id}}">{{subcategory.name}}</option>
+              <select *ngIf="selectedAccount != null" id="subcategory" class="form-control" name="subcategory" formControlName="subcategory">
+                <option *ngFor="let subcategory of allSubcategories"  [selected]="subcategory.id == selectedAccount.subcategory.id" [value]="subcategory.id">{{subcategory.name}}</option>
               </select>
             </label>
             <span class="help-block text-danger" *ngIf="editForm.get('subcategory').touched && editForm.get('subcategory').invalid">The subcategory name field is required.</span>
+            <label>Comment
+              <input type="text" class="form-control" formControlName="comment"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('comment').touched && editForm.get('comment').invalid">The comment field is required.</span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -80,4 +100,71 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="createAccountModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form (submit)="onCreateAccountSubmit()" [formGroup]="createForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createModalTitle">New Account</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>ID
+              <input type="text" class="form-control" formControlName="id"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="createForm.get('id').touched && createForm.get('id').invalid">The id field is required.</span>
+            <label>Name
+              <input type="text" class="form-control" formControlName="name"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="createForm.get('name').touched && createForm.get('name').invalid">The name field is required.</span>
+            <label>Beginning Balance
+              <input type="text" class="form-control" formControlName="beginningBalance"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="createForm.get('beginningBalance').touched && createForm.get('beginningBalance').invalid">The beginning balance name field is required.</span>
+            <label>Subcategory
+              <select *ngIf="selectedAccount != null" id="subcategoryCreate" class="form-control" name="subcategory" formControlName="subcategory">
+                <option *ngFor="let subcategory of allSubcategories"  [selected]="subcategory.id == selectedAccount.subcategory.id" [value]="subcategory.id">{{subcategory.name}}</option>
+              </select>
+            </label>
+            <span class="help-block text-danger" *ngIf="createForm.get('subcategory').touched && createForm.get('subcategory').invalid">The subcategory name field is required.</span>
+            <label>Comment
+              <input type="text" class="form-control" formControlName="comment"/>
+            </label>
+            <span class="help-block text-danger" *ngIf="editForm.get('comment').touched && editForm.get('comment').invalid">The comment field is required.</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" [disabled]="createForm.invalid" (click)="onCreateAccountSubmit()">Save changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="emailDialog" tabindex="-1" role="dialog" aria-labelledby="email" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="emailMargin">
+        <h5>Email</h5>
+        <app-email></app-email>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="calendar" tabindex="-1" role="dialog" aria-labelledby="calendar" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <iframe src="https://teamup.com/ksw86zto9m5thv2xes?showProfileAndInfo=0&showSidepanel=1&showAgendaHeader=1&showAgendaDetails=0" width="100%" height="800px" style="border: 1px solid #cccccc" frameborder="0"></iframe>
+    </div>
+  </div>
+</div>
+
+
+
 
