@@ -39,10 +39,10 @@
           <li *ngIf="roleCanActivate([userRole.Administrator, userRole.Manager])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/events"]'>Events</a>
           </li>
-          <li *ngIf="roleCanActivate([userRole.Administrator, userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <li *ngIf="roleCanActivate([ userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/journal"]'>Journal</a>
           </li>
-          <li *ngIf="roleCanActivate([userRole.Administrator, userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <li *ngIf="roleCanActivate([ userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/ledger"]'>Ledger</a>
           </li>
           <li class="nav-item dropdown">

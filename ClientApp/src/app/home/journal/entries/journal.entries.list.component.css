@@ -2,5 +2,5 @@
   border: 0;
 }
 td.credit-title::before{
-  content: "\a0\a0\a0\a0\a0";
+  content: "\a0\a0\a0\a0\a0\a0\a0\a0";
 }
