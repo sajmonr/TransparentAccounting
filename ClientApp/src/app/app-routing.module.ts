@@ -17,6 +17,11 @@ import {JournalComponent} from "./home/journal/journal.component";
 import {RoleGuard} from "./role-guard.service";
 import {UserRole} from "./shared/user-model";
 import {LedgerComponent} from "./home/ledger/ledger.component";
+import {ReportsComponent} from "./home/reports/reports.component";
+import {IncomeStatementComponent} from "./home/reports/income-statement/income-statement.component";
+import {TrialBalanceComponent} from "./home/reports/trial-balance/trial-balance.component";
+import {BalanceSheetComponent} from "./home/reports/balance-sheet/balance-sheet.component";
+import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnings-statement/retained-earnings-statement.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -40,7 +45,15 @@ const routes: Routes = [
         }},
       {path: 'ledger/:accountId', component: LedgerComponent, canActivate: [RoleGuard], data: {
           allowedRoles: [UserRole.Administrator, UserRole.Manager, UserRole.Accountant]
-        }}
+        }},
+      {path: 'report', component: ReportsComponent, canActivate: [RoleGuard], data: {
+          allowedRoles: [UserRole.Administrator, UserRole.Manager, UserRole.Accountant]
+        }, children: [
+          {path: 'income-statement', component: IncomeStatementComponent},
+          {path: 'trial-balance', component: TrialBalanceComponent},
+          {path: 'balance-sheet', component: BalanceSheetComponent},
+          {path: 'retained-earnings-statement', component: RetainedEarningsStatementComponent}
+        ]}
     ]},
   {path: 'account', component: AccountComponent, children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},

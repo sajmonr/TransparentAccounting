@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 import {UserRole} from "../../shared/user-model";
+import {ReportType} from "../../shared/report-type.enum";
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,6 +10,7 @@ import {UserRole} from "../../shared/user-model";
 })
 export class NavMenuComponent {
   private userRole = UserRole;
+  private reportType = ReportType;
   isExpanded = false;
 
   constructor(private loginService: LoginService){}

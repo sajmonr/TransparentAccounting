@@ -51,6 +51,16 @@
     <Content Include="ClientApp\src\app\home\ledger\ledger-entry\ledger-entry.component.html" />
     <Content Include="ClientApp\src\app\home\ledger\ledger.component.css" />
     <Content Include="ClientApp\src\app\home\ledger\ledger.component.html" />
+    <Content Include="ClientApp\src\app\home\reports\balance-sheet\balance-sheet.component.html" />
+    <Content Include="ClientApp\src\app\home\reports\balance-sheet\balance-sheet.component.less" />
+    <Content Include="ClientApp\src\app\home\reports\income-statement\income-statement.component.html" />
+    <Content Include="ClientApp\src\app\home\reports\income-statement\income-statement.component.less" />
+    <Content Include="ClientApp\src\app\home\reports\reports.component.html" />
+    <Content Include="ClientApp\src\app\home\reports\reports.component.less" />
+    <Content Include="ClientApp\src\app\home\reports\retained-earnings-statement\retained-earnings-statement.component.html" />
+    <Content Include="ClientApp\src\app\home\reports\retained-earnings-statement\retained-earnings-statement.component.less" />
+    <Content Include="ClientApp\src\app\home\reports\trial-balance\trial-balance.component.html" />
+    <Content Include="ClientApp\src\app\home\reports\trial-balance\trial-balance.component.less" />
     <Content Include="ClientApp\src\app\home\users\users.component.css" />
     <Content Include="ClientApp\src\app\home\users\users.component.html" />
     <Content Include="ClientApp\src\app\shared\components\message\message.component.css" />
@@ -89,6 +99,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\home\journal\journal.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\ledger\ledger-entry\ledger-entry.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\ledger\ledger.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\reports\balance-sheet\balance-sheet.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\reports\income-statement\income-statement.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\reports\reports.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\reports\retained-earnings-statement\retained-earnings-statement.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\reports\trial-balance\trial-balance.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\users\users.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\role-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\accounts.service.ts" />
@@ -112,6 +127,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\login.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\message.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\password.history.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\report-type.enum.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\security.question.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\subcategory.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\user-model.ts" />

@@ -36,6 +36,11 @@ import {DatePipe} from "@angular/common";
 import {FileService} from "./services/file.service";
 import {LedgerComponent} from "./home/ledger/ledger.component";
 import {LedgerEntryComponent} from "./home/ledger/ledger-entry/ledger-entry.component";
+import {ReportsComponent} from "./home/reports/reports.component";
+import {IncomeStatementComponent} from "./home/reports/income-statement/income-statement.component";
+import {TrialBalanceComponent} from "./home/reports/trial-balance/trial-balance.component";
+import {BalanceSheetComponent} from "./home/reports/balance-sheet/balance-sheet.component";
+import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnings-statement/retained-earnings-statement.component";
 
 @NgModule({
   declarations: [
@@ -58,7 +63,12 @@ import {LedgerEntryComponent} from "./home/ledger/ledger-entry/ledger-entry.comp
     JournalEntriesListComponent,
     JournalAddFormComponent,
     LedgerComponent,
-    LedgerEntryComponent
+    LedgerEntryComponent,
+    ReportsComponent,
+    IncomeStatementComponent,
+    TrialBalanceComponent,
+    BalanceSheetComponent,
+    RetainedEarningsStatementComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
