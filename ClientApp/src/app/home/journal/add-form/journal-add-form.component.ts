@@ -137,8 +137,8 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       accounts.splice(accounts.findIndex( a => a.id == accountId), 1);
     });
 
-    //return accounts;
-    return this.allAccounts.slice();
+    return accounts;
+    //return this.allAccounts.slice();
   }
 
   private validateForm(): string{
