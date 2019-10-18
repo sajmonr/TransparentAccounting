@@ -76,7 +76,7 @@ export class AccountsComponent implements OnInit{
 
   private isUserAuthorized(shouldShowModal: boolean) {
     const role = this.loginService.currentUserRole();
-    if (role == UserRole.Administrator) {
+    if (role == UserRole.Administrator || role == UserRole.Manager) {
       return true;
     } else {
       if (shouldShowModal) {

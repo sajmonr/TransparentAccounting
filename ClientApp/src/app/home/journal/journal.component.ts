@@ -101,7 +101,6 @@ export class JournalComponent implements OnInit, DoCheck{
     await this.addForm.submit();
 
     this.submitInProgress = false;
-    console.log('loading');
     this.loadTransactions();
     //@ts-ignore
     $(this.addModal.nativeElement).modal('hide');

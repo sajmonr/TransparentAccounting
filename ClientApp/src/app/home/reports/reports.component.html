@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="row hide-print">
+    <div class="col">
+      <button class="btn btn-primary" (click)="onPrint()">Print</button>
+      <button class="btn btn-primary" (click)="onSave()">Save</button>
+      <button class="btn btn-primary" (click)="onEmail()">Email</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="print">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

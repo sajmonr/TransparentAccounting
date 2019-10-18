@@ -7,5 +7,14 @@ import {Component} from "@angular/core";
 })
 export class ReportsComponent{
 
+  private onPrint(){
+    window.print();
+  }
 
+  private onSave(){
+
+  }
+  private onEmail(){
+
+  }
 }

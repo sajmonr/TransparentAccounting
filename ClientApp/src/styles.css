@@ -44,3 +44,8 @@ label{
 button:disabled{
   cursor: not-allowed;
 }
+@media print{
+  .hide-print{
+    display: none;
+  }
+}

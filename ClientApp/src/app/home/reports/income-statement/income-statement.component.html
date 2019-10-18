@@ -14,38 +14,36 @@
         <tr>
           <th>Revenues</th>
           <th></th>
+          <th></th>
         </tr>
-        <tr>
-          <td>Mercahndise sales</td>
-          <td>$24,800</td>
-        </tr>
-        <tr>
-          <td>Music lesson income</td>
-          <td>3,000</td>
+        <tr *ngFor="let revenue of revenues; first as isFirst; last as isLast">
+          <td>{{revenue.account.name}}</td>
+          <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{isFirst ? (revenue.amount | currency) : (revenue.amount | currency: 'USD': '')}}</td>
+          <td></td>
         </tr>
         <tr>
           <td>Total Revenues:</td>
-          <td colspan="2" class="text-right">$27,800</td>
+          <td></td>
+          <td class="text-right">{{getTotal(revenues) | currency}}</td>
         </tr>
         <tr>
-          <th>Expences</th>
+          <th>Expenses</th>
           <th></th>
         </tr>
-        <tr>
-          <td>Mercahndise sales</td>
-          <td>24,800</td>
+        <tr *ngFor="let expense of expenses; last as isLast">
+          <td>{{expense.account.name}}</td>
+          <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{expense.amount | currency: 'USD': ''}}</td>
+          <td></td>
         </tr>
         <tr>
-          <td>Mercahndise sales</td>
-          <td>24,800</td>
-        </tr>
-        <tr>
-          <td>Total Expeces:</td>
-          <td colspan="2" class="text-right">$27,800</td>
+          <td>Total Expeses:</td>
+          <td></td>
+          <td class="text-right amount-separator">{{getTotal(expenses) | currency: 'USD': ''}}</td>
         </tr>
         <tr>
           <th>Net Income</th>
-          <th  colspan="2" class="text-right">$12,980</th>
+          <th></th>
+          <th class="text-right amount-separator">{{getTotal(revenues) - getTotal(expenses) | currency}}</th>
         </tr>
       </table>
     </div>
