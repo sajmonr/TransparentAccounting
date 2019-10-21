@@ -9,6 +9,14 @@ import {JournalEntry} from "../shared/journal.entry.model";
 export class JournalService{
   constructor(private http: HttpClient, private api: ApiService, private login: LoginService){}
 
+  getTransactions(): Promise<JournalTransaction[]>{
+    return new Promise<JournalTransaction[]>(resolve => {
+      this.http.get<JournalTransaction[]>(this.api.getUrl(ApiMethod.GetTransactions)).subscribe(transactions => {
+        resolve(transactions.map(t => new JournalTransaction(t)));
+      });
+    })
+  }
+
   getEntries(): Promise<JournalEntry[]>{
     return new Promise<JournalEntry[]>(resolve => {
       this.http.get<JournalEntry[]>(this.api.getUrl(ApiMethod.GetJournalEntries)).subscribe(result => {

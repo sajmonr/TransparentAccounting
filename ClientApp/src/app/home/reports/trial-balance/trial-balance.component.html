@@ -3,8 +3,8 @@
   <div class="row report-header">
     <div class="col">
       <span class="d-block">Paul's Guitar Shop, Inc.</span>
-      <span class="d-block">Income statement</span>
-      <span class="d-block">For the year ended december 31, 2019</span>
+      <span class="d-block">Trial Balance</span>
+      <span class="d-block">December 31, 2019</span>
     </div>
   </div>
   <!--Body row-->
@@ -13,18 +13,24 @@
       <table class="table table-borderless">
         <thead>
           <tr>
-            <th>Revenues</th>
-            <th></th>
+            <th>Account number</th>
+            <th>Account</th>
+            <th>Debit</th>
+            <th>Credit</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Mercahndise sales</td>
-            <td>24,800</td>
+          <tr *ngFor="let account of accounts; last as isLast">
+            <td>{{account.accountId}}</td>
+            <td>{{account.name}}</td>
+            <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{account.normalSide == normalSide.Left ? (account.balance | currency: 'USD': '') : ''}}</td>
+            <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{account.normalSide == normalSide.Right ? (account.balance | currency: 'USD': '') : ''}}</td>
           </tr>
           <tr>
-            <td>Mercahndise sales</td>
-            <td>24,800</td>
+            <td></td>
+            <td class="font-weight-bold">Totals</td>
+            <td class="text-right amount-separator">{{getTotal(accounts, normalSide.Left) | currency}}</td>
+            <td class="text-right amount-separator">{{getTotal(accounts, normalSide.Right) | currency}}</td>
           </tr>
         </tbody>
       </table>

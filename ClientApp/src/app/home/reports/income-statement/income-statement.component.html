@@ -17,8 +17,8 @@
           <th></th>
         </tr>
         <tr *ngFor="let revenue of revenues; first as isFirst; last as isLast">
-          <td>{{revenue.account.name}}</td>
-          <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{isFirst ? (revenue.amount | currency) : (revenue.amount | currency: 'USD': '')}}</td>
+          <td>{{revenue.name}}</td>
+          <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{isFirst ? (revenue.balance | currency) : (revenue.balance | currency: 'USD': '')}}</td>
           <td></td>
         </tr>
         <tr>
@@ -31,8 +31,8 @@
           <th></th>
         </tr>
         <tr *ngFor="let expense of expenses; last as isLast">
-          <td>{{expense.account.name}}</td>
-          <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{expense.amount | currency: 'USD': ''}}</td>
+          <td>{{expense.name}}</td>
+          <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{expense.balance | currency: 'USD': ''}}</td>
           <td></td>
         </tr>
         <tr>

@@ -14,7 +14,7 @@ namespace TransparentAccounting.Sql
         private static string INSERT_STRING_FORMATTING = "`{0}`,";
         private static string UPDATE_STRING_FORMATTING = "`{0}`=@{1},";
 
-        public ApplicationDomainContext(): this(Constants.CONECTION_STRING){}
+        public ApplicationDomainContext(): this(Constants.CONNECTION_STRING){}
         
         public ApplicationDomainContext(string connectionString)
         {

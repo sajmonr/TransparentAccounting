@@ -1,6 +1,16 @@
 <div class="container">
   <div class="row hide-print">
     <div class="col">
+      <label>
+        From Date
+        <input type="date" class="form-control" [value]="fromFilter | date: 'yyyy-MM-dd'" (change)="setDateFilter($event.target.valueAsDate, true)"/>
+      </label>
+      <label>
+        To Date
+        <input type="date" class="form-control" [value]="toFilter | date: 'yyyy-MM-dd'" (change)="setDateFilter($event.target.valueAsDate, false)"/>
+      </label>
+    </div>
+    <div class="col text-right actions">
       <button class="btn btn-primary" (click)="onPrint()">Print</button>
       <button class="btn btn-primary" (click)="onSave()">Save</button>
       <button class="btn btn-primary" (click)="onEmail()">Email</button>

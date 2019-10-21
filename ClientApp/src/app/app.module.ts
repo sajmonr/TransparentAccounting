@@ -41,6 +41,7 @@ import {IncomeStatementComponent} from "./home/reports/income-statement/income-s
 import {TrialBalanceComponent} from "./home/reports/trial-balance/trial-balance.component";
 import {BalanceSheetComponent} from "./home/reports/balance-sheet/balance-sheet.component";
 import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnings-statement/retained-earnings-statement.component";
+import {ReportsService} from "./services/reports.service";
 
 @NgModule({
   declarations: [
@@ -77,7 +78,7 @@ import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnin
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [DatePipe, LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService,FileService],
+  providers: [DatePipe, LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService,FileService, ReportsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
