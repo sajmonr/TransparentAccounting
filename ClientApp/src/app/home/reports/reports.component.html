@@ -1,13 +1,19 @@
 <div class="container">
   <div class="row hide-print">
     <div class="col">
-      <label>
+      <label *ngIf="filterType == dateSelectorType.FromTo">
         From Date
         <input type="date" class="form-control" [value]="fromFilter | date: 'yyyy-MM-dd'" (change)="setDateFilter($event.target.valueAsDate, true)"/>
       </label>
-      <label>
+      <label *ngIf="filterType == dateSelectorType.FromTo || filterType == dateSelectorType.To">
         To Date
         <input type="date" class="form-control" [value]="toFilter | date: 'yyyy-MM-dd'" (change)="setDateFilter($event.target.valueAsDate, false)"/>
+      </label>
+      <label *ngIf="filterType == dateSelectorType.Year">
+        Year
+        <select class="form-control" (change)="setYearFilter($event.target.value)">
+          <option value="2019">2019</option>
+        </select>
       </label>
     </div>
     <div class="col text-right actions">

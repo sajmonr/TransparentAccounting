@@ -38,7 +38,7 @@ export class AccountsCategoryComponent{
 
   private isUserAuthorized() {
     const role = this.loginService.currentUserRole();
-    return role == UserRole.Administrator;
+    return role == UserRole.Administrator || role == UserRole.Manager;
   }
 
 

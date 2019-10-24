@@ -2,9 +2,9 @@
   <!--Header row-->
   <div class="row report-header">
     <div class="col">
-      <span class="d-block">Paul's Guitar Shop, Inc.</span>
+      <span class="d-block">Addams & Family Inc.</span>
       <span class="d-block">Trial Balance</span>
-      <span class="d-block">December 31, 2019</span>
+      <span class="d-block">{{reportsService.dateRange[0] | date: 'MMMM d, yyyy'}} - {{reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
     </div>
   </div>
   <!--Body row-->

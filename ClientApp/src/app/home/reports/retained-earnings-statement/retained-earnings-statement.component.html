@@ -2,29 +2,31 @@
   <!--Header row-->
   <div class="row report-header">
     <div class="col">
-      <span class="d-block">Paul's Guitar Shop, Inc.</span>
-      <span class="d-block">Income statement</span>
-      <span class="d-block">For the year ended december 31, 2019</span>
+      <span class="d-block">Addams & Family Inc.</span>
+      <span class="d-block">Retained Earnings Statement</span>
+      <span class="d-block">For the year ended {{reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
     </div>
   </div>
   <!--Body row-->
   <div class="row report-body">
     <div class="col">
       <table class="table table-borderless">
-        <thead>
-          <tr>
-            <th>Revenues</th>
-            <th></th>
-          </tr>
-        </thead>
         <tbody>
           <tr>
-            <td>Mercahndise sales</td>
-            <td>24,800</td>
+            <td>Begining Retained Earnings</td>
+            <td>{{retainedEarningsStart | currency}}</td>
           </tr>
           <tr>
-            <td>Mercahndise sales</td>
-            <td>24,800</td>
+            <td>Net Income</td>
+            <td>{{netIncome | currency: 'USD': ''}}</td>
+          </tr>
+          <tr>
+            <td>Dividends</td>
+            <td class="amount-separator">{{dividends | currency: 'USD': ''}}</td>
+          </tr>
+          <tr>
+            <td>End Retained Earnings</td>
+            <td>{{retainedEarningsStart + netIncome - dividends | currency}}</td>
           </tr>
         </tbody>
       </table>

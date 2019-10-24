@@ -15,6 +15,7 @@ export class Account{
   public order: number;
   public active: boolean;
   public accountId: number;
+  public contraAccount: boolean;
 
   public constructor(){
     this.id = 0;
@@ -29,6 +30,7 @@ export class Account{
     this.category = new Category();
     this.subcategory = new Subcategory();
     this.accountId = 0;
+    this.contraAccount = false;
   }
 
   public toString() {
@@ -38,7 +40,8 @@ export class Account{
       " Debit: " + this.debit +
       " Name: " + this.name +
       " Normal Side: " + this.normalSide +
-      " Beginning Balance: " + this.beginningBalance;
+      " Beginning Balance: " + this.beginningBalance +
+      " Contra Account" + this.contraAccount;
   }
 }
 export enum NormalSide{

@@ -17,17 +17,19 @@ export class JournalTransaction{
   attachments: Attachement[];
 
   constructor(json?: JournalTransaction){
-    this.id = json.id;
-    this.createdBy = json.createdBy;
-    this.createDate = new Date(json.createDate);
-    this.description = json.description;
-    this.resolvedBy = json.resolvedBy;
-    this.resolveDate = new Date(json.resolveDate);
-    this.journal = json.journal;
-    this.type = json.type;
-    this.entries = json.entries;
-    this.status = json.status;
-    this.attachments = json.attachments;
+    if(json) {
+      this.id = json.id;
+      this.createdBy = json.createdBy;
+      this.createDate = new Date(json.createDate);
+      this.description = json.description;
+      this.resolvedBy = json.resolvedBy;
+      this.resolveDate = new Date(json.resolveDate);
+      this.journal = json.journal;
+      this.type = json.type;
+      this.entries = json.entries;
+      this.status = json.status;
+      this.attachments = json.attachments;
+    }
   }
 
 }

@@ -173,17 +173,20 @@ export class AccountsComponent implements OnInit{
 
   private onEditAccountSubmit() {
     let originalAccount = this.selectedAccount;
+
     this.selectedAccount.accountId = this.editForm.value.id;
     this.selectedAccount.name = this.editForm.value.name;
 
     this.selectedAccount.subcategory = this.findSubcategoryById(this.editForm.value.subcategory);
     this.selectedAccount.category = this.findCategoryById(this.selectedAccount.subcategory.categoryId);
     if (this.selectedAccount.category.id == 1 || this.selectedAccount.category.id == 4) {
-      this.selectedAccount.normalSide = NormalSide.Left;
+      this.selectedAccount.normalSide = this.editForm.value.contraAccount ? NormalSide.Right : NormalSide.Left;
     } else {
-      this.selectedAccount.normalSide = NormalSide.Right;
+      this.selectedAccount.normalSide = this.editForm.value.contraAccount ? NormalSide.Left : NormalSide.Right;
     }
     this.selectedAccount.comment = this.editForm.value.comment;
+    this.selectedAccount.contraAccount = this.editForm.value.contraAccount;
+
     this.loggingService.updateLogEventFromObject(AccountsComponent.UPDATE_ACCOUNT_LOG, originalAccount, this.selectedAccount);
     this.postEditAccount();
   }
@@ -197,11 +200,12 @@ export class AccountsComponent implements OnInit{
     this.selectedAccount.subcategory = this.findSubcategoryById(this.createForm.value.subcategory);
     this.selectedAccount.category = this.findCategoryById(this.selectedAccount.subcategory.categoryId);
     if (this.selectedAccount.category.id == 1 || this.selectedAccount.category.id == 4) {
-      this.selectedAccount.normalSide = NormalSide.Left;
+      this.selectedAccount.normalSide = this.editForm.value.contraAccount ? NormalSide.Right : NormalSide.Left;
     } else {
-      this.selectedAccount.normalSide = NormalSide.Right;
+      this.selectedAccount.normalSide = this.editForm.value.contraAccount ? NormalSide.Left : NormalSide.Right;
     }
     this.selectedAccount.comment = this.editForm.value.comment;
+    this.selectedAccount.contraAccount = this.editForm.value.contraAccount;
 
     if (!this.isDuplicate(this.selectedAccount)) {
       this.loggingService.createLogEventFromObject(AccountsComponent.CREATE_ACCOUNT_LOG, this.selectedAccount);
@@ -236,6 +240,7 @@ export class AccountsComponent implements OnInit{
       name: new FormControl(null, Validators.required),
       comment: new FormControl(null),
       subcategory: new FormControl(null),
+      contraAccount: new FormControl(null)
     });
   }
 
@@ -246,6 +251,7 @@ export class AccountsComponent implements OnInit{
       beginningBalance: new FormControl(null, [Validators.required]),
       subcategory: new FormControl(null),
       comment: new FormControl(null),
+      contraAccount: new FormControl(null)
     });
   }
 
@@ -256,7 +262,8 @@ export class AccountsComponent implements OnInit{
       id: this.selectedAccount.accountId,
       name: this.selectedAccount.name,
       subcategory: this.selectedAccount.subcategory.id,
-      comment: this.selectedAccount.comment
+      comment: this.selectedAccount.comment,
+      contraAccount: this.selectedAccount.contraAccount
     });
   }
 

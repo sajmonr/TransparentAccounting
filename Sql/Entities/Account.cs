@@ -18,12 +18,10 @@ namespace TransparentAccounting.Sql.Entities
         public int StatementId { get; set; }
         public int Active { get; set; }
         public int AccountId { get; set; }
-        
         public decimal Debit { get; set; }
-        
         public decimal Credit { get; set; }
-        
-        public String Comment { get; set; }
+        public string Comment { get; set; }
+        public int ContraAccount { get; set; }
 
         public static Account ToDbEntity(Models.Account account)
         {
@@ -42,6 +40,7 @@ namespace TransparentAccounting.Sql.Entities
             sqlAccount.NormalSide = (int) account.NormalSide;
             sqlAccount.StatementId = 0;
             sqlAccount.AccountId = account.AccountId;
+            sqlAccount.ContraAccount = account.ContraAccount ? 1 : 0;
             return sqlAccount;
         }
     }

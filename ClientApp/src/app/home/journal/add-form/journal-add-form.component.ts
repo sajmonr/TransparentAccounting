@@ -120,7 +120,11 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
   }
 
   private getAvailableAccounts(currentEntry: JournalEntry): Account[]{
-    let accounts = this.allAccounts.slice();
+    let accounts = this.allAccounts.slice().sort((a, b) => {
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
+      return 0;
+    });
 
     if(currentEntry.id == 0)
       return accounts;
@@ -137,7 +141,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       accounts.splice(accounts.findIndex( a => a.id == accountId), 1);
     });
 
-    return accounts;
+    return accounts
     //return this.allAccounts.slice();
   }
 
@@ -228,10 +232,14 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       transaction.attachments = await this.uploadFiles();
     }
     await this.journalService.addTransaction(transaction);
+
+    this.reset();
   }
 
   reset(){
     this.newForm.resetForm();
+
+    this.newForm.value.type = 0;
 
     this.journalEntriesTouched = false;
     this.journalEntriesErrors = [];

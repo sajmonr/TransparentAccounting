@@ -18,12 +18,10 @@ namespace TransparentAccounting.Models
         public int Order { get; set; }
         public bool Active { get; set; }
         public int AccountId { get; set; }
-        
         public decimal Debit { get; set; }
-        
         public decimal Credit { get; set; }
-        
         public String Comment { get; set; }
+        public bool ContraAccount { get; set; }
 
         public static Account FromDbEntity(SqlEntity.Account account, SqlEntity.Category category, SqlEntity.Subcategory subcategory)
         {
@@ -41,7 +39,8 @@ namespace TransparentAccounting.Models
                 Active = account.Active == 1,
                 Category = Category.FromDbEntity(category),
                 Subcategory = Subcategory.FromDbEntity(subcategory),
-                AccountId = account.AccountId
+                AccountId = account.AccountId,
+                ContraAccount = account.ContraAccount == 1
             };
         }
 

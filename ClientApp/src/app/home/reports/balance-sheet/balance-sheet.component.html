@@ -2,9 +2,9 @@
   <!--Header row-->
   <div class="row report-header">
     <div class="col">
-      <span class="d-block">Paul's Guitar Shop, Inc.</span>
+      <span class="d-block">Addams & Family Inc.</span>
       <span class="d-block">Balance Sheet</span>
-      <span class="d-block">For the year ended december 31, 2019</span>
+      <span class="d-block">Balance as of {{this.reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
     </div>
   </div>
   <!--Body row-->
@@ -24,7 +24,11 @@
               <tbody>
               <tr *ngFor="let account of category.value; last as isLast">
                 <td>{{account.name}}</td>
-                <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{account.balance | currency: 'USD': ''}}</td>
+                <td class="text-right" [ngClass]="{'amount-separator': category.key != accountType.Equity && isLast}">{{account.balance | currency: 'USD': ''}}</td>
+              </tr>
+              <tr *ngIf="category.key == accountType.Equity">
+                <td>Retained Earnings</td>
+                <td class="text-right amount-separator">{{retainedEarnings | currency: 'USD': ''}}</td>
               </tr>
               <tr>
                 <td>Total {{accountType[category.key]}}</td>

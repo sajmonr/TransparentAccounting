@@ -152,14 +152,5 @@ namespace TransparentAccounting.Controllers
                 dbContext.Update(account);
             }
         }
-        
-
-        
-
-        private void SaveFiles()
-        {
-            
-        }
-        
     }
 }

@@ -85,6 +85,10 @@
                 <option *ngFor="let subcategory of allSubcategories"  [selected]="subcategory.id == selectedAccount.subcategory.id" [value]="subcategory.id">{{subcategory.name}}</option>
               </select>
             </label>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input w-auto" id="edit-contra-account-check" formControlName="contraAccount"/>
+              <label for="edit-contra-account-check" class="form-check-label">Contra Account</label>
+            </div>
             <span class="help-block text-danger" *ngIf="editForm.get('subcategory').touched && editForm.get('subcategory').invalid">The subcategory name field is required.</span>
             <label>Comment
               <input type="text" class="form-control" formControlName="comment"/>
@@ -131,6 +135,10 @@
               </select>
             </label>
             <span class="help-block text-danger" *ngIf="createForm.get('subcategory').touched && createForm.get('subcategory').invalid">The subcategory name field is required.</span>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input w-auto" id="add-contra-account-check" formControlName="contraAccount"/>
+              <label for="add-contra-account-check" class="form-check-label">Contra Account</label>
+            </div>
             <label>Comment
               <input type="text" class="form-control" formControlName="comment"/>
             </label>
