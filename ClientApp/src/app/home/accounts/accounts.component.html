@@ -142,7 +142,7 @@
             <label>Comment
               <input type="text" class="form-control" formControlName="comment"/>
             </label>
-            <span class="help-block text-danger" *ngIf="editForm.get('comment').touched && editForm.get('comment').invalid">The comment field is required.</span>
+            <span class="help-block text-danger" *ngIf="createForm.get('comment').touched && createForm.get('comment').invalid">The comment field is required.</span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

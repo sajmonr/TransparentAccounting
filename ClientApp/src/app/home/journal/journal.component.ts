@@ -19,6 +19,8 @@ import {JournalAddFormComponent} from "./add-form/journal-add-form.component";
 import {NormalSide} from "../../shared/account.model";
 import {ActivatedRoute} from "@angular/router";
 import {single} from "rxjs/operators";
+import {EventType} from "../../shared/event.model";
+import {LoggingService} from "../../services/logging.service";
 
 @Component({
   selector: 'app-journal',
@@ -47,13 +49,17 @@ export class JournalComponent implements OnInit, DoCheck{
 
   private submitInProgress = false;
 
+  private static APPROVE_JOURNAL_LOG = "Journal Entry Approved by: ";
+  private static REJECT_JOURNAL_LOG = "Journal Entry Approved by: ";
+
   constructor(private changeDetector: ChangeDetectorRef,
               private activatedRouted: ActivatedRoute,
               private apiService: ApiService,
               private http: HttpClient,
               private journals: JournalService,
               private login: LoginService,
-              private datePipe: DatePipe){
+              private datePipe: DatePipe,
+              private loggingService: LoggingService){
     activatedRouted.params.subscribe(params => {
       if(params["entryId"]){
         this.viewEntryId = params["entryId"];
@@ -84,6 +90,14 @@ export class JournalComponent implements OnInit, DoCheck{
   private onEntryResolve(){
     if(!this.isNullOrWhitespace(this.resolveComments))
       this.resolveTransaction.description += '\n' + this.constructResolveComment(this.resolveComments, this.resolveApprove);
+
+    if (this.resolveApprove) {
+      let description: string = JournalComponent.APPROVE_JOURNAL_LOG + this.login.getCurrentUser().username;
+      this.loggingService.createLogEventFromObject(description, this.resolveTransaction, EventType.JournalEntry);
+    } else {
+      let description: string = JournalComponent.REJECT_JOURNAL_LOG + this.login.getCurrentUser().username;
+      this.loggingService.createLogEventFromObject(description, this.resolveTransaction, EventType.JournalEntry);
+    }
 
     this.journals.resolveTransaction(this.resolveTransaction, this.resolveApprove).then(this.loadTransactions.bind(this));
   }

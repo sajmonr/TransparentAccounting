@@ -10,6 +10,8 @@ import {JournalService} from "../../../services/journal.service";
 import {MessageService} from "../../../services/message.service";
 import {FileService} from "../../../services/file.service";
 import {Attachement} from "../../../shared/attachement.model";
+import {EventType} from "../../../shared/event.model";
+import {LoggingService} from "../../../services/logging.service";
 
 @Component({
   selector: 'app-journal-add-form',
@@ -24,6 +26,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
   private journalEntries: JournalEntry[] = [];
   private files: File[] = [];
   private uploadProgress = -1;
+  private static POST_JOURNAL_LOG = "Post Transaction for Approval";
 
   private journalEntriesTouched = false;
   private journalEntriesErrors: string[] = [];
@@ -34,7 +37,8 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
               private journalService: JournalService,
               private loginService: LoginService,
               private messages: MessageService,
-              private filesService: FileService){}
+              private filesService: FileService,
+              private loggingService: LoggingService){}
 
   ngOnInit(): void {
     this.reset();
@@ -232,6 +236,7 @@ export class JournalAddFormComponent implements OnInit, DoCheck{
       transaction.attachments = await this.uploadFiles();
     }
     await this.journalService.addTransaction(transaction);
+    this.loggingService.createLogEventFromObject(JournalAddFormComponent.POST_JOURNAL_LOG, transaction, EventType.JournalEntry);
 
     this.reset();
   }

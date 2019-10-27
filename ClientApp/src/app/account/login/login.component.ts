@@ -3,6 +3,8 @@ import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {Login, LoginResult} from "../../shared/login.model";
+import {EventType} from "../../shared/event.model";
+import {LoggingService} from "../../services/logging.service";
 
 @Component({
   selector: 'app-root',
@@ -13,11 +15,13 @@ export class LoginComponent{
   @ViewChild('loginForm') loginForm: NgForm;
   errorMessage: string;
 
-  constructor(private loginService: LoginService, private router: Router){}
+  constructor(private loginService: LoginService, private router: Router, private loggingService: LoggingService){}
 
   onSubmit(){
-    this.loginService.logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((login: Login) => {
+    this.loginService.
+    logIn(this.loginForm.value.username, this.loginForm.value.password).subscribe((login: Login) => {
       if(login.result == LoginResult.Success){
+        this.loggingService.logEvent("User: " + login.user.username + " logged in successfully", EventType.Login);
         this.router.navigate(['/app/dashboard']);
       }else{
         switch(login.result){

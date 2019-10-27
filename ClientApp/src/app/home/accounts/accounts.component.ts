@@ -9,6 +9,7 @@ import {MessageService} from "../../services/message.service";
 import {LoginService} from "../../services/login.service";
 import {UserRole} from "../../shared/user-model";
 import {LoggingService} from "../../services/logging.service";
+import {EventType} from "../../shared/event.model";
 
 @Component({
   selector: 'app-accounts',
@@ -26,7 +27,6 @@ export class AccountsComponent implements OnInit{
   private selectedAccount: Account;
   private allCategories: Category[] = [];
   private allSubcategories: Subcategory[] = [];
-  private static FEATURE_NOT_IMPLEMENTED_ERROR_CODE = 1000;
   private static DEACTIVATE_ERROR_CODE = 1001;
   private static DEACTIVATE_SUCCESS_CODE = 1002;
   private static UNAUTHORIZED_ERROR_CODE = 1003;
@@ -126,9 +126,10 @@ export class AccountsComponent implements OnInit{
   }
 
   private onActivateAccountSelected(account) {
+    let clonedAccount = this.loggingService.cloneObject(account);
     this.selectedAccount = account;
     this.selectedAccount.active = true;
-    this.loggingService.updateLogEventFromObject(AccountsComponent.ACTIVATE_ACCOUNT_LOG, account, this.selectedAccount);
+    this.loggingService.updateLogEventFromObject(AccountsComponent.ACTIVATE_ACCOUNT_LOG, clonedAccount, this.selectedAccount, EventType.Account);
 
     this.http.post(this.apiService.getUrl(ApiMethod.UpdateAccount), this.selectedAccount).subscribe(next => {
       this.selectedAccount = null;
@@ -139,9 +140,10 @@ export class AccountsComponent implements OnInit{
 
   private onDeactivateAccountSelected(account) {
     if (account.balance == 0) {
+      let clonedAccount = this.loggingService.cloneObject(account);
       this.selectedAccount = account;
       this.selectedAccount.active = false;
-      this.loggingService.updateLogEventFromObject(AccountsComponent.DEACTIVATE_ACCOUNT_LOG, account, this.selectedAccount);
+      this.loggingService.updateLogEventFromObject(AccountsComponent.DEACTIVATE_ACCOUNT_LOG, clonedAccount, this.selectedAccount, EventType.Account);
 
       this.http.post(this.apiService.getUrl(ApiMethod.UpdateAccount), this.selectedAccount).subscribe(next => {
         this.selectedAccount = null;
@@ -172,7 +174,7 @@ export class AccountsComponent implements OnInit{
   }
 
   private onEditAccountSubmit() {
-    let originalAccount = this.selectedAccount;
+    let clonedAccount = this.loggingService.cloneObject(this.selectedAccount);
 
     this.selectedAccount.accountId = this.editForm.value.id;
     this.selectedAccount.name = this.editForm.value.name;
@@ -187,7 +189,7 @@ export class AccountsComponent implements OnInit{
     this.selectedAccount.comment = this.editForm.value.comment;
     this.selectedAccount.contraAccount = this.editForm.value.contraAccount;
 
-    this.loggingService.updateLogEventFromObject(AccountsComponent.UPDATE_ACCOUNT_LOG, originalAccount, this.selectedAccount);
+    this.loggingService.updateLogEventFromObject(AccountsComponent.UPDATE_ACCOUNT_LOG, clonedAccount, this.selectedAccount, EventType.Account);
     this.postEditAccount();
   }
 
@@ -200,15 +202,15 @@ export class AccountsComponent implements OnInit{
     this.selectedAccount.subcategory = this.findSubcategoryById(this.createForm.value.subcategory);
     this.selectedAccount.category = this.findCategoryById(this.selectedAccount.subcategory.categoryId);
     if (this.selectedAccount.category.id == 1 || this.selectedAccount.category.id == 4) {
-      this.selectedAccount.normalSide = this.editForm.value.contraAccount ? NormalSide.Right : NormalSide.Left;
+      this.selectedAccount.normalSide = this.createForm.value.contraAccount ? NormalSide.Right : NormalSide.Left;
     } else {
-      this.selectedAccount.normalSide = this.editForm.value.contraAccount ? NormalSide.Left : NormalSide.Right;
+      this.selectedAccount.normalSide = this.createForm.value.contraAccount ? NormalSide.Left : NormalSide.Right;
     }
-    this.selectedAccount.comment = this.editForm.value.comment;
-    this.selectedAccount.contraAccount = this.editForm.value.contraAccount;
+    this.selectedAccount.comment = this.createForm.value.comment;
+    this.selectedAccount.contraAccount = this.createForm.value.contraAccount;
 
     if (!this.isDuplicate(this.selectedAccount)) {
-      this.loggingService.createLogEventFromObject(AccountsComponent.CREATE_ACCOUNT_LOG, this.selectedAccount);
+      this.loggingService.createLogEventFromObject(AccountsComponent.CREATE_ACCOUNT_LOG, this.selectedAccount, EventType.Account);
 
       this.postCreateAccount();
     } else {
@@ -275,7 +277,8 @@ export class AccountsComponent implements OnInit{
       name: this.selectedAccount.name,
       beginningBalance: this.selectedAccount.beginningBalance,
       subcategory: this.selectedAccount.subcategory.id,
-      comment: this.selectedAccount.comment
+      comment: this.selectedAccount.comment,
+      contraAccount: this.selectedAccount.contraAccount
     });
   }
 

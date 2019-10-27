@@ -13,6 +13,7 @@ namespace TransparentAccounting.Sql.Entities
         public string Description { get; set; }
         public string Original { get; set; }
         public string Updated { get; set; }
+        public int EventType { get; set; }
         
     }
 }

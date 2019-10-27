@@ -21,8 +21,10 @@
         <td>{{event.createdBy.fullName}}</td>
         <td>{{event.timestamp}}</td>
         <td>{{event.description}}</td>
-        <td>{{event.original}}</td>
-        <td>{{event.updated}}</td>
+        <td [colSpan]="event.updated != null ? 2: 1" class="nestedTd">
+          <event-component [event]="event"></event-component>
+        </td>
+        <td *ngIf="event.updated == null"></td>
       </tr>
       </tbody>
     </table>
