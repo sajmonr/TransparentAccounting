@@ -22,6 +22,7 @@ import {IncomeStatementComponent} from "./home/reports/income-statement/income-s
 import {TrialBalanceComponent} from "./home/reports/trial-balance/trial-balance.component";
 import {BalanceSheetComponent} from "./home/reports/balance-sheet/balance-sheet.component";
 import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnings-statement/retained-earnings-statement.component";
+import {DownloadComponent} from "./download/download.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'app', pathMatch: 'full'},
@@ -62,6 +63,7 @@ const routes: Routes = [
       {path: 'forgot', component: ForgotComponent},
       {path: 'resolve/:userId/:result', component: ResolveComponent}
     ]},
+  {path: 'download/:file', component: DownloadComponent},
   {path: '**', redirectTo: '/'}
 ];
 

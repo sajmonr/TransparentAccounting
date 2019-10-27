@@ -31,6 +31,7 @@
     <Content Include="ClientApp\src\app\account\register\register.component.css" />
     <Content Include="ClientApp\src\app\account\register\register.component.html" />
     <Content Include="ClientApp\src\app\account\resolve\resolve.component.html" />
+    <Content Include="ClientApp\src\app\download\download.component.html" />
     <Content Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.css" />
     <Content Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.html" />
     <Content Include="ClientApp\src\app\home\accounts\accounts.component.css" />
@@ -88,6 +89,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\account\register\register.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\account\resolve\resolve.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\admin-auth-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\download\download.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts-category\accounts-category.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\accounts\accounts.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
@@ -111,12 +113,14 @@
     <TypeScriptCompile Include="ClientApp\src\app\role-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\accounts.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\email.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\file.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\journal.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\logging.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\message.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\reports.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\users.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\account.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\attachement.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\category.model.ts" />

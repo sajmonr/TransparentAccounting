@@ -15,7 +15,7 @@ label{
 }
 .modal-body{
   max-height: 75vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .modal-95{
   max-width: 95vw !important;

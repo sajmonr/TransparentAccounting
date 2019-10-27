@@ -5,5 +5,6 @@ namespace TransparentAccounting.Models
         public string Message { get; set; }
         public string Subject { get; set; }
         public string[] Recipients { get; set; }
+        public bool Html { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace TransparentAccounting.Controllers
             foreach (string recipient in email.Recipients)
             {
                 if(!string.IsNullOrWhiteSpace(recipient))
-                    _emailService.Send(recipient, email.Subject, email.Message);
+                    _emailService.Send(recipient, email.Subject, email.Message, email.Html);
             }
                 
         }

@@ -42,6 +42,9 @@ import {TrialBalanceComponent} from "./home/reports/trial-balance/trial-balance.
 import {BalanceSheetComponent} from "./home/reports/balance-sheet/balance-sheet.component";
 import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnings-statement/retained-earnings-statement.component";
 import {ReportsService} from "./services/reports.service";
+import {UsersService} from "./services/users.service";
+import {EmailService} from "./services/email.service";
+import {DownloadComponent} from "./download/download.component";
 import {EventComponent} from "./home/events/eventcomponents/event.component";
 
 @NgModule({
@@ -71,7 +74,8 @@ import {EventComponent} from "./home/events/eventcomponents/event.component";
     IncomeStatementComponent,
     TrialBalanceComponent,
     BalanceSheetComponent,
-    RetainedEarningsStatementComponent
+    RetainedEarningsStatementComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -80,7 +84,7 @@ import {EventComponent} from "./home/events/eventcomponents/event.component";
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [DatePipe, LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService,FileService, ReportsService],
+  providers: [DatePipe, LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService,FileService, ReportsService, UsersService, EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

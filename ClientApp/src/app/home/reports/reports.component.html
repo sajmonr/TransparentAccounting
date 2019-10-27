@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row hide-print">
-    <div class="col">
+    <div class="col row-options">
       <label *ngIf="filterType == dateSelectorType.FromTo">
         From Date
         <input type="date" class="form-control" [value]="fromFilter | date: 'yyyy-MM-dd'" (change)="setDateFilter($event.target.valueAsDate, true)"/>
@@ -19,13 +19,42 @@
     <div class="col text-right actions">
       <button class="btn btn-primary" (click)="onPrint()">Print</button>
       <button class="btn btn-primary" (click)="onSave()">Save</button>
-      <button class="btn btn-primary" (click)="onEmail()">Email</button>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#send-email-modal">Email</button>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <div class="print">
+      <div class="print" id="pdf-save">
         <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="send-email-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="h5 modal-title">Send Report</span>
+      </div>
+      <div class="modal-body">
+        <form #emailForm="ngForm">
+          <div class="form-group">
+            <label>
+              Recipient
+              <select class="form-control" name="recipient" ngModel>
+                <option *ngFor="let user of users" [ngValue]="user">{{user.fullName}}</option>
+              </select>
+            </label>
+            <label>
+              Message
+              <textarea class="form-control" name="message" ngModel rows="6"></textarea>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" (click)="onEmailSend()">Send</button>
       </div>
     </div>
   </div>
