@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,8 @@ namespace TransparentAccounting.Controllers
                 Timestamp = newEvent.Timestamp.AddHours(-4),
                 UserId = newEvent.CreatedBy.Id,
                 Original = newEvent.Original,
-                Updated = newEvent.Updated
+                Updated = newEvent.Updated,
+                EventType = newEvent.EventType
             };
             GetDbContext().Insert(sqlEvent);
         }

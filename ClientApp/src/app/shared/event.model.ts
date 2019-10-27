@@ -7,4 +7,7 @@ export class Event{
   description: string;
   original: string;
   updated: string;
+  eventType: EventType
 }
+
+export enum EventType{Login, Account, JournalEntry}

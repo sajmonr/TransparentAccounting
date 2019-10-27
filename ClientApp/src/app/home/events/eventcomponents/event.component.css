@@ -1,0 +1,12 @@
+.table{
+  table-layout: fixed;
+  border-collapse: collapse
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}

@@ -1,0 +1,56 @@
+<table *ngIf="isAccount()" class="table">
+  <tbody>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.accountId != updatedAccountEvent.accountId">Account ID: {{originalAccountEvent.accountId}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.accountId != updatedAccountEvent.accountId">Account ID: {{updatedAccountEvent.accountId}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.name != updatedAccountEvent.name">Name: {{originalAccountEvent.name}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.name != updatedAccountEvent.name">Name: {{updatedAccountEvent.name}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.active != updatedAccountEvent.active">Active: {{originalAccountEvent.active}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.active != updatedAccountEvent.active">Active: {{updatedAccountEvent.active}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.normalSide != updatedAccountEvent.normalSide">Normal Side: {{normalSide[originalAccountEvent.normalSide]}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.normalSide != updatedAccountEvent.normalSide">Normal Side: {{normalSide[updatedAccountEvent.normalSide]}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.beginningBalance != updatedAccountEvent.beginningBalance">Beginning Balance: {{originalAccountEvent.beginningBalance | currency}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.beginningBalance != updatedAccountEvent.beginningBalance">Beginning Balance: {{updatedAccountEvent.beginningBalance | currency}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.balance != updatedAccountEvent.balance">Balance: {{originalAccountEvent.balance | currency}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.balance != updatedAccountEvent.balance">Balance: {{updatedAccountEvent.balance | currency}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.debit != updatedAccountEvent.debit">Debit: {{originalAccountEvent.debit | currency}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.debit != updatedAccountEvent.debit">Debit: {{updatedAccountEvent.debit | currency}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.credit != updatedAccountEvent.credit">Credit: {{originalAccountEvent.credit | currency}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.credit != updatedAccountEvent.credit">Credit: {{updatedAccountEvent.credit | currency}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.subcategory.name != updatedAccountEvent.subcategory.name">Subcategory: {{originalAccountEvent.subcategory.name}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.subcategory.name != updatedAccountEvent.subcategory.name">Subcategory: {{updatedAccountEvent.subcategory.name}}</td>
+  </tr>
+  <tr>
+    <td [class.red]="updatedAccountEvent != null && originalAccountEvent.comment != updatedAccountEvent.comment">Comment: {{originalAccountEvent.comment}}</td>
+    <td *ngIf="updatedAccountEvent != null" [class.green]="originalAccountEvent.comment != updatedAccountEvent.comment">Comment: {{updatedAccountEvent.comment}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<table *ngIf="isJournalEntry()" class="table">
+  <tbody>
+  <tr *ngFor="let entry of journalTransaction.entries">
+    <table class="table">
+      <tr><strong>Account Name:</strong> {{getAccount(entry.account.id).name}}</tr>
+      <tr *ngIf="isDebit(entry)"><strong>Debit:</strong> {{isDebit(entry) ? getDebitBalance(entry, entry.account) : null}}</tr>
+      <tr *ngIf="!isDebit(entry)"><strong>Credit:</strong> {{!isDebit(entry) ? getCreditBalance(entry, entry.account): null}}</tr>
+    </table>
+  </tr>
+  </tbody>
+</table>

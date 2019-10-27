@@ -42,6 +42,7 @@ import {TrialBalanceComponent} from "./home/reports/trial-balance/trial-balance.
 import {BalanceSheetComponent} from "./home/reports/balance-sheet/balance-sheet.component";
 import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnings-statement/retained-earnings-statement.component";
 import {ReportsService} from "./services/reports.service";
+import {EventComponent} from "./home/events/eventcomponents/event.component";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {ReportsService} from "./services/reports.service";
     AccountsCategoryComponent,
     ForgotComponent,
     EventsComponent,
+    EventComponent,
     ResolveComponent,
     EmailComponent,
     JournalComponent,
