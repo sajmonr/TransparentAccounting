@@ -22,9 +22,9 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let account of category.value; last as isLast">
+              <tr *ngFor="let account of category.value; last as isLast, first as isFirst">
                 <td>{{account.name}}</td>
-                <td class="text-right" [ngClass]="{'amount-separator': category.key != accountType.Equity && isLast}">{{account.balance | currency: 'USD': ''}}</td>
+                <td class="text-right" [ngClass]="{'amount-separator': category.key != accountType.Equity && isLast}">{{isFirst ? (account.balance | currency) : account.balance | currency: 'USD': ''}}</td>
               </tr>
               <tr *ngIf="category.key == accountType.Equity">
                 <td>Retained Earnings</td>
@@ -32,9 +32,19 @@
               </tr>
               <tr>
                 <td>Total {{accountType[category.key]}}</td>
-                <td class="text-right">{{getTotal(category.key) | currency}}</td>
+                <td class="text-right">{{getTotal([category.key]) | currency}}</td>
               </tr>
               </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <td>Total Liabilities & Equity</td>
+                <td class="total-separator text-right">{{getTotal([accountType.Equity, accountType.Liabilities]) | currency}}</td>
+              </tr>
             </table>
           </div>
         </div>

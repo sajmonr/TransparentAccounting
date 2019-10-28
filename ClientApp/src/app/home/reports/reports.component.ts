@@ -9,6 +9,7 @@ import {NgForm} from "@angular/forms";
 import {EmailMessage} from "../../shared/email.message.model";
 import {FileService} from "../../services/file.service";
 import {EmailService} from "../../services/email.service";
+import {MessageService} from "../../services/message.service";
 
 @Component({
   selector: 'app-reports',
@@ -29,7 +30,8 @@ export class ReportsComponent{
               private reportsService: ReportsService,
               private usersService: UsersService,
               private fileService: FileService,
-              private emailService: EmailService){
+              private emailService: EmailService,
+              private message: MessageService){
     this.yearFilter = new Date().getFullYear();
 
     this.router.events.subscribe(e => {
@@ -133,7 +135,7 @@ export class ReportsComponent{
     email.html = true;
 
     this.emailService.send(email);
-    console.log('done');
+    this.message.success('Email sent', 'Your report was sent to the recipient.');
   }
 }
 export enum DateSelectorType{

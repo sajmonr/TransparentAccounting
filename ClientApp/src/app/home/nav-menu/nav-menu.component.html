@@ -45,7 +45,7 @@
           <li *ngIf="roleCanActivate([ userRole.Manager, userRole.Accountant])" class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link" [routerLink]='["/app/ledger"]'>Ledger</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="roleCanActivate([userRole.Manager])">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Reports</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" [routerLink]="['/app/report/trial-balance']">Trial Balance</a>

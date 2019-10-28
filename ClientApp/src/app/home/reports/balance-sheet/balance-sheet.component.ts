@@ -49,10 +49,13 @@ export class BalanceSheetComponent{
     return totalRevenues - totalExpenses - dividends;
   }
 
-  private getTotal(accountType: CategoryType): number{
-    let total = this.accounts[accountType].reduce((a, c) => a + c.balance, 0);
+  private getTotal(accountType: CategoryType[]): number{
+    let total = 0;
+    accountType.forEach(type => {
+      total += this.accounts[type].reduce((a, c) => a + c.balance, 0);
+    });
 
-    if(accountType == CategoryType.Equity)
+    if(accountType.some(t => t == CategoryType.Equity))
       total += this.retainedEarnings;
 
     return total;

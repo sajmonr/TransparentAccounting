@@ -21,6 +21,14 @@
             <td>{{netIncome | currency: 'USD': ''}}</td>
           </tr>
           <tr>
+            <td>
+              Total
+            </td>
+            <td class="total-separator">
+              {{netIncome + retainedEarningsStart | currency}}
+            </td>
+          </tr>
+          <tr>
             <td>Dividends</td>
             <td class="amount-separator">{{dividends | currency: 'USD': ''}}</td>
           </tr>
