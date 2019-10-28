@@ -83,6 +83,7 @@ export class ReportsComponent{
     const data = document.getElementById('pdf-save');
 
     return new Promise<jspdf>(resolve => {
+      console.log(data);
       html2canvas(data).then(async canvas => {
         // Few necessary setting options
         const imgWidth = 208;
@@ -98,6 +99,7 @@ export class ReportsComponent{
         resolve(pdf);
       });
     });
+
   }
 
   private onPrint(){
