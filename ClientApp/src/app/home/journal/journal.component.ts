@@ -50,7 +50,7 @@ export class JournalComponent implements OnInit, DoCheck{
   private submitInProgress = false;
 
   private static APPROVE_JOURNAL_LOG = "Journal Entry Approved by: ";
-  private static REJECT_JOURNAL_LOG = "Journal Entry Approved by: ";
+  private static REJECT_JOURNAL_LOG = "Journal Entry Rejected by: ";
 
   constructor(private changeDetector: ChangeDetectorRef,
               private activatedRouted: ActivatedRoute,
