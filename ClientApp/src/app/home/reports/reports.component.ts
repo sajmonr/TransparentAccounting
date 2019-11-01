@@ -66,9 +66,7 @@ export class ReportsComponent{
     this.fromFilter = null;
     this.toFilter = null;
 
-    if(url.endsWith('balance-sheet')){
-      this.filterType = DateSelectorType.To;
-    }else if(url.endsWith('retained-earnings-statement')){
+    if(url.endsWith('retained-earnings-statement')){
       this.filterType = DateSelectorType.Year;
 
       const years = this.getYearFromTo(new Date().getFullYear());
@@ -76,7 +74,7 @@ export class ReportsComponent{
       this.toFilter = years[1];
 
     }else{
-      this.filterType = DateSelectorType.FromTo;
+      this.filterType = DateSelectorType.To;
     }
 
     this.reportsService.load(this.fromFilter, this.toFilter);
