@@ -9,7 +9,6 @@ import {NgForm} from "@angular/forms";
 import {EmailMessage} from "../../shared/email.message.model";
 import {FileService} from "../../services/file.service";
 import {EmailService} from "../../services/email.service";
-import {MessageService} from "../../services/message.service";
 
 declare var $: any;
 
@@ -32,8 +31,7 @@ export class ReportsComponent{
               private reportsService: ReportsService,
               private usersService: UsersService,
               private fileService: FileService,
-              private emailService: EmailService,
-              private message: MessageService){
+              private emailService: EmailService){
     this.yearFilter = new Date().getFullYear();
 
     this.router.events.subscribe(e => {
@@ -68,7 +66,9 @@ export class ReportsComponent{
     this.fromFilter = null;
     this.toFilter = null;
 
-    if(url.endsWith('retained-earnings-statement')){
+    if(url.endsWith('balance-sheet')){
+      this.filterType = DateSelectorType.To;
+    }else if(url.endsWith('retained-earnings-statement')){
       this.filterType = DateSelectorType.Year;
 
       const years = this.getYearFromTo(new Date().getFullYear());
@@ -76,7 +76,7 @@ export class ReportsComponent{
       this.toFilter = years[1];
 
     }else{
-      this.filterType = DateSelectorType.To;
+      this.filterType = DateSelectorType.FromTo;
     }
 
     this.reportsService.load(this.fromFilter, this.toFilter);
@@ -132,7 +132,7 @@ export class ReportsComponent{
     email.subject = 'New report';
 
     this.emailService.send(email);
-    this.message.success('Email sent', 'Your report was sent to the recipient.');
+    console.log('done');
   }
 }
 export enum DateSelectorType{
