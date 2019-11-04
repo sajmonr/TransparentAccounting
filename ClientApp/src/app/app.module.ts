@@ -46,6 +46,7 @@ import {UsersService} from "./services/users.service";
 import {EmailService} from "./services/email.service";
 import {DownloadComponent} from "./download/download.component";
 import {EventComponent} from "./home/events/eventcomponents/event.component";
+import {AccountingCurrencyPipe} from "./shared/pipes/accounting-currency.pipe";
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import {EventComponent} from "./home/events/eventcomponents/event.component";
     TrialBalanceComponent,
     BalanceSheetComponent,
     RetainedEarningsStatementComponent,
-    DownloadComponent
+    DownloadComponent,
+    AccountingCurrencyPipe
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

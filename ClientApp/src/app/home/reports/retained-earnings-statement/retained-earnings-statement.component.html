@@ -24,17 +24,17 @@
             <td>
               Total
             </td>
-            <td class="total-separator">
+            <td class="amount-separator">
               {{netIncome + retainedEarningsStart | currency}}
             </td>
           </tr>
           <tr>
-            <td>Dividends</td>
+            <td>Less Dividends</td>
             <td class="amount-separator">{{dividends | currency: 'USD': ''}}</td>
           </tr>
           <tr>
             <td>End Retained Earnings</td>
-            <td>{{retainedEarningsStart + netIncome - dividends | currency}}</td>
+            <td class="total-separator">{{retainedEarningsStart + netIncome - dividends | currency}}</td>
           </tr>
         </tbody>
       </table>

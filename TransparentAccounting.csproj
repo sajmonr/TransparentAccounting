@@ -135,6 +135,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\login.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\message.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\password.history.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\pipes\accounting-currency.pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\report-type.enum.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\security.question.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\subcategory.model.ts" />

@@ -4,7 +4,7 @@
     <div class="col">
       <span class="d-block">Addams & Family Inc.</span>
       <span class="d-block">Balance Sheet</span>
-      <span class="d-block">Balance as of {{this.reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
+      <span class="d-block">As of {{this.reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
     </div>
   </div>
   <!--Body row-->
@@ -19,20 +19,28 @@
               <tr>
                 <th>{{accountType[category.key]}}</th>
                 <th></th>
+                <th></th>
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let account of category.value; last as isLast, first as isFirst">
-                <td>{{account.name}}</td>
-                <td class="text-right" [ngClass]="{'amount-separator': category.key != accountType.Equity && isLast}">{{isFirst ? (account.balance | currency) : account.balance | currency: 'USD': ''}}</td>
-              </tr>
+              <ng-container *ngFor="let account of category.value; first as isFirst, index as i">
+                <tr>
+                  <td>{{account.name}}</td>
+                  <td class="text-right">{{isFirst ? (account.balance | accountingCurrency) : account.balance | accountingCurrency: 'USD': ''}}</td>
+                </tr>
+                <tr *ngIf="account.subcategory.id == 21">
+                  <td>Total somehting</td>
+                  <td colspan="2" class="text-right amount-separator">{{getDepreciationForOfficeEquipment() | accountingCurrency}}</td>
+                </tr>
+              </ng-container>
               <tr *ngIf="category.key == accountType.Equity">
                 <td>Retained Earnings</td>
-                <td class="text-right amount-separator">{{retainedEarnings | currency: 'USD': ''}}</td>
+                <td class="text-right">{{retainedEarnings | currency: 'USD': ''}}</td>
               </tr>
               <tr>
                 <td>Total {{accountType[category.key]}}</td>
-                <td class="text-right">{{getTotal([category.key]) | currency}}</td>
+                <td class="total-separator"></td>
+                <td class="text-right total-separator">{{getTotal([category.key]) | currency}}</td>
               </tr>
               </tbody>
             </table>
@@ -41,6 +49,10 @@
         <div class="row">
           <div class="col">
             <table class="table table-borderless">
+              <tr>
+                <th>Liabilities & Equity</th>
+                <th></th>
+              </tr>
               <tr>
                 <td>Total Liabilities & Equity</td>
                 <td class="total-separator text-right">{{getTotal([accountType.Equity, accountType.Liabilities]) | currency}}</td>
