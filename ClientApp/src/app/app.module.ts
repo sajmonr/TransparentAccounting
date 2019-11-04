@@ -46,6 +46,7 @@ import {UsersService} from "./services/users.service";
 import {EmailService} from "./services/email.service";
 import {EventComponent} from "./home/events/eventcomponents/event.component";
 import {AccountingCurrencyPipe} from "./shared/pipes/accounting-currency.pipe";
+import {RatioComponent} from "./home/dashboard/ratio/ratio.component";
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import {AccountingCurrencyPipe} from "./shared/pipes/accounting-currency.pipe";
     TrialBalanceComponent,
     BalanceSheetComponent,
     RetainedEarningsStatementComponent,
-    AccountingCurrencyPipe
+    AccountingCurrencyPipe,
+    RatioComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
