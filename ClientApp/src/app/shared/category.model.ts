@@ -8,8 +8,8 @@ export class Category{
 }
 export enum CategoryType{
   Assets = 1,
-  Liabilities,
-  Revenues,
-  Expenses,
-  Equity
+  Liabilities = 2,
+  Revenues = 3,
+  Expenses = 4,
+  Equity = 5
 }

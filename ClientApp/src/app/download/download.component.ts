@@ -12,7 +12,6 @@ export class DownloadComponent implements OnInit{
 
   ngOnInit(): void {
     this.file = this.activatedRoute.params['file'];
-    this.activatedRoute.params.subscribe(params => this.file = params['file']);
   }
 
 }

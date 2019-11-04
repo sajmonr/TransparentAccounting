@@ -63,7 +63,7 @@ const routes: Routes = [
       {path: 'forgot', component: ForgotComponent},
       {path: 'resolve/:userId/:result', component: ResolveComponent}
     ]},
-  {path: 'uploads/:file', component: DownloadComponent},
+  {path: 'download/:file', component: DownloadComponent},
   {path: '**', redirectTo: '/'}
 ];
 
