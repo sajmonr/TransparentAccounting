@@ -2,11 +2,13 @@ export class EmailMessage{
   recipients: string[];
   message: string;
   subject: string;
-  html: boolean;
+  isHtml: boolean;
+  attachments: string[];
 
   constructor(){
     this.recipients = [];
-    this.html = false;
+    this.attachments = [];
+    this.isHtml = false;
   }
 
 }

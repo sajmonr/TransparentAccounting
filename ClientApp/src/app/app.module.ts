@@ -44,7 +44,6 @@ import {RetainedEarningsStatementComponent} from "./home/reports/retained-earnin
 import {ReportsService} from "./services/reports.service";
 import {UsersService} from "./services/users.service";
 import {EmailService} from "./services/email.service";
-import {DownloadComponent} from "./download/download.component";
 import {EventComponent} from "./home/events/eventcomponents/event.component";
 import {AccountingCurrencyPipe} from "./shared/pipes/accounting-currency.pipe";
 
@@ -76,7 +75,6 @@ import {AccountingCurrencyPipe} from "./shared/pipes/accounting-currency.pipe";
     TrialBalanceComponent,
     BalanceSheetComponent,
     RetainedEarningsStatementComponent,
-    DownloadComponent,
     AccountingCurrencyPipe
   ],
   imports: [

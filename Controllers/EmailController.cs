@@ -1,26 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
-using NETCore.MailKit.Core;
-using  TransparentAccounting.Models;
-    
+using TransparentAccounting.Models;
+using TransparentAccounting.Services;
+
 namespace TransparentAccounting.Controllers
 {
     public class EmailController : BaseController
     {
-        private readonly IEmailService _emailService;
-        
-        public EmailController(IEmailService emailService)
+        private readonly EmailService _email;
+        public EmailController(EmailService emailService)
         {
-            _emailService = emailService;
+            _email = emailService;
         }
         [HttpPost]
         public void Send([FromBody] EmailMessage email)
         {
-            foreach (string recipient in email.Recipients)
-            {
-                if(!string.IsNullOrWhiteSpace(recipient))
-                    _emailService.Send(recipient, email.Subject, email.Message, email.Html);
-            }
-                
+            _email.Send(email);
         }
     }
 }

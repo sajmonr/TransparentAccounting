@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using NETCore.MailKit.Core;
 using TransparentAccounting.Models;
 using TransparentAccounting.Utilities.Cryptography;
+using EmailService = TransparentAccounting.Services.EmailService;
 using Entities = TransparentAccounting.Sql.Entities;
 
 namespace TransparentAccounting.Controllers
 {
     public class UsersController : BaseController
     {
-        private IEmailService _emailService;
+        private EmailService _emailService;
         private readonly string _adminEmail;
-        public UsersController(IEmailService emailService, IConfiguration configuration)
+        public UsersController(EmailService emailService, IConfiguration configuration)
         {
             _emailService = emailService;
             _adminEmail = configuration.GetSection("Email")["SenderEmail"];
@@ -104,41 +104,13 @@ namespace TransparentAccounting.Controllers
             }
             
             GetDbContext().Update(dbUser);
-            _emailService.Send(dbUser.Email, subject, message, true);
-        }
-        [HttpPost]
-        public UserUpdateResult SelfRegister([FromBody] User user)
-        {
-            string username = GenerateUserName(user.FullName, DateTime.Now);
-            var dbUser = GetDbContext().Select<Entities.User>().FirstOrDefault(u => u.Username == username);
-
-            if (dbUser != null)
-                return UserUpdateResult.UsernameTaken;
-
-            dbUser = new Entities.User
+            _emailService.Send(new EmailMessage()
             {
-                Role = (int)UserRole.Accountant,
-                FullName = user.FullName,
-                IsActive = 0,
-                Email = user.Email,
-                Username = username,
-                PasswordExpiration = DateTime.Now.AddMonths(1),
-                Password = Hash.Sha256(user.Password),
-                Address = user.Address,
-                SecurityQuestion = user.SecurityQuestion.Id,
-                SecurityAnswer = user.SecurityQuestion.Answer,
-                DateOfBirth = user.DateOfBirth
-            };
-            
-            GetDbContext().Insert(dbUser);
-
-            var createdUser = GetDbContext().Select<Entities.User>().First(u => u.Username == dbUser.Username);
-            
-            var emailMessage = $"New user has registered. You can <a href=\"https://localhost:5001/account/resolve/{createdUser.Id}/1\">approve</a> or <a href=\"https://localhost:5001/account/resolve/{createdUser.Id}/0\">deny</a> the registration.";
-            
-            _emailService.Send(_adminEmail, "New user registration", emailMessage, true);
-            
-            return UserUpdateResult.Ok;
+                Message = message,
+                Subject = subject,
+                Recipients = new []{dbUser.Email},
+                IsHtml = true
+            });
         }
 
         [HttpPost]

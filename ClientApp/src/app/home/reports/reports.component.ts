@@ -11,6 +11,8 @@ import {FileService} from "../../services/file.service";
 import {EmailService} from "../../services/email.service";
 import {MessageService} from "../../services/message.service";
 
+declare var $: any;
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -121,16 +123,13 @@ export class ReportsComponent{
     this.fileService.uploadFinished.unsubscribe();
 
     const email = new EmailMessage();
-    let path = uploadedFiles[0].path;
-
-    path = path.replace(/\\/g, '/');
 
     email.recipients.push(this.emailForm.value.recipient.email);
+    email.attachments.push(uploadedFiles[0].path);
+
     email.message = this.emailForm.value.message;
-    email.message += '<br><a href="https://localhost:5001/' + path + '" download="report.pdf">Download file</a>';
 
     email.subject = 'New report';
-    email.html = true;
 
     this.emailService.send(email);
     this.message.success('Email sent', 'Your report was sent to the recipient.');
