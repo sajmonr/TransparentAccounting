@@ -6,26 +6,3 @@
   <button class="btn btn-danger" (click)="messageService.error('Error info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Error modal</button>
   <button class="btn btn-info" (click)="messageService.info('Test info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Info modal</button>
 </div>
-
-<table class="table table-borderless">
-  <tr *ngIf="hasPendingTransactions()"><th class="text-danger">Journal Entries To Be Resolved:</th></tr>
-  <tr *ngFor="let transaction of transactions">
-    <div *ngIf="transaction.status == transactionStatusType.Pending">
-      <td>{{transaction.createDate | date: 'M/d/yyyy'}}</td>
-      <td>{{transactionType[transaction.type]}}</td>
-      <td>{{transaction.createdBy.fullName}}</td>
-      <td class="text-center align-middle">
-            <span class="d-block" *ngIf="transaction.status == transactionStatusType.Pending"
-                  [ngClass]="{'text-info': transaction.status == transactionStatusType.Pending}">Pending</span>
-      </td>
-    </div>
-  </tr>
-  <tr>
-</table>
-
-<table>
-  <tr>
-    <td><ratio-component [ratio]="currentRatio"></ratio-component></td>
-    <td><ratio-component [ratio]="quickRatio"></ratio-component></td>
-  </tr>
-</table>

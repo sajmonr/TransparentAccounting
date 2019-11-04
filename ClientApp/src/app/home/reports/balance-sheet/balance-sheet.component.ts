@@ -49,10 +49,19 @@ export class BalanceSheetComponent{
     return totalRevenues - totalExpenses - dividends;
   }
 
-  private getTotal(accountType: CategoryType): number{
-    let total = this.accounts[accountType].reduce((a, c) => a + c.balance, 0);
+  private getDepreciationForOfficeEquipment(): number{
+    const acc = this.accounts[CategoryType.Assets].filter(a => a.name == 'Office Equipment' || a.name == 'Accumulated Depreciation, Office Equipment');
+    return acc.reduce((a, c) => a + c.balance, 0);
+  }
 
-    if(accountType == CategoryType.Equity)
+  private getTotal(accountType: CategoryType[]): number{
+    let total = 0;
+    accountType.forEach(type => {
+      if(this.accounts[type])
+        total += this.accounts[type].reduce((a, c) => a + c.balance, 0);
+    });
+
+    if(accountType.some(t => t == CategoryType.Equity))
       total += this.retainedEarnings;
 
     return total;

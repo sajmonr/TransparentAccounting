@@ -45,8 +45,7 @@ import {ReportsService} from "./services/reports.service";
 import {UsersService} from "./services/users.service";
 import {EmailService} from "./services/email.service";
 import {EventComponent} from "./home/events/eventcomponents/event.component";
-import {GaugeChartModule} from "angular-gauge-chart";
-import {RatioComponent} from "./home/dashboard/ratio/ratio.component";
+import {AccountingCurrencyPipe} from "./shared/pipes/accounting-currency.pipe";
 
 @NgModule({
   declarations: [
@@ -76,8 +75,6 @@ import {RatioComponent} from "./home/dashboard/ratio/ratio.component";
     TrialBalanceComponent,
     BalanceSheetComponent,
     RetainedEarningsStatementComponent,
-    DownloadComponent,
-    RatioComponent
     AccountingCurrencyPipe
   ],
   imports: [
@@ -85,8 +82,7 @@ import {RatioComponent} from "./home/dashboard/ratio/ratio.component";
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    GaugeChartModule
+    ReactiveFormsModule
   ],
   providers: [DatePipe, LoginService, AuthGuard, RoleGuard, AdminAuthGuard, CookieService, ApiService, LoggingService, MessageService, AccountsService, JournalService,FileService, ReportsService, UsersService, EmailService],
   bootstrap: [AppComponent]

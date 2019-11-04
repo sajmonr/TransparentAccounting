@@ -37,7 +37,6 @@
     <Content Include="ClientApp\src\app\home\accounts\accounts.component.html" />
     <Content Include="ClientApp\src\app\home\dashboard\dashboard.component.css" />
     <Content Include="ClientApp\src\app\home\dashboard\dashboard.component.html" />
-    <Content Include="ClientApp\src\app\home\dashboard\ratio\ratio.component.html" />
     <Content Include="ClientApp\src\app\home\email\email.component.html" />
     <Content Include="ClientApp\src\app\home\events\eventcomponents\event.component.css" />
     <Content Include="ClientApp\src\app\home\events\eventcomponents\event.component.html" />
@@ -94,7 +93,6 @@
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth-guard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\dashboard\dashboard.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\home\dashboard\ratio\ratio.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\email\email.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\events\eventcomponents\event.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\events\events.component.ts" />
@@ -135,7 +133,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\login.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\message.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\password.history.model.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\shared\ratio.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\pipes\accounting-currency.pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\report-type.enum.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\security.question.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\subcategory.model.ts" />

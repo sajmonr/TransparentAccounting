@@ -19,7 +19,7 @@
       <tr *ngFor="let event of events">
         <td>{{event.id}}</td>
         <td>{{event.createdBy.fullName}}</td>
-        <td>{{event.timestamp}}</td>
+        <td>{{event.timestamp | date}}</td>
         <td>{{event.description}}</td>
         <td [colSpan]="event.updated != null ? 2: 1" class="nestedTd">
           <event-component [event]="event"></event-component>
