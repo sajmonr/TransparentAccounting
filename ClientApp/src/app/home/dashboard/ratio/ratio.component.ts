@@ -43,7 +43,7 @@ export class RatioComponent{
 
   getBottomLabel() {
     if (this.ratio && this.ratio.value) {
-      return '' + this.ratio.value
+      return '' + this.ratio.value.toFixed(4);
     }
     return ''
   }
