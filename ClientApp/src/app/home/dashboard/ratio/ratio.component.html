@@ -2,6 +2,6 @@
   [canvasWidth]="canvasWidth"
   [needleValue]="50"
   [centralLabel]="centralLabel"
-  [options]="getOptions()"
+  [options]="!isInverted() ? getOptions(): getInvertedOptions()"
   [name]="getRatioName()"
   [bottomLabel]="getBottomLabel()"></rg-gauge-chart>
