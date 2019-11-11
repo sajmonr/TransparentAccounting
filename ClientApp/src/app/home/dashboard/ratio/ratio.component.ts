@@ -24,6 +24,25 @@ export class RatioComponent{
     };
   }
 
+  getInvertedOptions() {
+    return {
+      hasNeedle: true,
+      outerNeedle: false,
+      needleColor: "black",
+      needleStartValue: this.getPercentValue(),
+      arcColors: ["rgb(61,204,91)", "rgb(239,214,19)", "rgb(255,84,84)"],
+      arcDelimiters: [this.getGreenPercentageInverted(), this.getYellowPercentageInverted()],
+      rangeLabel: ["0", this.getRedMax()]
+    };
+  }
+
+  isInverted() {
+    if (this.ratio && this.ratio.isInverted) {
+      return this.ratio.isInverted
+    }
+    return false;
+  }
+
   getPercentValue() {
     if (this.ratio && this.ratio.percentValue) {
       if (this.ratio.percentValue > 100) {
@@ -43,7 +62,7 @@ export class RatioComponent{
 
   getBottomLabel() {
     if (this.ratio && this.ratio.value) {
-      return '' + this.ratio.value.toFixed(4);
+      return this.ratio.value.toFixed(2)
     }
     return ''
   }
@@ -62,9 +81,30 @@ export class RatioComponent{
     return 1
   }
 
+  getYellowPercentageInverted() {
+    if (this.ratio && this.ratio.yellowMax && this.ratio.redMax) {
+      return this.ratio.yellowMax / this.ratio.redMax * 100
+    }
+    return 1
+  }
+
+  getGreenPercentageInverted() {
+    if (this.ratio && this.ratio.greenMax && this.ratio.redMax) {
+      return this.ratio.greenMax / this.ratio.redMax * 100
+    }
+    return 1
+  }
+
   getGreenMax() {
     if (this.ratio && this.ratio.greenMax) {
       return "" + this.ratio.greenMax
+    }
+    return ""
+  }
+
+  getRedMax() {
+    if (this.ratio && this.ratio.redMax) {
+      return "" + this.ratio.redMax
     }
     return ""
   }
