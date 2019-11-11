@@ -1,16 +1,16 @@
 <table>
-<tr *ngFor="let transaction of transactions">
-  <td>
-    <div *ngIf="transaction.status == transactionStatusType.Pending">
-      <div class="alert alert-warning" role="alert">
-        <strong>Transaction Alert!</strong><a class="alert-link" [routerLink]='["/app/journal", transaction.entries[0].id]'> A new transaction is ready for your approval.</a>
-      </div>
-    </div>
-  </td>
-</tr>
+  <ng-container *ngFor="let transaction of transactions">
+    <tr *ngIf="transaction.status == transactionStatusType.Pending">
+      <td>
+        <div class="alert alert-warning" role="alert">
+          <strong>Transaction Alert!</strong><a class="alert-link" [routerLink]='["/app/journal", transaction.entries[0].id]'> A new transaction is ready for your approval.</a>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
 </table>
 
-<table>
+<table class="mx-auto">
   <tr>
     <td><ratio-component [ratio]="currentRatio"></ratio-component></td>
     <td><ratio-component [ratio]="quickRatio"></ratio-component></td>
