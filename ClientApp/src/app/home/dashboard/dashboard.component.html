@@ -1,18 +1,12 @@
-<strong>Welcome to Transparent Accounting</strong>
-<div style="display: none;">
-  <strong>This is dashboard</strong>
-  <button (click)="onSendEmail()">Send email</button>
-  <button class="btn btn-success" (click)="messageService.success('Success info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Success modal</button>
-  <button class="btn btn-danger" (click)="messageService.error('Error info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Error modal</button>
-  <button class="btn btn-info" (click)="messageService.info('Test info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis eget nunc lobortis mattis. Enim nulla aliquet porttitor lacus luctus accumsan tortor.')">Info modal</button>
-</div>
 <table>
 <tr *ngFor="let transaction of transactions">
-  <div *ngIf="transaction.status == transactionStatusType.Pending">
-    <div class="alert alert-warning" role="alert">
-      <strong>Transaction Alert!</strong><a class="alert-link" [routerLink]='["/app/journal", transaction.entries[0].id]'> A new transaction is ready for your approval.</a>
+  <td>
+    <div *ngIf="transaction.status == transactionStatusType.Pending">
+      <div class="alert alert-warning" role="alert">
+        <strong>Transaction Alert!</strong><a class="alert-link" [routerLink]='["/app/journal", transaction.entries[0].id]'> A new transaction is ready for your approval.</a>
+      </div>
     </div>
-  </div>
+  </td>
 </tr>
 </table>
 

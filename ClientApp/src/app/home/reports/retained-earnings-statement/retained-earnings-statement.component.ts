@@ -2,9 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {ReportsService} from "../../../services/reports.service";
 import {Account} from "../../../shared/account.model";
 import {CategoryType} from "../../../shared/category.model";
-import {Subcategory} from "../../../shared/subcategory.model";
-import {ApiMethod, ApiService} from "../../../services/api.service";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-retained-earnings-statement',

@@ -1,7 +1,2 @@
-<rg-gauge-chart
-  [canvasWidth]="canvasWidth"
-  [needleValue]="50"
-  [centralLabel]="centralLabel"
-  [options]="!isInverted() ? getOptions(): getInvertedOptions()"
-  [name]="getRatioName()"
-  [bottomLabel]="getBottomLabel()"></rg-gauge-chart>
+<span class="display-4 d-block text-center">{{ratio && ratio.name ? ratio.name : ''}}</span>
+<div #gaugeArea></div>

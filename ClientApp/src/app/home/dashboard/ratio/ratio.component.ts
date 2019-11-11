@@ -1,38 +1,50 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from "@angular/core";
 import {Ratio} from "../../../shared/ratio.model";
+import * as GaugeChart from 'gauge-chart';
 
 @Component({
   selector: 'ratio-component',
-  templateUrl: './ratio.component.html'
+  templateUrl: './ratio.component.html',
+  styleUrls: ['./ratio.component.less']
 })
 
-export class RatioComponent{
-
+export class RatioComponent implements OnChanges{
+  @ViewChild('gaugeArea') gaugeArea: ElementRef;
   @Input() ratio: Ratio;
 
-  public canvasWidth = 300;
-  public centralLabel = '';
-  getOptions() {
-    return {
-      hasNeedle: true,
-      outerNeedle: false,
-      needleColor: "black",
-      needleStartValue: this.getPercentValue(),
-      arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
-      arcDelimiters: [this.getRedPercentage(), this.getYellowPercentage()],
-      rangeLabel: ["0", this.getGreenMax()]
-    };
+  private canvasWidth = 300;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.ratio)
+      this.renderGauge();
   }
 
-  getInvertedOptions() {
+  private renderGauge(){
+    // Drawing and updating the chart
+    GaugeChart.gaugeChart(this.gaugeArea.nativeElement, this.canvasWidth, this.getGaugeOptions()).updateNeedle(this.getPercentValue())
+  }
+
+  private getGaugeOptions(){
+    let arcColors, arcDelimiters, rangeLabel;
+
+    if(this.isInverted()){
+      arcColors = ['rgb(61,204,91)', 'rgb(239,214,19)', 'rgb(255,84,84)'];
+      arcDelimiters = [this.getGreenPercentageInverted(), this.getYellowPercentageInverted()];
+      rangeLabel = ['0', this.getRedMax()];
+    }else{
+      arcColors = ['rgb(255,84,84)', 'rgb(239,214,19)', 'rgb(61,204,91)'];
+      arcDelimiters = [this.getRedPercentage(), this.getYellowPercentage()];
+      rangeLabel = ['0', this.getGreenMax()];
+    }
+
     return {
       hasNeedle: true,
       outerNeedle: false,
-      needleColor: "black",
-      needleStartValue: this.getPercentValue(),
-      arcColors: ["rgb(61,204,91)", "rgb(239,214,19)", "rgb(255,84,84)"],
-      arcDelimiters: [this.getGreenPercentageInverted(), this.getYellowPercentageInverted()],
-      rangeLabel: ["0", this.getRedMax()]
+      needleColor: 'black',
+      arcColors: arcColors,
+      arcDelimiters: arcDelimiters,
+      rangeLabel: rangeLabel,
+      centralLabel: this.getCentralLabel()
     };
   }
 
@@ -53,18 +65,8 @@ export class RatioComponent{
     return 0
   }
 
-  getRatioName() {
-    if (this.ratio && this.ratio.name) {
-      return this.ratio.name
-    }
-    return ""
-  }
-
-  getBottomLabel() {
-    if (this.ratio && this.ratio.value) {
-      return this.ratio.value.toFixed(2)
-    }
-    return ''
+  getCentralLabel(): string {
+    return this.ratio && this.ratio.value ? this.ratio.value.toFixed(2) : '';
   }
 
   getRedPercentage() {
