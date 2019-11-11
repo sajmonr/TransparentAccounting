@@ -11,6 +11,8 @@ export class TrialBalanceComponent{
   private normalSide = NormalSide;
   private accounts:Account[] = [];
 
+  private firstAccounts: Account[] = [];
+
   constructor(private reportsService: ReportsService){}
 
   ngOnInit(): void {
@@ -18,7 +20,16 @@ export class TrialBalanceComponent{
   }
 
   private loadAccounts(accounts: Account[]){
-    this.accounts = accounts.filter(a => a.balance > 0).sort((a, b) => a.accountId - b.accountId);
+    console.log(accounts);
+
+    const tmpAccounts = accounts.filter(a => a.balance > 0).sort((a, b) => a.accountId - b.accountId);
+
+    const firstCredit = tmpAccounts.findIndex(a => a.normalSide == NormalSide.Left);
+    const firstDebit = tmpAccounts.findIndex(a => a.normalSide == NormalSide.Right);
+
+    this.firstAccounts = [tmpAccounts[firstCredit], tmpAccounts[firstDebit]];
+
+    this.accounts = tmpAccounts;
   }
 
   private getTotal(accounts: Account[], normalSide: NormalSide): number{

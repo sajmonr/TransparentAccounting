@@ -3,7 +3,6 @@ import {AccountsService} from "./accounts.service";
 import {Account} from "../shared/account.model";
 import {JournalService} from "./journal.service";
 import {TransactionStatusType} from "../shared/journal.transaction.model";
-import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 
 @Injectable()
 export class ReportsService{
