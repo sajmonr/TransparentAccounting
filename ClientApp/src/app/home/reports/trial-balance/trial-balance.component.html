@@ -20,17 +20,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let account of accounts; last as isLast, first as isFirst">
+          <tr *ngFor="let account of accounts; first as isFirst">
             <td>{{account.accountId}}</td>
             <td>{{account.name}}</td>
-            <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{account.normalSide == normalSide.Left ? (isFirst ? (account.balance | currency) : account.balance | currency: 'USD': '') : ''}}</td>
-            <td class="text-right" [ngClass]="{'amount-separator': isLast}">{{account.normalSide == normalSide.Right ? (account.balance | currency: 'USD': '') : ''}}</td>
+            <td class="text-right">{{account.normalSide == normalSide.Left ? (isFirst ? (account.balance | currency) : account.balance | currency: 'USD': '') : ''}}</td>
+            <td class="text-right">{{account.normalSide == normalSide.Right ? (account.balance | currency: 'USD': '') : ''}}</td>
           </tr>
           <tr>
             <td></td>
             <td class="font-weight-bold">Totals</td>
-            <td class="text-right amount-separator">{{getTotal(accounts, normalSide.Left) | currency}}</td>
-            <td class="text-right amount-separator">{{getTotal(accounts, normalSide.Right) | currency}}</td>
+            <td class="text-right total-separator">{{getTotal(accounts, normalSide.Left) | currency}}</td>
+            <td class="text-right total-separator">{{getTotal(accounts, normalSide.Right) | currency}}</td>
           </tr>
         </tbody>
       </table>

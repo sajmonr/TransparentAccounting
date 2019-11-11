@@ -4,7 +4,7 @@
     <div class="col">
       <span class="d-block">Addams & Family Inc.</span>
       <span class="d-block">Income statement</span>
-      <span class="d-block">As of {{reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
+      <span class="d-block">For period ending {{reportsService.dateRange[1] | date: 'MMMM d, yyyy'}}</span>
     </div>
   </div>
   <!--Body row-->
@@ -36,7 +36,7 @@
         </tr>
         <tr>
           <td>Total Expenses:</td>
-          <td colspan="2" class="text-right amount-separator">{{getTotal(expenses) | currency}}</td>
+          <td colspan="2" class="text-right">{{getTotal(expenses) | currency}}</td>
         </tr>
         <tr>
           <th>Net Income</th>

@@ -39,8 +39,8 @@
               </tr>
               <tr>
                 <td>Total {{accountType[category.key]}}</td>
-                <td class="total-separator"></td>
-                <td class="text-right total-separator">{{getTotal([category.key]) | currency}}</td>
+                <td [ngClass]="{'total-separator': category.key == accountType.Assets, 'amount-separator': category.key != accountType.Assets}"></td>
+                <td class="text-right" [ngClass]="{'total-separator': category.key == accountType.Assets, 'amount-separator': category.key != accountType.Assets}">{{getTotal([category.key]) | currency}}</td>
               </tr>
               </tbody>
             </table>
