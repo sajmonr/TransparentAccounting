@@ -1,9 +1,9 @@
-<table>
+<table class="mx-auto">
   <ng-container *ngFor="let transaction of transactions">
     <tr *ngIf="transaction.status == transactionStatusType.Pending">
       <td>
         <div class="alert alert-warning" role="alert">
-          <strong>Transaction Alert!</strong><a class="alert-link" [routerLink]='["/app/journal", transaction.entries[0].id]'> A new transaction is ready for your approval.</a>
+          <a class="alert-link" [routerLink]='["/app/journal", transaction.entries[0].id]'><strong>Transaction Alert!</strong> A new transaction is ready for your approval.</a>
         </div>
       </td>
     </tr>

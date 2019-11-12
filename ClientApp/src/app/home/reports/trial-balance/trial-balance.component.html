@@ -23,8 +23,8 @@
           <tr *ngFor="let account of accounts;">
             <td>{{account.accountId}}</td>
             <td>{{account.name}}</td>
-            <td class="text-right">{{account.normalSide == normalSide.Left ? (firstAccounts[0].id == account.id ? (account.balance | currency) : account.balance | currency: 'USD': '') : ''}}</td>
-            <td class="text-right">{{account.normalSide == normalSide.Right ? (firstAccounts[1].id == account.id ? (account.balance | currency) : account.balance | currency: 'USD': '') : ''}}</td>
+            <td class="text-right">{{account.normalSide == normalSide.Left && !account.contraAccount || account.normalSide == normalSide.Right && account.contraAccount ? (firstAccounts[0].id == account.id ? (account.balance | currency) : (account.contraAccount ? account.balance * -1 : account.balance) | accountingCurrency: 'USD': '') : ''}}</td>
+            <td class="text-right">{{account.normalSide == normalSide.Right && !account.contraAccount || account.normalSide == normalSide.Left && account.contraAccount ? (firstAccounts[1].id == account.id ? (account.balance | currency) : (account.contraAccount ? account.balance * -1 : account.balance) | accountingCurrency: 'USD': '') : ''}}</td>
           </tr>
           <tr>
             <td></td>

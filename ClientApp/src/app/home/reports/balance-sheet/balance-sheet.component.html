@@ -26,7 +26,9 @@
               <ng-container *ngFor="let account of category.value; first as isFirst, index as i">
                 <tr>
                   <td>{{account.name}}</td>
-                  <td class="text-right">{{isFirst ? (account.balance | accountingCurrency) : account.balance | accountingCurrency: 'USD': ''}}</td>
+                  <td class="text-right">
+                    {{isFirst ? (account.balance | accountingCurrency) : (account.contraAccount ? account.balance * -1 : account.balance) | accountingCurrency: 'USD': ''}}
+                  </td>
                 </tr>
                 <tr *ngIf="account.subcategory.id == 21">
                   <td>Total Office Equipment</td>

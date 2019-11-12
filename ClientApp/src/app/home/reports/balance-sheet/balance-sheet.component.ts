@@ -27,7 +27,7 @@ export class BalanceSheetComponent{
     newAccounts[CategoryType.Liabilities] = accounts.filter(e => e.category.id == CategoryType.Liabilities && e.balance > 0);
     newAccounts[CategoryType.Equity] = accounts.filter(e => e.category.id == CategoryType.Equity && e.balance > 0);
 
-    this.adjustForContraAccounts(newAccounts);
+    //this.adjustForContraAccounts(newAccounts);
     this.retainedEarnings = this.calculateNetIncome(accounts);
 
     this.accounts = newAccounts;
@@ -42,23 +42,30 @@ export class BalanceSheetComponent{
     })
   }
   private calculateNetIncome(accounts: Account[]): number{
-    const totalRevenues = accounts.filter(account => account.category.id == CategoryType.Revenues).reduce((a, c) => a + c.balance, 0);
-    const totalExpenses = accounts.filter(account => account.category.id == CategoryType.Expenses).reduce((a, c) => a + c.balance, 0);
-    const dividends = accounts.filter(account => account.subcategory.name == 'Dividends').reduce((a, c) => a + c.balance, 0);
+    //const totalRevenues = accounts.filter(account => account.category.id == CategoryType.Revenues).reduce((a, c) => a + c.balance, 0);
+    //const totalExpenses = accounts.filter(account => account.category.id == CategoryType.Expenses).reduce((a, c) => a + c.balance, 0);
+    //const dividends = accounts.filter(account => account.subcategory.name == 'Dividends').reduce((a, c) => a + c.balance, 0);
+
+    const totalRevenues = this.getTotalBalance(accounts.filter(account => account.category.id == CategoryType.Revenues));
+    const totalExpenses = this.getTotalBalance(accounts.filter(account => account.category.id == CategoryType.Expenses));
+    const dividends = this.getTotalBalance(accounts.filter(account => account.subcategory.name == 'Dividends'));
 
     return totalRevenues - totalExpenses - dividends;
   }
 
   private getDepreciationForOfficeEquipment(): number{
     const acc = this.accounts[CategoryType.Assets].filter(a => a.name == 'Office Equipment' || a.name == 'Accumulated Depreciation, Office Equipment');
-    return acc.reduce((a, c) => a + c.balance, 0);
+    //return acc.reduce((a, c) => a + c.balance, 0);
+
+    return this.getTotalBalance(acc);
   }
 
   private getTotal(accountType: CategoryType[]): number{
     let total = 0;
     accountType.forEach(type => {
       if(this.accounts[type])
-        total += this.accounts[type].reduce((a, c) => a + c.balance, 0);
+        total += this.getTotalBalance(this.accounts[type]);
+        //total += this.accounts[type].reduce((a, c) => a + c.balance, 0);
     });
 
     if(accountType.some(t => t == CategoryType.Equity))
@@ -66,4 +73,16 @@ export class BalanceSheetComponent{
 
     return total;
   }
+
+  private getTotalBalance(accounts: Account[]): number{
+    return accounts.reduce((a, c) => {
+      if(c.contraAccount)
+        a -= c.balance;
+      else
+        a += c.balance;
+
+      return a;
+    }, 0);
+  }
+
 }

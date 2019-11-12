@@ -48,8 +48,8 @@
   <tr *ngFor="let entry of journalTransaction.entries">
     <table class="table">
       <tr><strong>Account Name:</strong> {{getAccount(entry.account.id).name}}</tr>
-      <tr *ngIf="isDebit(entry)"><strong>Debit:</strong> {{isDebit(entry) ? getDebitBalance(entry, entry.account) : null}}</tr>
-      <tr *ngIf="!isDebit(entry)"><strong>Credit:</strong> {{!isDebit(entry) ? getCreditBalance(entry, entry.account): null}}</tr>
+      <tr *ngIf="isDebit(entry)"><strong>Debit:</strong> {{isDebit(entry) ? (getDebitBalance(entry, entry.account) | accountingCurrency) : null}}</tr>
+      <tr *ngIf="!isDebit(entry)"><strong>Credit:</strong> {{!isDebit(entry) ? (getCreditBalance(entry, entry.account) | accountingCurrency): null}}</tr>
     </table>
   </tr>
   </tbody>

@@ -20,12 +20,10 @@ export class TrialBalanceComponent{
   }
 
   private loadAccounts(accounts: Account[]){
-    console.log(accounts);
-
     const tmpAccounts = accounts.filter(a => a.balance > 0).sort((a, b) => a.accountId - b.accountId);
 
-    const firstCredit = tmpAccounts.findIndex(a => a.normalSide == NormalSide.Left);
-    const firstDebit = tmpAccounts.findIndex(a => a.normalSide == NormalSide.Right);
+    const firstCredit = tmpAccounts.findIndex(a => a.normalSide == NormalSide.Left && !a.contraAccount);
+    const firstDebit = tmpAccounts.findIndex(a => a.normalSide == NormalSide.Right && !a.contraAccount);
 
     this.firstAccounts = [tmpAccounts[firstCredit], tmpAccounts[firstDebit]];
 
